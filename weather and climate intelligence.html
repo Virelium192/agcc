@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather & Climate Intelligence - AgriClimate Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'weather-pulse': 'weatherPulse 3s ease-in-out infinite'
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes weatherPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1976D2 0%, #87CEEB 50%, #4CAF50 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #1976D2 70%, #87CEEB 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .weather-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .weather-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .weather-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark .weather-card:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark .feature-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #1976D2, #87CEEB, #4CAF50);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .weather-widget {
+            background: linear-gradient(135deg, rgba(25, 118, 210, 0.8), rgba(135, 206, 235, 0.6));
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+        }
+        
+        .dark .weather-widget {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8));
+        }
+        
+        .climate-pattern {
+            background: conic-gradient(from 0deg, #4CAF50, #87CEEB, #1976D2, #4CAF50);
+            border-radius: 50%;
+            animation: spin-slow;
+        }
+        
+        .alert-card {
+            border-left: 4px solid;
+            animation: weather-pulse;
+        }
+        
+        .alert-warning { border-color: #FF8F00; background: rgba(255, 143, 0, 0.1); }
+        .alert-danger { border-color: #F44336; background: rgba(244, 67, 54, 0.1); }
+        .alert-info { border-color: #2196F3; background: rgba(33, 150, 243, 0.1); }
+        .alert-success { border-color: #4CAF50; background: rgba(76, 175, 80, 0.1); }
+        
+        .dark .alert-warning { background: rgba(255, 143, 0, 0.2); }
+        .dark .alert-danger { background: rgba(244, 67, 54, 0.2); }
+        .dark .alert-info { background: rgba(33, 150, 243, 0.2); }
+        .dark .alert-success { background: rgba(76, 175, 80, 0.2); }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        /* Accessibility Enhancements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #000;
+            }
+            
+            .dark .glass-effect {
+                background: rgba(0, 0, 0, 0.9);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #87CEEB;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1976D2;
+        }
+        
+        .weather-icon-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .temperature-gradient {
+            background: linear-gradient(90deg, #4CAF50, #FF8F00, #F44336);
+            height: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-blue-50 via-sky-50 to-green-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-agri-blue text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">
+                            <a href="index.html" class="hover:text-agri-green transition-colors">AgriClimate Connect</a>
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400" data-translate="nav.tagline">Weather & Climate Intelligence</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-agri-blue dark:text-agri-sky font-semibold transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#weather" class="block py-2 text-sm font-semibold text-agri-blue dark:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather & Climate Intelligence</span>
+                            </a>
+                            <a href="crops.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="livestock.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="market.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="ai-tools.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.community">Community</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-64 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="forum.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-comments mr-3 text-blue-500" aria-hidden="true"></i><span data-translate="nav.forum">Discussion Forum</span>
+                            </a>
+                            <a href="knowledge.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-book mr-3 text-orange-500" aria-hidden="true"></i><span data-translate="nav.knowledge_center">Knowledge Center</span>
+                            </a>
+                            <a href="experts.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-user-tie mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.expert_network">Expert Network</span>
+                            </a>
+                            <a href="events.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-calendar mr-3 text-green-500" aria-hidden="true"></i><span data-translate="nav.events">Events & Training</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- About Us -->
+                    <a href="about.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us -->
+                    <a href="contact.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-agri-green rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <a href="signup.html"><button class="hidden md:block bg-gradient-to-r from-agri-green to-agri-light text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover">
+                        <span data-translate="cta.get_started">Get Started</span>
+                    </button></a>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    
+                    <div class="py-2">
+                        <button class="w-full text-left text-agri-blue dark:text-agri-sky font-semibold flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-agri-green rounded" onclick="toggleMobileDropdown('knowledge-tools')" aria-expanded="false">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span>
+                            <i class="fas fa-chevron-down transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div id="mobile-knowledge-tools" class="hidden ml-4 mt-2 space-y-1">
+                            <a href="#weather" class="block py-1 text-sm text-agri-blue dark:text-agri-sky font-semibold focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.weather_climate">Weather & Climate</a>
+                            <a href="crops.html" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.crop_advisory">Crop Advisory</a>
+                            <a href="livestock.html" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.livestock">Livestock Management</a>
+                            <a href="market.html" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.market_hub">Market Intelligence</a>
+                            <a href="ai-tools.html" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.ai_tools">AI Tools</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="contact.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="weather" class="min-h-screen pt-20 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/20 dark:bg-black/40"></div>
+            
+            <!-- Floating Weather Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white/20 dark:bg-agri-sky/30 rounded-full animate-float flex items-center justify-center" aria-hidden="true">
+                <i class="fas fa-cloud-sun text-white text-2xl weather-icon-animation"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-agri-blue/30 dark:bg-agri-blue/40 rounded-full animate-float flex items-center justify-center" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-thermometer-half text-white text-xl weather-icon-animation"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-sky/30 dark:bg-agri-sky/40 rounded-full animate-float flex items-center justify-center" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-wind text-white text-2xl weather-icon-animation"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.weather">Weather</span> & <span class="text-agri-sky" data-translate="hero.climate">Climate</span><br>
+                            <span class="text-agri-gold" data-translate="hero.intelligence">Intelligence</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Master the science of weather patterns and climate change with AI-powered forecasting, risk assessment tools, and expert knowledge to make informed farming decisions.</span>
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <button class="bg-agri-sky hover:bg-agri-blue text-gray-900 dark:text-white font-semibold px-8 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-sky">
+                                <i class="fas fa-cloud-sun mr-2" aria-hidden="true"></i><span data-translate="cta.start_forecasting">Start Forecasting</span>
+                            </button>
+                            <button class="border-2 border-white text-white hover:bg-white hover:text-agri-blue font-semibold px-8 py-4 rounded-full text-lg transition-all focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-graduation-cap mr-2" aria-hidden="true"></i><span data-translate="cta.learn_climate">Learn Climate Science</span>
+                            </button>
+                        </div>
+
+                        <!-- Weather Stats -->
+                        <div class="grid grid-cols-3 gap-6 mt-12">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-sky" id="accuracy-counter">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.accuracy">% Accuracy</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-sky" id="locations-counter">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.locations">Global Locations</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-sky" id="forecasts-counter">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.forecasts">Daily Forecasts</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Live Weather Dashboard -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- Current Weather Widget -->
+                        <div class="weather-widget p-6 text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold" data-translate="widget.current_weather">Current Weather</h3>
+                                <button id="location-btn" class="text-sm bg-white/20 dark:bg-agri-night/50 px-3 py-1 rounded-full hover:bg-white/30 dark:hover:bg-agri-night/70 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky">
+                                    <i class="fas fa-location-dot mr-1" aria-hidden="true"></i><span data-translate="widget.auto_detect">Auto-detect</span>
+                                </button>
+                            </div>
+                            
+                            <div id="weather-content">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div>
+                                        <div class="text-5xl font-bold" id="temperature">--°</div>
+                                        <div class="text-lg" id="location" data-translate="widget.getting_location">Getting location...</div>
+                                        <div class="text-sm opacity-75" id="weather-description">--</div>
+                                    </div>
+                                    <div class="text-8xl" id="weather-icon">🌤️</div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/20 dark:border-gray-600/30">
+                                    <div class="text-center">
+                                        <div class="text-sm opacity-75" data-translate="widget.humidity">Humidity</div>
+                                        <div class="font-semibold text-lg" id="humidity">--%</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-sm opacity-75" data-translate="widget.wind_speed">Wind Speed</div>
+                                        <div class="font-semibold text-lg" id="wind-speed">-- m/s</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-sm opacity-75" data-translate="widget.pressure">Pressure</div>
+                                        <div class="font-semibold text-lg" id="pressure">-- hPa</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-sm opacity-75" data-translate="widget.visibility">Visibility</div>
+                                        <div class="font-semibold text-lg" id="visibility">-- km</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Weather Insights -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-sky weather-card" tabindex="0" role="button">
+                                <i class="fas fa-cloud-rain text-3xl mb-2 text-agri-sky weather-icon-animation" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.rainfall_forecast">Rainfall Forecast</div>
+                                <div class="text-sm opacity-75" id="rainfall-chance">--%</div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-sky weather-card" tabindex="0" role="button">
+                                <i class="fas fa-sun text-3xl mb-2 text-agri-gold weather-icon-animation" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.uv_index">UV Index</div>
+                                <div class="text-sm opacity-75" id="uv-index">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.explore">Explore weather intelligence</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Dashboard Section -->
+        <section id="dashboard" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="dashboard.title">Advanced Weather Dashboard</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto" data-translate="dashboard.description">
+                        Access comprehensive weather data, satellite imagery, and predictive analytics to make informed agricultural decisions.
+                    </p>
+                </div>
+
+                <!-- Weather Cards Grid -->
+                <div class="grid lg:grid-cols-3 gap-8 mb-16">
+                    <!-- 7-Day Forecast -->
+                    <div class="lg:col-span-2 bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white flex items-center">
+                                <i class="fas fa-calendar-week mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="dashboard.seven_day">7-Day Forecast</span>
+                            </h3>
+                            <button class="text-agri-blue hover:text-agri-dark transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue rounded px-2 py-1" data-translate="dashboard.view_hourly">View Hourly</button>
+                        </div>
+                        <div class="grid grid-cols-7 gap-2" id="seven-day-forecast">
+                            <!-- Forecast items will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Weather Alerts -->
+                    <div class="bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-2 text-orange-500" aria-hidden="true"></i><span data-translate="dashboard.weather_alerts">Weather Alerts</span>
+                        </h3>
+                        <div class="space-y-4" id="weather-alerts">
+                            <!-- Alert items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Weather Tools -->
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- Weather Map -->
+                    <div class="bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-right">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
+                            <i class="fas fa-map mr-2 text-agri-green" aria-hidden="true"></i><span data-translate="dashboard.weather_map">Interactive Weather Map</span>
+                        </h3>
+                        <div class="bg-gradient-to-br from-agri-blue/10 to-agri-sky/10 dark:from-agri-blue/20 dark:to-agri-sky/20 rounded-lg h-64 flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-globe text-4xl text-agri-blue mb-4" aria-hidden="true"></i>
+                                <p class="text-gray-600 dark:text-gray-400" data-translate="dashboard.map_placeholder">Interactive satellite weather map</p>
+                                <button class="mt-4 bg-agri-blue text-white px-6 py-2 rounded-lg hover:bg-agri-dark transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue" data-translate="dashboard.view_map">View Full Map</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Climate Patterns -->
+                    <div class="bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-left">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
+                            <i class="fas fa-chart-line mr-2 text-purple-500" aria-hidden="true"></i><span data-translate="dashboard.climate_patterns">Climate Patterns</span>
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 climate-pattern mr-3"></div>
+                                    <span class="text-gray-900 dark:text-white" data-translate="dashboard.el_nino">El Niño Status</span>
+                                </div>
+                                <span class="text-agri-green font-semibold" data-translate="dashboard.neutral">Neutral</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-agri-blue rounded-full mr-3"></div>
+                                    <span class="text-gray-900 dark:text-white" data-translate="dashboard.monsoon">Monsoon Prediction</span>
+                                </div>
+                                <span class="text-agri-blue font-semibold" data-translate="dashboard.normal">Normal</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-4 h-4 bg-agri-accent rounded-full mr-3"></div>
+                                    <span class="text-gray-900 dark:text-white" data-translate="dashboard.temperature_trend">Temperature Trend</span>
+                                </div>
+                                <span class="text-agri-accent font-semibold" data-translate="dashboard.rising">Rising</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Resources Section -->
+        <section id="learning" class="py-20 bg-gradient-to-br from-sky-50 to-blue-50 dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="learning.title">Weather Intelligence Learning</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto" data-translate="learning.description">
+                        Master meteorology and climate science with our comprehensive courses, expert tutorials, and interactive learning tools.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Course 1: Weather Fundamentals -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                        <div class="h-48 bg-gradient-to-br from-agri-blue to-agri-sky relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-cloud-sun text-6xl text-white opacity-80 weather-icon-animation" aria-hidden="true"></i>
+                            </div>
+                            <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-white text-sm" data-translate="learning.beginner">Beginner</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="learning.course1_title">Weather Fundamentals for Farmers</h4>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="learning.course1_description">Learn the basics of weather patterns, reading forecasts, and understanding atmospheric conditions that affect your crops.</p>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.duration">Duration:</span>
+                                    <span class="text-agri-blue font-medium" data-translate="learning.course1_duration">4 hours</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.lessons">Lessons:</span>
+                                    <span class="text-agri-blue font-medium">12</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.students">Students:</span>
+                                    <span class="text-agri-blue font-medium">15,420</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-agri-blue hover:bg-agri-dark text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue" data-translate="learning.start_course">Start Course</button>
+                        </div>
+                    </div>
+
+                    <!-- Course 2: Climate Change Adaptation -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                        <div class="h-48 bg-gradient-to-br from-agri-green to-agri-light relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-globe-americas text-6xl text-white opacity-80 weather-icon-animation" aria-hidden="true"></i>
+                            </div>
+                            <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-white text-sm" data-translate="learning.intermediate">Intermediate</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="learning.course2_title">Climate Change Adaptation Strategies</h4>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="learning.course2_description">Advanced strategies for adapting farming practices to changing climate conditions and extreme weather events.</p>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.duration">Duration:</span>
+                                    <span class="text-agri-green font-medium" data-translate="learning.course2_duration">6 hours</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.lessons">Lessons:</span>
+                                    <span class="text-agri-green font-medium">18</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.students">Students:</span>
+                                    <span class="text-agri-green font-medium">8,750</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-agri-green hover:bg-agri-dark text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="learning.start_course">Start Course</button>
+                        </div>
+                    </div>
+
+                    <!-- Course 3: Advanced Meteorology -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                        <div class="h-48 bg-gradient-to-br from-purple-500 to-indigo-600 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-satellite text-6xl text-white opacity-80 weather-icon-animation" aria-hidden="true"></i>
+                            </div>
+                            <div class="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-white text-sm" data-translate="learning.advanced">Advanced</div>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="learning.course3_title">Advanced Agricultural Meteorology</h4>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="learning.course3_description">Professional-level training in weather prediction, satellite data interpretation, and micro-climate analysis.</p>
+                            <div class="space-y-2 mb-4">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.duration">Duration:</span>
+                                    <span class="text-purple-600 font-medium" data-translate="learning.course3_duration">12 hours</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.lessons">Lessons:</span>
+                                    <span class="text-purple-600 font-medium">24</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500" data-translate="learning.students">Students:</span>
+                                    <span class="text-purple-600 font-medium">3,200</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-purple-600" data-translate="learning.start_course">Start Course</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Learning Tools -->
+                <div class="mt-16 bg-white dark:bg-agri-night-light rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center" data-translate="learning.interactive_tools">Interactive Learning Tools</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-agri-blue to-agri-sky rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                                <i class="fas fa-cloud-rain text-3xl text-white" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="learning.weather_simulator">Weather Simulator</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="learning.simulator_description">Practice weather prediction with our interactive simulator</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-agri-green to-agri-light rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                                <i class="fas fa-thermometer-half text-3xl text-white" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="learning.climate_analyzer">Climate Analyzer</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="learning.analyzer_description">Analyze historical climate data and trends</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                                <i class="fas fa-chart-area text-3xl text-white" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="learning.forecast_trainer">Forecast Trainer</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="learning.trainer_description">Train your forecasting skills with real scenarios</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Tools Section -->
+        <section id="tools" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="tools.title">Professional Weather Tools</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto" data-translate="tools.description">
+                        Access professional-grade weather tools designed specifically for agricultural applications and farming success.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tool 1: Weather Station -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 bg-agri-blue/10 dark:bg-agri-blue/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-broadcast-tower text-agri-blue text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tools.weather_station">Digital Weather Station</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="tools.station_description">Real-time monitoring of temperature, humidity, wind, and rainfall at your farm location</p>
+                        <button class="text-agri-blue hover:text-agri-dark font-medium focus:outline-none focus:ring-2 focus:ring-agri-blue rounded" data-translate="tools.learn_more">Learn More →</button>
+                    </div>
+
+                    <!-- Tool 2: Satellite Imagery -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-16 h-16 bg-agri-green/10 dark:bg-agri-green/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-satellite text-agri-green text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tools.satellite_imagery">Satellite Weather Imagery</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="tools.imagery_description">High-resolution satellite images for cloud patterns, storm tracking, and precipitation analysis</p>
+                        <button class="text-agri-green hover:text-agri-dark font-medium focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="tools.learn_more">Learn More →</button>
+                    </div>
+
+                    <!-- Tool 3: Forecast Models -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-16 h-16 bg-purple-500/10 dark:bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-chart-line text-purple-500 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tools.forecast_models">AI Forecast Models</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="tools.models_description">Advanced AI-powered weather prediction models with agricultural focus and local accuracy</p>
+                        <button class="text-purple-500 hover:text-purple-700 font-medium focus:outline-none focus:ring-2 focus:ring-purple-500 rounded" data-translate="tools.learn_more">Learn More →</button>
+                    </div>
+
+                    <!-- Tool 4: Climate Analytics -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-16 h-16 bg-agri-accent/10 dark:bg-agri-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-analytics text-agri-accent text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tools.climate_analytics">Climate Analytics</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="tools.analytics_description">Long-term climate trend analysis and adaptation planning for sustainable farming</p>
+                        <button class="text-agri-accent hover:text-orange-600 font-medium focus:outline-none focus:ring-2 focus:ring-agri-accent rounded" data-translate="tools.learn_more">Learn More →</button>
+                    </div>
+
+                    <!-- Tool 5: Alert System -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="500">
+                        <div class="w-16 h-16 bg-red-500/10 dark:bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-bell text-red-500 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tools.alert_system">Smart Alert System</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="tools.alert_description">Intelligent weather alerts and warnings tailored to your crops and farming operations</p>
+                        <button class="text-red-500 hover:text-red-700 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 rounded" data-translate="tools.learn_more">Learn More →</button>
+                    </div>
+
+                    <!-- Tool 6: Mobile App -->
+                    <div class="feature-card bg-white dark:bg-agri-night-light rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="600">
+                        <div class="w-16 h-16 bg-agri-sky/20 dark:bg-agri-sky/30 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-mobile-alt text-agri-sky text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tools.mobile_app">Weather Mobile App</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="tools.app_description">Access all weather tools on-the-go with our comprehensive mobile application</p>
+                        <button class="text-agri-sky hover:text-agri-blue font-medium focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="tools.learn_more">Learn More →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Weather Intelligence Platform</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Advanced weather intelligence and climate science tools for modern agricultural success and sustainability.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-blue rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-blue rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-blue rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-blue rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Weather Tools -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.weather_tools">Weather Tools</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#dashboard" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.live_weather">Live Weather</a></li>
+                        <li><a href="#forecast" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.forecasting">Forecasting</a></li>
+                        <li><a href="#alerts" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.weather_alerts">Weather Alerts</a></li>
+                        <li><a href="#satellite" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.satellite">Satellite Imagery</a></li>
+                        <li><a href="#climate" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.climate_data">Climate Data</a></li>
+                    </ul>
+                </div>
+
+                <!-- Learning -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.learning">Learning</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#courses" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.weather_courses">Weather Courses</a></li>
+                        <li><a href="#tutorials" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.tutorials">Tutorials</a></li>
+                        <li><a href="#webinars" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.webinars">Webinars</a></li>
+                        <li><a href="#certification" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.certification">Certification</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.expert_support">Expert Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.cookies">Cookies</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-sky transition-colors focus:outline-none focus:ring-2 focus:ring-agri-sky rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for Weather & Climate Intelligence page
+        const translations = {
+            en: {
+                'nav.tagline': 'Weather & Climate Intelligence',
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather & Climate Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.forum': 'Discussion Forum',
+                'nav.knowledge_center': 'Knowledge Center',
+                'nav.expert_network': 'Expert Network',
+                'nav.events': 'Events & Training',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'hero.weather': 'Weather',
+                'hero.climate': 'Climate',
+                'hero.intelligence': 'Intelligence',
+                'hero.description': 'Master the science of weather patterns and climate change with AI-powered forecasting, risk assessment tools, and expert knowledge to make informed farming decisions.',
+                'cta.start_forecasting': 'Start Forecasting',
+                'cta.learn_climate': 'Learn Climate Science',
+                'stats.accuracy': '% Accuracy',
+                'stats.locations': 'Global Locations',
+                'stats.forecasts': 'Daily Forecasts',
+                'widget.current_weather': 'Current Weather',
+                'widget.auto_detect': 'Auto-detect',
+                'widget.getting_location': 'Getting location...',
+                'widget.humidity': 'Humidity',
+                'widget.wind_speed': 'Wind Speed',
+                'widget.pressure': 'Pressure',
+                'widget.visibility': 'Visibility',
+                'widget.rainfall_forecast': 'Rainfall Forecast',
+                'widget.uv_index': 'UV Index',
+                'scroll.explore': 'Explore weather intelligence',
+                'dashboard.title': 'Advanced Weather Dashboard',
+                'dashboard.description': 'Access comprehensive weather data, satellite imagery, and predictive analytics to make informed agricultural decisions.',
+                'dashboard.seven_day': '7-Day Forecast',
+                'dashboard.view_hourly': 'View Hourly',
+                'dashboard.weather_alerts': 'Weather Alerts',
+                'dashboard.weather_map': 'Interactive Weather Map',
+                'dashboard.map_placeholder': 'Interactive satellite weather map',
+                'dashboard.view_map': 'View Full Map',
+                'dashboard.climate_patterns': 'Climate Patterns',
+                'dashboard.el_nino': 'El Niño Status',
+                'dashboard.neutral': 'Neutral',
+                'dashboard.monsoon': 'Monsoon Prediction',
+                'dashboard.normal': 'Normal',
+                'dashboard.temperature_trend': 'Temperature Trend',
+                'dashboard.rising': 'Rising',
+                'learning.title': 'Weather Intelligence Learning',
+                'learning.description': 'Master meteorology and climate science with our comprehensive courses, expert tutorials, and interactive learning tools.',
+                'learning.beginner': 'Beginner',
+                'learning.intermediate': 'Intermediate',
+                'learning.advanced': 'Advanced',
+                'learning.course1_title': 'Weather Fundamentals for Farmers',
+                'learning.course1_description': 'Learn the basics of weather patterns, reading forecasts, and understanding atmospheric conditions that affect your crops.',
+                'learning.course1_duration': '4 hours',
+                'learning.course2_title': 'Climate Change Adaptation Strategies',
+                'learning.course2_description': 'Advanced strategies for adapting farming practices to changing climate conditions and extreme weather events.',
+                'learning.course2_duration': '6 hours',
+                'learning.course3_title': 'Advanced Agricultural Meteorology',
+                'learning.course3_description': 'Professional-level training in weather prediction, satellite data interpretation, and micro-climate analysis.',
+                'learning.course3_duration': '12 hours',
+                'learning.duration': 'Duration:',
+                'learning.lessons': 'Lessons:',
+                'learning.students': 'Students:',
+                'learning.start_course': 'Start Course',
+                'learning.interactive_tools': 'Interactive Learning Tools',
+                'learning.weather_simulator': 'Weather Simulator',
+                'learning.simulator_description': 'Practice weather prediction with our interactive simulator',
+                'learning.climate_analyzer': 'Climate Analyzer',
+                'learning.analyzer_description': 'Analyze historical climate data and trends',
+                'learning.forecast_trainer': 'Forecast Trainer',
+                'learning.trainer_description': 'Train your forecasting skills with real scenarios',
+                'tools.title': 'Professional Weather Tools',
+                'tools.description': 'Access professional-grade weather tools designed specifically for agricultural applications and farming success.',
+                'tools.weather_station': 'Digital Weather Station',
+                'tools.station_description': 'Real-time monitoring of temperature, humidity, wind, and rainfall at your farm location',
+                'tools.satellite_imagery': 'Satellite Weather Imagery',
+                'tools.imagery_description': 'High-resolution satellite images for cloud patterns, storm tracking, and precipitation analysis',
+                'tools.forecast_models': 'AI Forecast Models',
+                'tools.models_description': 'Advanced AI-powered weather prediction models with agricultural focus and local accuracy',
+                'tools.climate_analytics': 'Climate Analytics',
+                'tools.analytics_description': 'Long-term climate trend analysis and adaptation planning for sustainable farming',
+                'tools.alert_system': 'Smart Alert System',
+                'tools.alert_description': 'Intelligent weather alerts and warnings tailored to your crops and farming operations',
+                'tools.mobile_app': 'Weather Mobile App',
+                'tools.app_description': 'Access all weather tools on-the-go with our comprehensive mobile application',
+                'tools.learn_more': 'Learn More',
+                'footer.tagline': 'Weather Intelligence Platform',
+                'footer.description': 'Advanced weather intelligence and climate science tools for modern agricultural success and sustainability.',
+                'footer.weather_tools': 'Weather Tools',
+                'footer.live_weather': 'Live Weather',
+                'footer.forecasting': 'Forecasting',
+                'footer.weather_alerts': 'Weather Alerts',
+                'footer.satellite': 'Satellite Imagery',
+                'footer.climate_data': 'Climate Data',
+                'footer.learning': 'Learning',
+                'footer.weather_courses': 'Weather Courses',
+                'footer.tutorials': 'Tutorials',
+                'footer.webinars': 'Webinars',
+                'footer.certification': 'Certification',
+                'footer.expert_support': 'Expert Support',
+                'footer.copyright': '© 2024 AgriClimate Connect. All rights reserved.',
+                'footer.privacy': 'Privacy Policy',
+                'footer.terms': 'Terms of Service',
+                'footer.cookies': 'Cookies',
+                'footer.accessibility': 'Accessibility'
+            },
+            es: {
+                'nav.tagline': 'Inteligencia Meteorológica y Climática',
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.weather_climate': 'Inteligencia Meteorológica y Climática',
+                'nav.crop_advisory': 'Asesoramiento de Cultivos',
+                'nav.livestock': 'Gestión de Ganado',
+                'nav.market_hub': 'Inteligencia de Mercado',
+                'nav.ai_tools': 'Herramientas IA',
+                'nav.community': 'Comunidad',
+                'nav.about': 'Acerca de',
+                'nav.contact': 'Contacto',
+                'hero.weather': 'Meteorología',
+                'hero.climate': 'Clima',
+                'hero.intelligence': 'Inteligencia',
+                'hero.description': 'Domina la ciencia de los patrones climáticos y el cambio climático con pronósticos impulsados por IA, herramientas de evaluación de riesgos y conocimientos expertos.',
+                'cta.start_forecasting': 'Comenzar Pronósticos',
+                'cta.learn_climate': 'Aprender Ciencia Climática',
+                'stats.accuracy': '% Precisión',
+                'stats.locations': 'Ubicaciones Globales',
+                'stats.forecasts': 'Pronósticos Diarios',
+                'widget.current_weather': 'Clima Actual',
+                'widget.auto_detect': 'Auto-detectar',
+                'widget.getting_location': 'Obteniendo ubicación...',
+                'widget.humidity': 'Humedad',
+                'widget.wind_speed': 'Velocidad del Viento',
+                'widget.pressure': 'Presión',
+                'widget.visibility': 'Visibilidad',
+                'widget.rainfall_forecast': 'Pronóstico de Lluvia',
+                'widget.uv_index': 'Índice UV',
+                'scroll.explore': 'Explorar inteligencia meteorológica',
+                'dashboard.title': 'Panel Meteorológico Avanzado',
+                'dashboard.description': 'Accede a datos meteorológicos completos, imágenes satelitales y análisis predictivos.',
+                'dashboard.seven_day': 'Pronóstico 7 Días',
+                'dashboard.view_hourly': 'Ver por Horas',
+                'dashboard.weather_alerts': 'Alertas Meteorológicas',
+                'footer.copyright': '© 2024 AgriClimate Connect. Todos los derechos reservados.'
+            },
+            fr: {
+                'nav.tagline': 'Intelligence Météorologique et Climatique',
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.weather_climate': 'Intelligence Météorologique et Climatique',
+                'nav.crop_advisory': 'Conseil des Cultures',
+                'nav.livestock': 'Gestion du Bétail',
+                'nav.market_hub': 'Intelligence du Marché',
+                'nav.ai_tools': 'Outils IA',
+                'nav.community': 'Communauté',
+                'nav.about': 'À Propos',
+                'nav.contact': 'Contact',
+                'hero.weather': 'Météo',
+                'hero.climate': 'Climat',
+                'hero.intelligence': 'Intelligence',
+                'hero.description': 'Maîtrisez la science des modèles météorologiques et du changement climatique avec des prévisions alimentées par IA.',
+                'cta.start_forecasting': 'Commencer les Prévisions',
+                'cta.learn_climate': 'Apprendre la Science Climatique',
+                'stats.accuracy': '% Précision',
+                'stats.locations': 'Emplacements Mondiaux',
+                'stats.forecasts': 'Prévisions Quotidiennes',
+                'footer.copyright': '© 2024 AgriClimate Connect. Tous droits réservés.'
+            },
+            sw: {
+                'nav.tagline': 'Akili ya Hali ya Hewa na Tabianchi',
+                'nav.home': 'Nyumbani',
+                'nav.knowledge_tools': 'Zana za Maarifa',
+                'nav.weather_climate': 'Akili ya Hali ya Hewa na Tabianchi',
+                'nav.crop_advisory': 'Ushauri wa Mazao',
+                'nav.livestock': 'Uongozi wa Mifugo',
+                'nav.market_hub': 'Akili ya Soko',
+                'nav.ai_tools': 'Zana za AI',
+                'nav.community': 'Jamii',
+                'nav.about': 'Kutuhusu',
+                'nav.contact': 'Wasiliana',
+                'hero.weather': 'Hali ya Hewa',
+                'hero.climate': 'Tabianchi',
+                'hero.intelligence': 'Akili',
+                'hero.description': 'Jifunze sayansi ya mifumo ya hali ya hewa na mabadiliko ya tabianchi na utabiri wa AI.',
+                'cta.start_forecasting': 'Anza Utabiri',
+                'cta.learn_climate': 'Jifunze Sayansi ya Tabianchi',
+                'stats.accuracy': '% Usahihi',
+                'stats.locations': 'Maeneo ya Dunia',
+                'stats.forecasts': 'Utabiri wa Kila Siku',
+                'footer.copyright': '© 2024 AgriClimate Connect. Haki zote zimehifadhiwa.'
+            },
+            hi: {
+                'nav.tagline': 'मौसम और जलवायु बुद्धिमत्ता',
+                'nav.home': 'मुख्य पृष्ठ',
+                'nav.knowledge_tools': 'ज्ञान उपकरण',
+                'nav.weather_climate': 'मौसम और जलवायु बुद्धिमत्ता',
+                'nav.crop_advisory': 'फसल सलाह',
+                'nav.livestock': 'पशुधन प्रबंधन',
+                'nav.market_hub': 'बाजार बुद्धिमत्ता',
+                'nav.ai_tools': 'AI उपकरण',
+                'nav.community': 'समुदाय',
+                'nav.about': 'हमारे बारे में',
+                'nav.contact': 'संपर्क',
+                'hero.weather': 'मौसम',
+                'hero.climate': 'जलवायु',
+                'hero.intelligence': 'बुद्धिमत्ता',
+                'hero.description': 'AI-संचालित पूर्वानुमान के साथ मौसम पैटर्न और जलवायु परिवर्तन के विज्ञान में महारत हासिल करें।',
+                'cta.start_forecasting': 'पूर्वानुमान शुरू करें',
+                'cta.learn_climate': 'जलवायु विज्ञान सीखें',
+                'stats.accuracy': '% सटीकता',
+                'stats.locations': 'वैश्विक स्थान',
+                'stats.forecasts': 'दैनिक पूर्वानुमान',
+                'footer.copyright': '© 2024 AgriClimate Connect. सभी अधिकार सुरक्षित।'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+        });
+
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Mobile dropdown functionality
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(`mobile-${id}`);
+            const button = dropdown.previousElementSibling;
+            const icon = button.querySelector('i');
+            
+            dropdown.classList.toggle('hidden');
+            icon.style.transform = dropdown.classList.contains('hidden') ? '' : 'rotate(180deg)';
+            
+            button.setAttribute('aria-expanded', !dropdown.classList.contains('hidden'));
+        }
+
+        // Text size adjustment
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    element.textContent = Math.floor(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target;
+                }
+            };
+            
+            updateCounter();
+        }
+
+        // Weather stats animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(document.getElementById('accuracy-counter'), 94);
+                    animateCounter(document.getElementById('locations-counter'), 50000);
+                    animateCounter(document.getElementById('forecasts-counter'), 2000000);
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        observer.observe(document.getElementById('accuracy-counter'));
+
+        // Weather API functionality (Demo data)
+        async function getWeatherData(lat, lon) {
+            try {
+                // Demo weather data
+                const demoData = {
+                    name: 'Agricultural Region',
+                    main: { 
+                        temp: 26 + Math.random() * 8, 
+                        humidity: 55 + Math.random() * 30,
+                        pressure: 1013 + Math.random() * 20
+                    },
+                    weather: [{ 
+                        description: ['clear sky', 'few clouds', 'scattered clouds', 'broken clouds'][Math.floor(Math.random() * 4)], 
+                        icon: ['01d', '02d', '03d', '04d'][Math.floor(Math.random() * 4)]
+                    }],
+                    wind: { speed: 2 + Math.random() * 6 },
+                    visibility: 8 + Math.random() * 2
+                };
+                
+                updateWeatherWidget(demoData);
+                getForecastData();
+                getWeatherAlerts();
+            } catch (error) {
+                console.log('Weather API error:', error);
+                showWeatherError();
+            }
+        }
+
+        function updateWeatherWidget(data) {
+            document.getElementById('temperature').textContent = Math.round(data.main.temp) + '°C';
+            document.getElementById('location').textContent = data.name;
+            document.getElementById('weather-description').textContent = data.weather[0].description;
+            document.getElementById('humidity').textContent = data.main.humidity + '%';
+            document.getElementById('wind-speed').textContent = data.wind.speed.toFixed(1) + ' m/s';
+            document.getElementById('pressure').textContent = Math.round(data.main.pressure) + ' hPa';
+            document.getElementById('visibility').textContent = data.visibility.toFixed(1) + ' km';
+            
+            // Update additional widgets
+            document.getElementById('rainfall-chance').textContent = Math.floor(Math.random() * 40) + '%';
+            document.getElementById('uv-index').textContent = Math.floor(Math.random() * 8) + 1;
+            
+            const iconMap = {
+                '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️',
+                '03d': '☁️', '03n': '☁️', '04d': '☁️', '04n': '☁️',
+                '09d': '🌦️', '09n': '🌦️', '10d': '🌧️', '10n': '🌧️',
+                '11d': '⛈️', '11n': '⛈️', '13d': '❄️', '13n': '❄️',
+                '50d': '🌫️', '50n': '🌫️'
+            };
+            
+            document.getElementById('weather-icon').textContent = iconMap[data.weather[0].icon] || '🌤️';
+        }
+
+        function getForecastData() {
+            const forecastContainer = document.getElementById('seven-day-forecast');
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const icons = ['☀️', '⛅', '☁️', '🌦️', '🌧️', '⛈️', '❄️'];
+            
+            const forecastHTML = Array.from({length: 7}, (_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() + i);
+                const dayName = days[date.getDay()];
+                const temp = Math.round(20 + Math.random() * 15);
+                const icon = icons[Math.floor(Math.random() * icons.length)];
+                
+                return `
+                    <div class="text-center p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors cursor-pointer">
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">${dayName}</div>
+                        <div class="text-3xl mb-2 weather-icon-animation">${icon}</div>
+                        <div class="text-lg font-semibold text-gray-900 dark:text-white">${temp}°</div>
+                        <div class="text-xs text-gray-500">${Math.round(temp-5)}°</div>
+                    </div>
+                `;
+            }).join('');
+            
+            forecastContainer.innerHTML = forecastHTML;
+        }
+
+        function getWeatherAlerts() {
+            const alertsContainer = document.getElementById('weather-alerts');
+            const alerts = [
+                {
+                    type: 'warning',
+                    icon: 'fas fa-thermometer-three-quarters',
+                    title: 'High Temperature Alert',
+                    description: 'Temperatures may exceed 35°C tomorrow'
+                },
+                {
+                    type: 'info',
+                    icon: 'fas fa-cloud-rain',
+                    title: 'Rainfall Expected',
+                    description: 'Light rain expected in the next 48 hours'
+                },
+                {
+                    type: 'success',
+                    icon: 'fas fa-seedling',
+                    title: 'Optimal Growing Conditions',
+                    description: 'Perfect conditions for crop growth this week'
+                }
+            ];
+            
+            const alertsHTML = alerts.map(alert => `
+                <div class="alert-card alert-${alert.type} p-3 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="${alert.icon} mr-3 text-lg"></i>
+                        <div>
+                            <div class="font-medium text-gray-900 dark:text-white">${alert.title}</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-300">${alert.description}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            alertsContainer.innerHTML = alertsHTML;
+        }
+
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 300000
+                };
+                
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        getWeatherData(position.coords.latitude, position.coords.longitude);
+                    },
+                    error => {
+                        console.log('Geolocation error:', error);
+                        getWeatherData(40.7128, -74.0060);
+                    },
+                    options
+                );
+            } else {
+                getWeatherData(40.7128, -74.0060);
+            }
+        }
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // Location button functionality
+        document.getElementById('location-btn').addEventListener('click', getCurrentLocation);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced feature card interactions
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            translatePage(currentLanguage);
+            getCurrentLocation();
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('Weather & Climate Intelligence page loaded successfully!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                mobileMenu.classList.add('hidden');
+            }
+            
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Performance optimization
+        const lazyElements = document.querySelectorAll('[data-aos]');
+        const lazyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        });
+
+        lazyElements.forEach(el => lazyObserver.observe(el));
+    </script>
+</body>
+</html>

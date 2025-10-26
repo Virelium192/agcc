@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Hub - AgriClimate Connect | Connect, Learn, Grow Together</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B',
+                        'community-purple': '#7C3AED',
+                        'community-pink': '#EC4899'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-in': 'slideIn 0.8s ease-out',
+                        'community-pulse': 'communityPulse 3s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes communityPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #4CAF50 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #7C3AED 70%, #EC4899 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .community-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark .community-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .community-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark .community-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #4CAF50);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #7C3AED, #EC4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .online-indicator {
+            position: relative;
+        }
+        
+        .online-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background: #10B981;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+        
+        .dark .online-indicator::after {
+            border-color: #1E293B;
+        }
+        
+        .discussion-thread {
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .discussion-thread:hover {
+            border-left-color: #7C3AED;
+            background-color: rgba(124, 58, 237, 0.05);
+        }
+        
+        .dark .discussion-thread:hover {
+            background-color: rgba(124, 58, 237, 0.1);
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        .community-badge {
+            background: linear-gradient(45deg, #7C3AED, #EC4899);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Accessibility Enhancements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .community-card {
+                background: rgba(255, 255, 255, 1);
+                border: 2px solid #000;
+            }
+            
+            .dark .community-card {
+                background: rgba(0, 0, 0, 1);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #7C3AED;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5B21B6;
+        }
+        
+        .live-indicator {
+            animation: pulse 2s infinite;
+        }
+        
+        .trending-topic {
+            background: linear-gradient(45deg, rgba(124, 58, 237, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        
+        .dark .trending-topic {
+            background: linear-gradient(45deg, rgba(124, 58, 237, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-purple-50 via-pink-50 to-green-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-community-purple text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">
+                            <a href="index.html" class="hover:text-agri-green transition-colors">AgriClimate Connect</a>
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Community Hub</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-chart-line mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community (Current Page) -->
+                    <a href="#community" class="nav-link text-community-purple dark:text-community-pink font-semibold hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="nav.community">Community</a>
+                    
+                    <!-- About Us -->
+                    <a href="index.html#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us -->
+                    <a href="index.html#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-community-purple rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-community-purple dark:hover:text-community-pink transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-community-purple dark:hover:text-community-pink transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- User Profile & CTA -->
+                    <div class="hidden md:flex items-center space-x-3">
+                        <div class="user-avatar online-indicator" title="John Farmer">JF</div>
+                        <button class="bg-gradient-to-r from-community-purple to-community-pink text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-community-purple glow-on-hover">
+                            <span data-translate="cta.join_discussion">Join Discussion</span>
+                        </button>
+                    </div>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    <a href="#community" class="block py-2 text-community-purple dark:text-community-pink font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" role="menuitem" data-translate="nav.community">Community</a>
+                    <a href="index.html#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="index.html#contact" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div class="user-avatar online-indicator" title="John Farmer">JF</div>
+                        <button class="bg-gradient-to-r from-community-purple to-community-pink text-white py-2 px-4 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-community-purple">
+                            <span data-translate="cta.join_discussion">Join Discussion</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="community-hero" class="min-h-screen pt-20 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+            
+            <!-- Floating Community Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white/20 dark:bg-community-purple/30 rounded-full animate-float flex items-center justify-center" aria-hidden="true">
+                <i class="fas fa-users text-white dark:text-community-purple text-2xl"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-community-pink/20 dark:bg-community-pink/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-heart text-community-pink text-xl"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-green/20 dark:bg-agri-green/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-handshake text-agri-green text-2xl"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <nav class="mb-6" aria-label="Breadcrumb">
+                            <ol class="flex items-center space-x-2 text-sm text-white/80">
+                                <li><a href="index.html" class="hover:text-agri-gold transition-colors" data-translate="breadcrumb.home">Home</a></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li class="text-agri-gold font-medium" data-translate="breadcrumb.community">Community Hub</li>
+                            </ol>
+                        </nav>
+                        
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.connect">Connect</span><br>
+                            <span class="text-agri-gold" data-translate="hero.learn">Learn</span><br>
+                            <span class="text-community-pink" data-translate="hero.grow">Grow</span> <span data-translate="hero.together">Together</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Join thousands of farmers worldwide in our vibrant community. Share experiences, get expert advice, and build lasting connections that drive agricultural success.</span>
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 font-semibold px-8 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-gold">
+                                <i class="fas fa-users mr-2" aria-hidden="true"></i><span data-translate="cta.join_community">Join Community</span>
+                            </button>
+                            <button class="border-2 border-white text-white hover:bg-white hover:text-community-purple font-semibold px-8 py-4 rounded-full text-lg transition-all focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-compass mr-2" aria-hidden="true"></i><span data-translate="cta.explore_forums">Explore Forums</span>
+                            </button>
+                        </div>
+
+                        <!-- Community Statistics -->
+                        <div class="grid grid-cols-3 gap-6 mt-12">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="150000">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.active_farmers">Active Farmers</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="2500">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.daily_discussions">Daily Discussions</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="98">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.success_rate">% Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Live Community Feed -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- Live Community Activity -->
+                        <div class="community-card rounded-2xl p-6 text-gray-900 dark:text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold flex items-center">
+                                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse mr-2 live-indicator"></div>
+                                    <span data-translate="widget.live_activity">Live Community Activity</span>
+                                </h3>
+                                <span class="text-sm text-gray-500 dark:text-gray-400" data-translate="widget.online_now">1,247 online now</span>
+                            </div>
+                            
+                            <div class="space-y-3" id="live-feed">
+                                <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div class="user-avatar">MR</div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium">Maria Rodriguez <span class="community-badge" data-translate="badge.expert">Expert</span></div>
+                                        <div class="text-xs text-gray-600 dark:text-gray-400" data-translate="activity.shared_tip">shared a corn harvesting tip</div>
+                                    </div>
+                                    <div class="text-xs text-gray-500">2m</div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div class="user-avatar">DK</div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium">David Kim <span class="text-xs text-green-600" data-translate="badge.online">Online</span></div>
+                                        <div class="text-xs text-gray-600 dark:text-gray-400" data-translate="activity.asked_question">asked about organic fertilizers</div>
+                                    </div>
+                                    <div class="text-xs text-gray-500">5m</div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div class="user-avatar">AJ</div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium">Ahmed Juma <span class="text-xs text-community-purple" data-translate="badge.moderator">Moderator</span></div>
+                                        <div class="text-xs text-gray-600 dark:text-gray-400" data-translate="activity.started_discussion">started a discussion on drought management</div>
+                                    </div>
+                                    <div class="text-xs text-gray-500">8m</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Join Categories -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-gold" tabindex="0" role="button">
+                                <i class="fas fa-seedling text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.crop_discussions">Crop Discussions</div>
+                                <div class="text-xs opacity-75">2,451 members</div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-gold" tabindex="0" role="button">
+                                <i class="fas fa-users text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.expert_advice">Expert Advice</div>
+                                <div class="text-xs opacity-75">1,847 members</div>
+                            </div>
+                        </div>
+
+                        <!-- Community Search -->
+                        <div class="glass-effect rounded-full p-2">
+                            <div class="flex items-center">
+                                <input type="text" placeholder="Search community discussions..." 
+                                       class="flex-1 bg-transparent text-white placeholder-gray-300 dark:placeholder-gray-400 px-4 py-2 focus:outline-none text-base"
+                                       id="community-search"
+                                       data-translate-placeholder="widget.search_placeholder">
+                                <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 p-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-agri-gold" aria-label="Search community">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.explore">Explore community features</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Categories Section -->
+        <section id="community-categories" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="categories.title">Explore Community Categories</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
+                        <span data-translate="categories.description">Join specialized groups of farmers sharing knowledge, experiences, and solutions across different agricultural sectors and interests.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Crop Farming Community -->
+                    <div class="community-card rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 bg-gradient-to-br from-agri-green to-agri-light rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                                <i class="fas fa-seedling text-3xl text-white" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="crop_community.title">Crop Farming Hub</h3>
+                            <div class="flex items-center justify-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
+                                <span><i class="fas fa-users mr-1" aria-hidden="true"></i>12,450 <span data-translate="members">members</span></span>
+                                <span><i class="fas fa-comments mr-1" aria-hidden="true"></i>2,341 <span data-translate="discussions">discussions</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="crop_community.trending1">🌽 Corn Yield Optimization</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">34 active discussions</div>
+                            </div>
+                            
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="crop_community.trending2">🌾 Wheat Disease Prevention</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">28 active discussions</div>
+                            </div>
+                            
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="crop_community.trending3">🌱 Organic Certification Tips</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">19 active discussions</div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-agri-green hover:bg-agri-dark text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                            <span data-translate="crop_community.join">Join Crop Community</span>
+                        </button>
+                    </div>
+
+                    <!-- Livestock Community -->
+                    <div class="community-card rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 bg-gradient-to-br from-agri-earth to-orange-600 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                                <i class="fas fa-cow text-3xl text-white" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="livestock_community.title">Livestock Network</h3>
+                            <div class="flex items-center justify-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
+                                <span><i class="fas fa-users mr-1" aria-hidden="true"></i>8,750 <span data-translate="members">members</span></span>
+                                <span><i class="fas fa-comments mr-1" aria-hidden="true"></i>1,892 <span data-translate="discussions">discussions</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="livestock_community.trending1">🐄 Dairy Cow Nutrition</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">42 active discussions</div>
+                            </div>
+                            
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="livestock_community.trending2">🐔 Poultry Health Management</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">31 active discussions</div>
+                            </div>
+                            
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="livestock_community.trending3">🐐 Goat Breeding Programs</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">23 active discussions</div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-agri-earth hover:bg-orange-700 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-earth">
+                            <span data-translate="livestock_community.join">Join Livestock Network</span>
+                        </button>
+                    </div>
+
+                    <!-- Sustainable Farming Community -->
+                    <div class="community-card rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-teal-600 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                                <i class="fas fa-leaf text-3xl text-white" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="sustainable_community.title">Sustainable Farming</h3>
+                            <div class="flex items-center justify-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
+                                <span><i class="fas fa-users mr-1" aria-hidden="true"></i>6,230 <span data-translate="members">members</span></span>
+                                <span><i class="fas fa-comments mr-1" aria-hidden="true"></i>1,456 <span data-translate="discussions">discussions</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="sustainable_community.trending1">♻️ Renewable Energy Solutions</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">25 active discussions</div>
+                            </div>
+                            
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="sustainable_community.trending2">🌿 Permaculture Design</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">18 active discussions</div>
+                            </div>
+                            
+                            <div class="trending-topic p-3 rounded-lg">
+                                <div class="font-medium text-gray-900 dark:text-white mb-1" data-translate="sustainable_community.trending3">💧 Water Conservation Methods</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">21 active discussions</div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-600">
+                            <span data-translate="sustainable_community.join">Join Sustainable Community</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discussion Forum Section -->
+        <section id="discussion-forum" class="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="forum.title">Latest Community Discussions</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" data-translate="forum.description">
+                        Join ongoing conversations, ask questions, and share your expertise with fellow farmers from around the world.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Main Discussion Feed -->
+                    <div class="lg:col-span-2 space-y-6" data-aos="fade-right">
+                        <!-- Discussion Thread 1 -->
+                        <div class="discussion-thread community-card rounded-2xl p-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="user-avatar">TC</div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center space-x-2">
+                                            <h3 class="font-semibold text-gray-900 dark:text-white">Thomas Chen</h3>
+                                            <span class="community-badge" data-translate="badge.verified">Verified</span>
+                                            <span class="text-sm text-gray-500">2 hours ago</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3 text-sm text-gray-500">
+                                            <span><i class="fas fa-heart mr-1" aria-hidden="true"></i>24</span>
+                                            <span><i class="fas fa-reply mr-1" aria-hidden="true"></i>12</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-2" data-translate="discussion1.title">Best practices for tomato disease prevention?</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" data-translate="discussion1.content">I've been struggling with late blight in my tomato crops for the past two seasons. What preventive measures have worked best for you? Looking for both organic and conventional solutions.</p>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 px-3 py-1 rounded-full text-sm" data-translate="tag.tomatoes">Tomatoes</span>
+                                        <span class="bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 px-3 py-1 rounded-full text-sm" data-translate="tag.disease_prevention">Disease Prevention</span>
+                                        <button class="text-community-purple hover:text-community-pink transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="reply">Reply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discussion Thread 2 -->
+                        <div class="discussion-thread community-card rounded-2xl p-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="user-avatar online-indicator">MF</div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center space-x-2">
+                                            <h3 class="font-semibold text-gray-900 dark:text-white">Maria Fernandez</h3>
+                                            <span class="community-badge" data-translate="badge.expert">Expert</span>
+                                            <span class="text-sm text-gray-500">4 hours ago</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3 text-sm text-gray-500">
+                                            <span><i class="fas fa-heart mr-1" aria-hidden="true"></i>67</span>
+                                            <span><i class="fas fa-reply mr-1" aria-hidden="true"></i>23</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-2" data-translate="discussion2.title">Soil pH management for corn production</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" data-translate="discussion2.content">After soil testing, I found my pH is 5.8. Should I apply lime before planting corn this season? What's the optimal pH range for maximum yield?</p>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300 px-3 py-1 rounded-full text-sm" data-translate="tag.corn">Corn</span>
+                                        <span class="bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full text-sm" data-translate="tag.soil_management">Soil Management</span>
+                                        <button class="text-community-purple hover:text-community-pink transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="reply">Reply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discussion Thread 3 -->
+                        <div class="discussion-thread community-card rounded-2xl p-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="user-avatar">AK</div>
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center space-x-2">
+                                            <h3 class="font-semibold text-gray-900 dark:text-white">Ahmed Khalil</h3>
+                                            <span class="text-xs text-green-600" data-translate="badge.online">Online</span>
+                                            <span class="text-sm text-gray-500">6 hours ago</span>
+                                        </div>
+                                        <div class="flex items-center space-x-3 text-sm text-gray-500">
+                                            <span><i class="fas fa-heart mr-1" aria-hidden="true"></i>15</span>
+                                            <span><i class="fas fa-reply mr-1" aria-hidden="true"></i>8</span>
+                                        </div>
+                                    </div>
+                                    <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-2" data-translate="discussion3.title">Drought-resistant wheat varieties recommendations?</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-3" data-translate="discussion3.content">With changing climate patterns in our region, I'm looking for wheat varieties that can handle water stress. Any recommendations for varieties that maintain good yield under drought conditions?</p>
+                                    <div class="flex items-center space-x-4">
+                                        <span class="bg-amber-100 dark:bg-amber-900/20 text-amber-800 dark:text-amber-300 px-3 py-1 rounded-full text-sm" data-translate="tag.wheat">Wheat</span>
+                                        <span class="bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300 px-3 py-1 rounded-full text-sm" data-translate="tag.drought_resistant">Drought Resistant</span>
+                                        <button class="text-community-purple hover:text-community-pink transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="reply">Reply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Load More Button -->
+                        <div class="text-center">
+                            <button class="bg-gradient-to-r from-community-purple to-community-pink text-white px-8 py-3 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-community-purple">
+                                <span data-translate="forum.load_more">Load More Discussions</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-8" data-aos="fade-left">
+                        <!-- Trending Topics -->
+                        <div class="community-card rounded-2xl p-6">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <i class="fas fa-fire mr-2 text-red-500" aria-hidden="true"></i><span data-translate="sidebar.trending">Trending Topics</span>
+                            </h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-700 dark:text-gray-300" data-translate="trending.climate_adaptation"># Climate Adaptation</span>
+                                    <span class="text-gray-500">1.2k</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-700 dark:text-gray-300" data-translate="trending.organic_farming"># Organic Farming</span>
+                                    <span class="text-gray-500">892</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-700 dark:text-gray-300" data-translate="trending.precision_agriculture"># Precision Agriculture</span>
+                                    <span class="text-gray-500">756</span>
+                                </div>
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-700 dark:text-gray-300" data-translate="trending.soil_health"># Soil Health</span>
+                                    <span class="text-gray-500">643</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Expert Contributors -->
+                        <div class="community-card rounded-2xl p-6">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <i class="fas fa-star mr-2 text-yellow-500" aria-hidden="true"></i><span data-translate="sidebar.top_contributors">Top Contributors</span>
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="user-avatar">DR</div>
+                                    <div class="flex-1">
+                                        <div class="font-medium text-gray-900 dark:text-white">Dr. Robert Silva</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Agricultural Scientist</div>
+                                    </div>
+                                    <div class="text-sm text-community-purple">4.9⭐</div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <div class="user-avatar online-indicator">LM</div>
+                                    <div class="flex-1">
+                                        <div class="font-medium text-gray-900 dark:text-white">Lisa Martinez</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Sustainable Farming Expert</div>
+                                    </div>
+                                    <div class="text-sm text-community-purple">4.8⭐</div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <div class="user-avatar">JW</div>
+                                    <div class="flex-1">
+                                        <div class="font-medium text-gray-900 dark:text-white">James Wilson</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400">Crop Management Specialist</div>
+                                    </div>
+                                    <div class="text-sm text-community-purple">4.7⭐</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Community Guidelines -->
+                        <div class="community-card rounded-2xl p-6">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <i class="fas fa-shield-alt mr-2 text-green-500" aria-hidden="true"></i><span data-translate="sidebar.guidelines">Community Guidelines</span>
+                            </h3>
+                            <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                                <div class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-0.5" aria-hidden="true"></i>
+                                    <span data-translate="guidelines.respectful">Be respectful and supportive</span>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-0.5" aria-hidden="true"></i>
+                                    <span data-translate="guidelines.accurate">Share accurate information</span>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-0.5" aria-hidden="true"></i>
+                                    <span data-translate="guidelines.relevant">Keep discussions relevant</span>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <i class="fas fa-check text-green-500 mt-0.5" aria-hidden="true"></i>
+                                    <span data-translate="guidelines.help">Help fellow farmers</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Section -->
+        <section id="success-stories" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="success.title">Community Success Stories</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" data-translate="success.description">
+                        Inspiring stories from our community members who have transformed their farming operations through shared knowledge and collaboration.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Success Story 1 -->
+                    <div class="community-card rounded-2xl p-8 text-center shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                        <div class="user-avatar mx-auto mb-4" style="width: 80px; height: 80px; font-size: 24px;">SM</div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Sarah Mitchell</h3>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-4" data-translate="success.story1.location">Kenya • Maize Farmer</div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="success.story1.quote">
+                            "Thanks to the community's advice on drought-resistant varieties and water management, I increased my yield by 40% despite the dry season. The support here is incredible!"
+                        </p>
+                        <div class="flex items-center justify-center space-x-4 text-sm">
+                            <span class="text-green-600"><i class="fas fa-arrow-up mr-1" aria-hidden="true"></i>40% <span data-translate="success.yield_increase">yield increase</span></span>
+                            <span class="text-blue-600"><i class="fas fa-droplet mr-1" aria-hidden="true"></i>30% <span data-translate="success.water_saved">water saved</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 2 -->
+                    <div class="community-card rounded-2xl p-8 text-center shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <div class="user-avatar mx-auto mb-4" style="width: 80px; height: 80px; font-size: 24px;">RG</div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Roberto Garcia</h3>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-4" data-translate="success.story2.location">Mexico • Organic Vegetable Farmer</div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="success.story2.quote">
+                            "The organic farming community helped me transition from conventional farming. Now I'm certified organic and earning 60% more per hectare. Best decision ever!"
+                        </p>
+                        <div class="flex items-center justify-center space-x-4 text-sm">
+                            <span class="text-green-600"><i class="fas fa-dollar-sign mr-1" aria-hidden="true"></i>60% <span data-translate="success.income_increase">income increase</span></span>
+                            <span class="text-green-600"><i class="fas fa-leaf mr-1" aria-hidden="true"></i><span data-translate="success.organic_certified">Organic certified</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 3 -->
+                    <div class="community-card rounded-2xl p-8 text-center shadow-xl" data-aos="fade-up" data-aos-delay="300">
+                        <div class="user-avatar mx-auto mb-4" style="width: 80px; height: 80px; font-size: 24px;">PK</div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Priya Kapoor</h3>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-4" data-translate="success.story3.location">India • Dairy Farmer</div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="success.story3.quote">
+                            "The livestock experts in the community guided me through proper nutrition and health management. My milk production doubled and cow health improved dramatically!"
+                        </p>
+                        <div class="flex items-center justify-center space-x-4 text-sm">
+                            <span class="text-blue-600"><i class="fas fa-glass-milk mr-1" aria-hidden="true"></i>100% <span data-translate="success.milk_increase">milk increase</span></span>
+                            <span class="text-green-600"><i class="fas fa-heartbeat mr-1" aria-hidden="true"></i><span data-translate="success.health_improved">Health improved</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center mt-12" data-aos="fade-up">
+                    <button class="bg-gradient-to-r from-community-purple to-community-pink text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-community-purple">
+                        <span data-translate="success.share_story">Share Your Success Story</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Community Hub</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Building the world's largest community of connected farmers, sharing knowledge, experiences, and solutions for sustainable agricultural success.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Discord">
+                            <i class="fab fa-discord" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Community Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.community_links">Community</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#discussion-forum" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.discussions">Discussions</a></li>
+                        <li><a href="#community-categories" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.categories">Categories</a></li>
+                        <li><a href="#success-stories" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.success_stories">Success Stories</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.events">Community Events</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.expert_network">Expert Network</a></li>
+                        <li><a href="index.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.home">Home</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.support">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.help_center">Help Center</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.community_guidelines">Community Guidelines</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.moderation">Moderation Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.report_issue">Report Issue</a></li>
+                        <li><a href="index.html#contact" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.contact_support">Contact Support</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.feedback">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-gray-800 dark:bg-gray-900 rounded-2xl p-8 mb-8">
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2" data-translate="footer.newsletter_title">Community Digest</h4>
+                        <p class="text-gray-300" data-translate="footer.newsletter_description">Get weekly highlights of community discussions, expert insights, and success stories delivered to your inbox.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <input type="email" placeholder="Enter your email" 
+                               class="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-community-purple text-base text-white placeholder-gray-400"
+                               data-translate-placeholder="footer.email_placeholder">
+                        <button class="bg-gradient-to-r from-community-purple to-community-pink text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple">
+                            <span data-translate="footer.subscribe">Subscribe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect Community Hub. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.code_conduct">Code of Conduct</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Chat Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="chat-toggle" class="w-16 h-16 bg-gradient-to-r from-community-purple to-community-pink text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center glow-on-hover focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Open community chat">
+            <i class="fas fa-users text-xl animate-community-pulse" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="fixed bottom-24 right-6 w-96 h-96 bg-white dark:bg-agri-night rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 transform scale-0 origin-bottom-right transition-transform z-50">
+        <div class="h-full flex flex-col">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-community-purple to-community-pink text-white p-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold" data-translate="chat.title">Community Helper</h4>
+                            <p class="text-xs opacity-75" data-translate="chat.subtitle">Your Community Guide</p>
+                        </div>
+                    </div>
+                    <button id="chat-close" class="hover:bg-white/20 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close chat">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 overflow-y-auto" id="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+                <div class="flex items-start space-x-2 mb-4">
+                    <div class="w-6 h-6 bg-gradient-to-r from-community-purple to-community-pink rounded-full flex items-center justify-center text-white text-xs">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+                        <p class="text-sm text-gray-900 dark:text-white" data-translate="chat.welcome">Hi! I'm here to help you navigate our community. Ask me about discussions, finding experts, or getting started!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex space-x-2">
+                    <input type="text" 
+                           placeholder="Ask about the community..."
+                           class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-community-purple text-sm text-gray-900 dark:text-white dark:bg-gray-800"
+                           id="widget-chat-input"
+                           data-translate-placeholder="chat.input_placeholder">
+                    <button class="bg-gradient-to-r from-community-purple to-community-pink text-white px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" id="widget-send-chat" aria-label="Send message">
+                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for community page
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'cta.join_discussion': 'Join Discussion',
+                'breadcrumb.home': 'Home',
+                'breadcrumb.community': 'Community Hub',
+                'hero.connect': 'Connect',
+                'hero.learn': 'Learn',
+                'hero.grow': 'Grow',
+                'hero.together': 'Together',
+                'hero.description': 'Join thousands of farmers worldwide in our vibrant community. Share experiences, get expert advice, and build lasting connections that drive agricultural success.',
+                'cta.join_community': 'Join Community',
+                'cta.explore_forums': 'Explore Forums',
+                'stats.active_farmers': 'Active Farmers',
+                'stats.daily_discussions': 'Daily Discussions',
+                'stats.success_rate': '% Success Rate',
+                'widget.live_activity': 'Live Community Activity',
+                'widget.online_now': '1,247 online now',
+                'badge.expert': 'Expert',
+                'badge.online': 'Online',
+                'badge.moderator': 'Moderator',
+                'badge.verified': 'Verified',
+                'activity.shared_tip': 'shared a corn harvesting tip',
+                'activity.asked_question': 'asked about organic fertilizers',
+                'activity.started_discussion': 'started a discussion on drought management',
+                'widget.crop_discussions': 'Crop Discussions',
+                'widget.expert_advice': 'Expert Advice',
+                'widget.search_placeholder': 'Search community discussions...',
+                'scroll.explore': 'Explore community features',
+                'categories.title': 'Explore Community Categories',
+                'categories.description': 'Join specialized groups of farmers sharing knowledge, experiences, and solutions across different agricultural sectors and interests.',
+                'members': 'members',
+                'discussions': 'discussions',
+                'crop_community.title': 'Crop Farming Hub',
+                'crop_community.trending1': '🌽 Corn Yield Optimization',
+                'crop_community.trending2': '🌾 Wheat Disease Prevention',
+                'crop_community.trending3': '🌱 Organic Certification Tips',
+                'crop_community.join': 'Join Crop Community',
+                'livestock_community.title': 'Livestock Network',
+                'livestock_community.trending1': '🐄 Dairy Cow Nutrition',
+                'livestock_community.trending2': '🐔 Poultry Health Management',
+                'livestock_community.trending3': '🐐 Goat Breeding Programs',
+                'livestock_community.join': 'Join Livestock Network',
+                'sustainable_community.title': 'Sustainable Farming',
+                'sustainable_community.trending1': '♻️ Renewable Energy Solutions',
+                'sustainable_community.trending2': '🌿 Permaculture Design',
+                'sustainable_community.trending3': '💧 Water Conservation Methods',
+                'sustainable_community.join': 'Join Sustainable Community',
+                'forum.title': 'Latest Community Discussions',
+                'forum.description': 'Join ongoing conversations, ask questions, and share your expertise with fellow farmers from around the world.',
+                'discussion1.title': 'Best practices for tomato disease prevention?',
+                'discussion1.content': 'I\'ve been struggling with late blight in my tomato crops for the past two seasons. What preventive measures have worked best for you? Looking for both organic and conventional solutions.',
+                'discussion2.title': 'Soil pH management for corn production',
+                'discussion2.content': 'After soil testing, I found my pH is 5.8. Should I apply lime before planting corn this season? What\'s the optimal pH range for maximum yield?',
+                'discussion3.title': 'Drought-resistant wheat varieties recommendations?',
+                'discussion3.content': 'With changing climate patterns in our region, I\'m looking for wheat varieties that can handle water stress. Any recommendations for varieties that maintain good yield under drought conditions?',
+                'tag.tomatoes': 'Tomatoes',
+                'tag.disease_prevention': 'Disease Prevention',
+                'tag.corn': 'Corn',
+                'tag.soil_management': 'Soil Management',
+                'tag.wheat': 'Wheat',
+                'tag.drought_resistant': 'Drought Resistant',
+                'reply': 'Reply',
+                'forum.load_more': 'Load More Discussions',
+                'sidebar.trending': 'Trending Topics',
+                'trending.climate_adaptation': '# Climate Adaptation',
+                'trending.organic_farming': '# Organic Farming',
+                'trending.precision_agriculture': '# Precision Agriculture',
+                'trending.soil_health': '# Soil Health',
+                'sidebar.top_contributors': 'Top Contributors',
+                'sidebar.guidelines': 'Community Guidelines',
+                'guidelines.respectful': 'Be respectful and supportive',
+                'guidelines.accurate': 'Share accurate information',
+                'guidelines.relevant': 'Keep discussions relevant',
+                'guidelines.help': 'Help fellow farmers',
+                'success.title': 'Community Success Stories',
+                'success.description': 'Inspiring stories from our community members who have transformed their farming operations through shared knowledge and collaboration.',
+                'success.story1.location': 'Kenya • Maize Farmer',
+                'success.story1.quote': 'Thanks to the community\'s advice on drought-resistant varieties and water management, I increased my yield by 40% despite the dry season. The support here is incredible!',
+                'success.story2.location': 'Mexico • Organic Vegetable Farmer',
+                'success.story2.quote': 'The organic farming community helped me transition from conventional farming. Now I\'m certified organic and earning 60% more per hectare. Best decision ever!',
+                'success.story3.location': 'India • Dairy Farmer',
+                'success.story3.quote': 'The livestock experts in the community guided me through proper nutrition and health management. My milk production doubled and cow health improved dramatically!',
+                'success.yield_increase': 'yield increase',
+                'success.water_saved': 'water saved',
+                'success.income_increase': 'income increase',
+                'success.organic_certified': 'Organic certified',
+                'success.milk_increase': 'milk increase',
+                'success.health_improved': 'Health improved',
+                'success.share_story': 'Share Your Success Story',
+                'chat.title': 'Community Helper',
+                'chat.subtitle': 'Your Community Guide',
+                'chat.welcome': 'Hi! I\'m here to help you navigate our community. Ask me about discussions, finding experts, or getting started!',
+                'chat.input_placeholder': 'Ask about the community...',
+                'footer.tagline': 'Community Hub',
+                'footer.description': 'Building the world\'s largest community of connected farmers, sharing knowledge, experiences, and solutions for sustainable agricultural success.',
+                'footer.community_links': 'Community',
+                'footer.discussions': 'Discussions',
+                'footer.categories': 'Categories',
+                'footer.success_stories': 'Success Stories',
+                'footer.events': 'Community Events',
+                'footer.expert_network': 'Expert Network',
+                'footer.home': 'Home',
+                'footer.support': 'Support',
+                'footer.help_center': 'Help Center',
+                'footer.community_guidelines': 'Community Guidelines',
+                'footer.moderation': 'Moderation Policy',
+                'footer.report_issue': 'Report Issue',
+                'footer.contact_support': 'Contact Support',
+                'footer.feedback': 'Feedback',
+                'footer.newsletter_title': 'Community Digest',
+                'footer.newsletter_description': 'Get weekly highlights of community discussions, expert insights, and success stories delivered to your inbox.',
+                'footer.email_placeholder': 'Enter your email',
+                'footer.subscribe': 'Subscribe',
+                'footer.copyright': '© 2024 AgriClimate Connect Community Hub. All rights reserved.',
+                'footer.privacy': 'Privacy Policy',
+                'footer.terms': 'Terms of Service',
+                'footer.code_conduct': 'Code of Conduct',
+                'footer.accessibility': 'Accessibility'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.community': 'Comunidad',
+                'nav.about': 'Acerca de Nosotros',
+                'nav.contact': 'Contáctanos',
+                'cta.join_discussion': 'Unirse a Discusión',
+                'breadcrumb.home': 'Inicio',
+                'breadcrumb.community': 'Centro Comunitario',
+                'hero.connect': 'Conectar',
+                'hero.learn': 'Aprender',
+                'hero.grow': 'Crecer',
+                'hero.together': 'Juntos',
+                'hero.description': 'Únete a miles de agricultores de todo el mundo en nuestra vibrante comunidad. Comparte experiencias, obtén consejos de expertos y construye conexiones duraderas que impulsen el éxito agrícola.',
+                'cta.join_community': 'Unirse a la Comunidad',
+                'cta.explore_forums': 'Explorar Foros',
+                'stats.active_farmers': 'Agricultores Activos',
+                'stats.daily_discussions': 'Discusiones Diarias',
+                'stats.success_rate': '% Tasa de Éxito',
+                'widget.live_activity': 'Actividad Comunitaria en Vivo',
+                'widget.online_now': '1,247 en línea ahora',
+                'badge.expert': 'Experto',
+                'badge.online': 'En línea',
+                'badge.moderator': 'Moderador',
+                'badge.verified': 'Verificado',
+                'activity.shared_tip': 'compartió un consejo de cosecha de maíz',
+                'activity.asked_question': 'preguntó sobre fertilizantes orgánicos',
+                'activity.started_discussion': 'inició una discusión sobre manejo de sequía',
+                'widget.crop_discussions': 'Discusiones de Cultivos',
+                'widget.expert_advice': 'Consejos de Expertos',
+                'widget.search_placeholder': 'Buscar discusiones comunitarias...',
+                'scroll.explore': 'Explorar características comunitarias',
+                'chat.title': 'Asistente Comunitario',
+                'chat.subtitle': 'Tu Guía Comunitaria',
+                'chat.welcome': '¡Hola! Estoy aquí para ayudarte a navegar por nuestra comunidad. ¡Pregúntame sobre discusiones, encontrar expertos o comenzar!',
+                'chat.input_placeholder': 'Pregunta sobre la comunidad...'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.community': 'Communauté',
+                'nav.about': 'À Propos',
+                'nav.contact': 'Contact',
+                'cta.join_discussion': 'Rejoindre la Discussion',
+                'breadcrumb.home': 'Accueil',
+                'breadcrumb.community': 'Centre Communautaire',
+                'hero.connect': 'Se Connecter',
+                'hero.learn': 'Apprendre',
+                'hero.grow': 'Grandir',
+                'hero.together': 'Ensemble',
+                'hero.description': 'Rejoignez des milliers d\'agriculteurs du monde entier dans notre communauté dynamique. Partagez des expériences, obtenez des conseils d\'experts et construisez des connexions durables qui favorisent le succès agricole.',
+                'cta.join_community': 'Rejoindre la Communauté',
+                'cta.explore_forums': 'Explorer les Forums',
+                'stats.active_farmers': 'Agriculteurs Actifs',
+                'stats.daily_discussions': 'Discussions Quotidiennes',
+                'stats.success_rate': '% Taux de Succès',
+                'widget.live_activity': 'Activité Communautaire en Direct',
+                'widget.online_now': '1,247 en ligne maintenant',
+                'badge.expert': 'Expert',
+                'badge.online': 'En ligne',
+                'badge.moderator': 'Modérateur',
+                'badge.verified': 'Vérifié',
+                'activity.shared_tip': 'a partagé un conseil de récolte de maïs',
+                'activity.asked_question': 'a demandé sur les engrais biologiques',
+                'activity.started_discussion': 'a commencé une discussion sur la gestion de la sécheresse',
+                'widget.crop_discussions': 'Discussions sur les Cultures',
+                'widget.expert_advice': 'Conseils d\'Experts',
+                'widget.search_placeholder': 'Rechercher discussions communautaires...',
+                'scroll.explore': 'Explorer les fonctionnalités communautaires',
+                'chat.title': 'Assistant Communautaire',
+                'chat.subtitle': 'Votre Guide Communautaire',
+                'chat.welcome': 'Salut! Je suis là pour vous aider à naviguer dans notre communauté. Demandez-moi sur les discussions, trouver des experts ou commencer!',
+                'chat.input_placeholder': 'Demandez sur la communauté...'
+            },
+            sw: {
+                'nav.home': 'Nyumbani',
+                'nav.knowledge_tools': 'Zana za Maarifa',
+                'nav.community': 'Jamii',
+                'nav.about': 'Kutuhusu',
+                'nav.contact': 'Wasiliana',
+                'cta.join_discussion': 'Jiunge na Mjadala',
+                'breadcrumb.home': 'Nyumbani',
+                'breadcrumb.community': 'Kituo cha Jamii',
+                'hero.connect': 'Unganisha',
+                'hero.learn': 'Jifunze',
+                'hero.grow': 'Kua',
+                'hero.together': 'Pamoja',
+                'hero.description': 'Jiunge na maelfu ya wakulima duniani kote katika jamii yetu yenye nguvu. Shiriki uzoefu, pata ushauri wa wataalamu, na jenga uhusiano wa kudumu unaoongoza mafanikio ya kilimo.',
+                'cta.join_community': 'Jiunge na Jamii',
+                'cta.explore_forums': 'Chunguza Majukwaa',
+                'stats.active_farmers': 'Wakulima Hai',
+                'stats.daily_discussions': 'Mijadala ya Kila Siku',
+                'stats.success_rate': '% Kiwango cha Mafanikio',
+                'widget.live_activity': 'Shughuli za Jamii za Moja kwa Moja',
+                'widget.online_now': '1,247 mtandaoni sasa',
+                'badge.expert': 'Mtaalamu',
+                'badge.online': 'Mtandaoni',
+                'badge.moderator': 'Msimamizi',
+                'badge.verified': 'Imethibitishwa',
+                'activity.shared_tip': 'alishiriki ushauri wa kuvuna mahindi',
+                'activity.asked_question': 'aliuliza kuhusu mbolea za kikaboni',
+                'activity.started_discussion': 'alianza mjadala kuhusu usimamizi wa ukame',
+                'widget.crop_discussions': 'Mijadala ya Mazao',
+                'widget.expert_advice': 'Ushauri wa Wataalamu',
+                'widget.search_placeholder': 'Tafuta mijadala ya jamii...',
+                'scroll.explore': 'Chunguza vipengele vya jamii',
+                'chat.title': 'Msaidizi wa Jamii',
+                'chat.subtitle': 'Mwongozi wako wa Jamii',
+                'chat.welcome': 'Habari! Niko hapa kukusaidia kunavigata jamii yetu. Niulize kuhusu mijadala, kutafuta wataalamu au kuanza!',
+                'chat.input_placeholder': 'Uliza kuhusu jamii...'
+            },
+            hi: {
+                'nav.home': 'मुख्य पृष्ठ',
+                'nav.knowledge_tools': 'ज्ञान उपकरण',
+                'nav.community': 'समुदाय',
+                'nav.about': 'हमारे बारे में',
+                'nav.contact': 'संपर्क करें',
+                'cta.join_discussion': 'चर्चा में शामिल हों',
+                'breadcrumb.home': 'मुख्य पृष्ठ',
+                'breadcrumb.community': 'समुदाय केंद्र',
+                'hero.connect': 'जुड़ें',
+                'hero.learn': 'सीखें',
+                'hero.grow': 'बढ़ें',
+                'hero.together': 'साथ में',
+                'hero.description': 'हमारे जीवंत समुदाय में दुनिया भर के हजारों किसानों से जुड़ें। अनुभव साझा करें, विशेषज्ञ सलाह प्राप्त करें, और स्थायी संबंध बनाएं जो कृषि सफलता को बढ़ावा देते हैं।',
+                'cta.join_community': 'समुदाय में शामिल हों',
+                'cta.explore_forums': 'फोरम देखें',
+                'stats.active_farmers': 'सक्रिय किसान',
+                'stats.daily_discussions': 'दैनिक चर्चाएं',
+                'stats.success_rate': '% सफलता दर',
+                'widget.live_activity': 'लाइव समुदाय गतिविधि',
+                'widget.online_now': '1,247 अब ऑनलाइन',
+                'badge.expert': 'विशेषज्ञ',
+                'badge.online': 'ऑनलाइन',
+                'badge.moderator': 'मॉडरेटर',
+                'badge.verified': 'सत्यापित',
+                'activity.shared_tip': 'ने मक्का कटाई की सुझाव साझा की',
+                'activity.asked_question': 'ने जैविक उर्वरकों के बारे में पूछा',
+                'activity.started_discussion': 'ने सूखा प्रबंधन पर चर्चा शुरू की',
+                'widget.crop_discussions': 'फसल चर्चाएं',
+                'widget.expert_advice': 'विशेषज्ञ सलाह',
+                'widget.search_placeholder': 'समुदाय चर्चाएं खोजें...',
+                'scroll.explore': 'समुदाय सुविधाओं का अन्वेषण करें',
+                'chat.title': 'समुदाय सहायक',
+                'chat.subtitle': 'आपका समुदाय गाइड',
+                'chat.welcome': 'नमस्ते! मैं यहाँ हमारे समुदाय में आपकी मदद करने के लिए हूँ। मुझसे चर्चाओं, विशेषज्ञों को खोजने या शुरुआत करने के बारे में पूछें!',
+                'chat.input_placeholder': 'समुदाय के बारे में पूछें...'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            // Add visual feedback
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            // Visual feedback
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        // Load high contrast preference
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            // Animate hamburger to X
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Text size adjustment with accessibility
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            // Update button states
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        // Initialize text size
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Enhanced counter animation with intersection observer
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000; // 2 seconds
+                        const increment = target / (duration / 16); // 60fps
+                        let current = 0;
+                        
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.textContent = Math.floor(current).toLocaleString();
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            // Animate language change
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // Enhanced chat functionality for community
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWidget = document.getElementById('chat-widget');
+        const chatClose = document.getElementById('chat-close');
+        const widgetChatInput = document.getElementById('widget-chat-input');
+        const widgetSendBtn = document.getElementById('widget-send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatToggle.addEventListener('click', () => {
+            const isVisible = !chatWidget.classList.contains('scale-0');
+            chatWidget.classList.toggle('scale-0');
+            
+            if (!isVisible) {
+                setTimeout(() => widgetChatInput.focus(), 300);
+            }
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.add('scale-0');
+        });
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-2 mb-4 ${isUser ? 'justify-end' : ''} animate-fade-in`;
+            
+            messageDiv.innerHTML = `
+                ${!isUser ? '<div class="w-6 h-6 bg-gradient-to-r from-community-purple to-community-pink rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-users"></i></div>' : ''}
+                <div class="bg-${isUser ? 'gradient-to-r from-community-purple to-community-pink text-white' : 'gray-100 dark:bg-gray-700'} rounded-lg p-3 max-w-xs shadow-sm">
+                    <p class="text-sm ${isUser ? 'text-white' : 'text-gray-900 dark:text-white'}">${message}</p>
+                </div>
+                ${isUser ? '<div class="w-6 h-6 bg-gradient-to-r from-community-purple to-community-pink rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>' : ''}
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function simulateCommunityAIResponse(userMessage) {
+            const responses = {
+                'forum': 'Our discussion forums are organized by categories like Crop Farming, Livestock, and Sustainable Farming. You can browse trending topics or search for specific questions. Would you like me to guide you to a specific category?',
+                'expert': 'We have verified agricultural experts and successful farmers who regularly share knowledge. You can find them in our Expert Network section, or look for users with "Expert" badges in discussions.',
+                'discussion': 'To start a discussion, click "Join Discussion" and choose a relevant category. Make sure to use descriptive titles and provide context about your farming situation for better responses.',
+                'help': 'I can help you navigate the community! Ask me about finding discussions, connecting with experts, understanding badges, or getting started. What specific area interests you?',
+                'categories': 'We have three main categories: Crop Farming Hub (12,450+ members), Livestock Network (8,750+ members), and Sustainable Farming (6,230+ members). Each has trending topics and specialized discussions.',
+                'trending': 'Currently trending topics include Climate Adaptation, Organic Farming, Precision Agriculture, and Soil Health. These are popular discussion topics this week.',
+                'badge': 'Community badges include Expert (verified agricultural professionals), Verified (identity confirmed), Moderator (community leaders), and Online status. Badges help identify credible contributors.',
+                'guidelines': 'Our community guidelines emphasize being respectful, sharing accurate information, keeping discussions relevant, and helping fellow farmers. We maintain a supportive environment for learning.',
+                'story': 'Success stories showcase real farmers who\'ve improved their operations through community knowledge. Sarah from Kenya increased yield by 40%, Roberto from Mexico went organic, and Priya from India doubled milk production!',
+                'join': 'To join, click "Join Community" and complete your farmer profile. You can then participate in discussions, ask questions, share experiences, and connect with experts worldwide.',
+                'default': 'I\'m here to help you navigate our farming community! Ask me about discussions, finding experts, community categories, success stories, or getting started. What would you like to know?'
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            let response = responses.default;
+
+            for (const key in responses) {
+                if (lowerMessage.includes(key)) {
+                    response = responses[key];
+                    break;
+                }
+            }
+
+            // Simulate typing delay
+            setTimeout(() => {
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendMessage(input) {
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                simulateCommunityAIResponse(message);
+            }
+        }
+
+        widgetSendBtn.addEventListener('click', () => sendMessage(widgetChatInput));
+
+        widgetChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage(widgetChatInput);
+            }
+        });
+
+        // Live feed animation
+        function updateLiveFeed() {
+            const liveFeed = document.getElementById('live-feed');
+            if (liveFeed) {
+                // Simulate live activity updates
+                const activities = [
+                    { avatar: 'KS', name: 'Kwame Sarpong', badge: 'Expert', action: 'answered a question about soil testing', time: '1m' },
+                    { avatar: 'LE', name: 'Linda Evans', badge: 'Online', action: 'shared photos of successful tomato harvest', time: '3m' },
+                    { avatar: 'MO', name: 'Miguel Ortiz', badge: 'Moderator', action: 'created a poll on irrigation methods', time: '6m' }
+                ];
+
+                // Update with random activity every 30 seconds
+                setInterval(() => {
+                    const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+                    const firstChild = liveFeed.firstElementChild;
+                    
+                    const newActivity = document.createElement('div');
+                    newActivity.className = 'flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg animate-slide-in';
+                    newActivity.innerHTML = `
+                        <div class="user-avatar">${randomActivity.avatar}</div>
+                        <div class="flex-1">
+                            <div class="text-sm font-medium">${randomActivity.name} <span class="text-xs text-green-600">${randomActivity.badge}</span></div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">${randomActivity.action}</div>
+                        </div>
+                        <div class="text-xs text-gray-500">${randomActivity.time}</div>
+                    `;
+                    
+                    liveFeed.insertBefore(newActivity, firstChild);
+                    
+                    // Remove last item if more than 3
+                    if (liveFeed.children.length > 3) {
+                        liveFeed.removeChild(liveFeed.lastElementChild);
+                    }
+                }, 30000);
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80; // Account for fixed header
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced feature card interactions
+        document.querySelectorAll('.community-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize components
+            translatePage(currentLanguage);
+            animateCounters();
+            updateLiveFeed();
+            
+            // Add loading complete class for animations
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - Community Hub loaded successfully!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            // Escape key to close modals/dropdowns
+            if (e.key === 'Escape') {
+                chatWidget.classList.add('scale-0');
+                mobileMenu.classList.add('hidden');
+            }
+            
+            // Enter key for buttons with role="button"
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Performance optimization: Lazy loading for non-critical features
+        const lazyElements = document.querySelectorAll('[data-aos]');
+        const lazyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        });
+
+        lazyElements.forEach(el => lazyObserver.observe(el));
+    </script>
+</body>
+</html>

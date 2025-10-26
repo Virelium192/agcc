@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriClimate Connect - Empowering Farmers, Sustaining the Future</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out'
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #2F7D32 0%, #4CAF50 50%, #81C784 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #2F7D32 70%, #4CAF50 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .weather-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .dark .weather-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark .feature-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #2F7D32, #4CAF50, #FF8F00);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .dark-mode-bg {
+            background: radial-gradient(ellipse at top, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+        }
+        
+        .dark .bg-gradient-to-br {
+            background: linear-gradient(to bottom right, #0F172A, #1E293B, #374151);
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Accessibility Enhancements */
+        .focus\:ring-agri:focus {
+            ring-color: #4CAF50;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #000;
+            }
+            
+            .dark .glass-effect {
+                background: rgba(0, 0, 0, 0.9);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2F7D32;
+        }
+        /* Video Modal Overlay */
+#videoModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal Content */
+#videoModalContent {
+  position: relative;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 90%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Close Button */
+#closeModal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+#closeModal:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Fullscreen Button */
+#fullscreenBtn {
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+#fullscreenBtn:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-agri-green text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">AgriClimate Connect</h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Empowering Farmers, Sustaining the Future.</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="weather and climate intelligence.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather & Climate Intelligence</span>
+                            </a>
+                            <a href="smart crop advisory.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="livestock management.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="market intelligence.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="ai powered tools.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.community">Community</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-64 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="discussion forum.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-comments mr-3 text-blue-500" aria-hidden="true"></i><span data-translate="nav.forum">Discussion Forum</span>
+                            </a>
+                            <a href="knowledge.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-book mr-3 text-orange-500" aria-hidden="true"></i><span data-translate="nav.knowledge_center">Knowledge Center</span>
+                            </a>
+                            <a href="experts.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-user-tie mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.expert_network">Expert Network</span>
+                            </a>
+                            <a href="events.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-calendar mr-3 text-green-500" aria-hidden="true"></i><span data-translate="nav.events">Events & Training</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- About Us -->
+                    <a href="about us.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us -->
+                    <a href="contact.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-agri-green rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <a href="signup.html"><button class="hidden md:block bg-gradient-to-r from-agri-green to-agri-light text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover">
+                        <span data-translate="cta.get_started">Get Started</span>
+                    </button></a>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    
+                    <div class="py-2">
+                        <button class="w-full text-left text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-agri-green rounded" onclick="toggleMobileDropdown('knowledge-tools')" aria-expanded="false">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span>
+                            <i class="fas fa-chevron-down transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div id="mobile-knowledge-tools" class="hidden ml-4 mt-2 space-y-1">
+                            <a href="#weather" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.weather_climate">Weather & Climate</a>
+                            <a href="#crops" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.crop_advisory">Crop Advisory</a>
+                            <a href="#livestock" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.livestock">Livestock Management</a>
+                            <a href="#market" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.market_hub">Market Intelligence</a>
+                            <a href="#ai-tools" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.ai_tools">AI Tools</a>
+                        </div>
+                    </div>
+                    
+                    <div class="py-2">
+                        <button class="w-full text-left text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-agri-green rounded" onclick="toggleMobileDropdown('community')" aria-expanded="false">
+                            <span data-translate="nav.community">Community</span>
+                            <i class="fas fa-chevron-down transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div id="mobile-community" class="hidden ml-4 mt-2 space-y-1">
+                            <a href="#forum" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.forum">Discussion Forum</a>
+                            <a href="#knowledge" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.knowledge_center">Knowledge Center</a>
+                            <a href="#experts" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.expert_network">Expert Network</a>
+                            <a href="#events" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.events">Events & Training</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="#contact" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <button class="w-full mt-4 bg-gradient-to-r from-agri-green to-agri-light text-white py-2 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-agri-green">
+                        <span data-translate="cta.get_started">Get Started</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen pt-20 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+            
+            <!-- Floating Knowledge Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-agri-gold/20 dark:bg-agri-gold/30 rounded-full animate-float flex items-center justify-center" aria-hidden="true">
+                <i class="fas fa-brain text-agri-gold text-2xl"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-white/20 dark:bg-agri-light/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-lightbulb text-white dark:text-agri-light text-xl"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-accent/20 dark:bg-agri-accent/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-graduation-cap text-agri-accent text-2xl"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.empowering">Empowering</span> <span class="text-agri-gold" data-translate="hero.farmers">Farmers</span><br>
+                            <span data-translate="hero.with_knowledge">with Knowledge Tools</span><br>
+                            <span class="text-agri-light" data-translate="hero.for_success">for Success</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Transform your farming with AI-powered insights, comprehensive training resources, and a global community of agricultural experts. Master every aspect of modern farming for guaranteed success.</span>
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                           <a href="signup.html" ><button class="bg-agri-gold hover:bg-agri-accent text-gray-900 font-semibold px-8 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-gold">
+                                <i class="fas fa-graduation-cap mr-2" aria-hidden="true"></i><span data-translate="cta.start_your_journey">Start Your Journey</span>
+                            </button></a>
+                            <button class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all w-full sm:w-auto" id="watchDemoBtn">
+                                ▶️ <span data-translate="watch-demo">Watch Demo</span>
+                            </button>
+                            
+                        </div>
+
+                        <!-- Impact Statistics -->
+                        <div class="grid grid-cols-3 gap-6 mt-12">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="250000">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.farmers_empowered">Farmers Empowered</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="150">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.countries">Countries Served</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="65">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.success_rate">% Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Interactive Knowledge Dashboard -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- Real-time Weather & Learning Widget -->
+                        <div class="weather-card rounded-2xl p-6 text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold" data-translate="widget.knowledge_dashboard">Knowledge Dashboard</h3>
+                                <button id="location-btn" class="text-sm bg-white/20 dark:bg-agri-night/50 px-3 py-1 rounded-full hover:bg-white/30 dark:hover:bg-agri-night/70 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-light">
+                                    <i class="fas fa-location-dot mr-1" aria-hidden="true"></i><span data-translate="widget.auto_detect">Auto-detect</span>
+                                </button>
+                            </div>
+                            
+                            <div id="weather-content">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div>
+                                        <div class="text-4xl font-bold" id="temperature">--°</div>
+                                        <div class="text-lg" id="location" data-translate="widget.getting_location">Getting location...</div>
+                                        <div class="text-sm opacity-75" id="weather-description">--</div>
+                                    </div>
+                                    <div class="text-6xl" id="weather-icon">🌤️</div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/20 dark:border-gray-600/30">
+                                    <div class="text-center">
+                                        <div class="text-sm opacity-75" data-translate="widget.humidity">Humidity</div>
+                                        <div class="font-semibold" id="humidity">--%</div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-sm opacity-75" data-translate="widget.wind_speed">Wind Speed</div>
+                                        <div class="font-semibold" id="wind-speed">-- m/s</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Learning Access -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-light" tabindex="0" role="button">
+                                <i class="fas fa-book-open text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.crop_guides">Crop Guides</div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-light" tabindex="0" role="button">
+                                <i class="fas fa-chart-line text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.market_analysis">Market Analysis</div>
+                            </div>
+                        </div>
+
+                        <!-- AI Learning Assistant -->
+                        <div class="glass-effect rounded-full p-2">
+                            <div class="flex items-center">
+                                <input type="text" placeholder="Ask our AI farming expert..." 
+                                       class="flex-1 bg-transparent text-white placeholder-gray-300 dark:placeholder-gray-400 px-4 py-2 focus:outline-none text-base"
+                                       id="hero-search"
+                                       data-translate-placeholder="widget.ask_ai">
+                                <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 p-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-agri-gold" aria-label="Ask AI assistant">
+                                    <i class="fas fa-brain" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.explore">Scroll to explore knowledge</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge Empowerment Section -->
+        <section id="knowledge-empowerment" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="knowledge.title">Knowledge is Power</span><br>
+                        <span class="text-agri-green" data-translate="knowledge.subtitle">Success is Inevitable</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
+                        <span data-translate="knowledge.description">Our comprehensive knowledge platform equips farmers with cutting-edge insights, proven methodologies, and expert guidance to ensure agricultural success in any climate condition.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Knowledge Pillar 1: Expert Training -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-24 h-24 bg-gradient-to-br from-agri-green to-agri-light rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-chalkboard-teacher text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="pillar1.title">Expert Training Programs</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="pillar1.description">
+                            Learn from world-renowned agricultural experts through interactive courses, live sessions, and hands-on workshops designed for real-world application.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-center text-sm text-agri-green">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar1.feature1">Interactive video courses</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-green">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar1.feature2">Live expert sessions</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-green">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar1.feature3">Certification programs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Pillar 2: AI-Powered Insights -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-24 h-24 bg-gradient-to-br from-agri-blue to-agri-sky rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-brain text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="pillar2.title">AI-Powered Intelligence</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="pillar2.description">
+                            Harness artificial intelligence to receive personalized recommendations, predictive analytics, and smart decision-making tools tailored to your specific farming conditions.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-center text-sm text-agri-blue">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar2.feature1">Predictive analytics</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-blue">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar2.feature2">Smart recommendations</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-blue">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar2.feature3">Risk assessment tools</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Pillar 3: Global Community -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-24 h-24 bg-gradient-to-br from-agri-accent to-agri-gold rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-globe-americas text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="pillar3.title">Global Knowledge Network</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="pillar3.description">
+                            Connect with successful farmers worldwide, share experiences, and access a vast library of proven farming strategies from diverse climatic conditions.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-center text-sm text-agri-accent">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar3.feature1">Global farmer network</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-accent">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar3.feature2">Best practice library</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-accent">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="pillar3.feature3">Peer mentorship</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Intelligence Section -->
+        <section id="weather" class="py-20 bg-gradient-to-br from-blue-50 to-green-50 dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="weather.title">Weather Intelligence for Smart Decisions</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" data-translate="weather.description">
+                        Master climate patterns with advanced forecasting, risk assessment, and personalized alerts that keep you ahead of weather challenges.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Weather Dashboard Demo -->
+                    <div class="space-y-6" data-aos="fade-right">
+                        <!-- 7-Day Forecast -->
+                        <div class="bg-white dark:bg-agri-night rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <i class="fas fa-calendar-alt mr-2 text-agri-blue" aria-hidden="true"></i><span data-translate="weather.forecast_7day">7-Day Forecast</span>
+                            </h3>
+                            <div class="grid grid-cols-7 gap-2" id="seven-day-forecast">
+                                <!-- Forecast items will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Climate Knowledge Alerts -->
+                        <div class="bg-white dark:bg-agri-night rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                                <i class="fas fa-graduation-cap mr-2 text-agri-green" aria-hidden="true"></i><span data-translate="weather.knowledge_alerts">Knowledge Alerts</span>
+                            </h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border-l-4 border-yellow-400">
+                                    <i class="fas fa-lightbulb text-yellow-500 mr-3" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="font-medium text-gray-900 dark:text-white" data-translate="alert1.title">Heat Wave Preparation</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-300" data-translate="alert1.description">Learn optimal irrigation schedules for upcoming high temperatures</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border-l-4 border-blue-400">
+                                    <i class="fas fa-book-open text-blue-500 mr-3" aria-hidden="true"></i>
+                                    <div>
+                                        <div class="font-medium text-gray-900 dark:text-white" data-translate="alert2.title">Rainfall Optimization</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-300" data-translate="alert2.description">New course: Maximizing rainwater harvesting techniques</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weather Features List -->
+                    <div class="space-y-8" data-aos="fade-left">
+                        <div class="feature-card bg-white dark:bg-agri-night rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-agri-blue/10 dark:bg-agri-blue/20 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-satellite text-agri-blue text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="feature1.title">Satellite Data Mastery</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="feature1.description">
+                                        Learn to interpret satellite imagery, radar data, and atmospheric conditions for precision farming decisions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card bg-white dark:bg-agri-night rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-green-500/10 dark:bg-green-500/20 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-brain text-green-500 text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="feature2.title">Climate Pattern Intelligence</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="feature2.description">
+                                        Master long-term climate prediction and adaptation strategies for sustainable farming success.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="feature-card bg-white dark:bg-agri-night rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 bg-red-500/10 dark:bg-red-500/20 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-red-500 text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="feature3.title">Risk Management Expertise</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="feature3.description">
+                                        Develop comprehensive risk assessment skills for drought, flood, pest, and disease management.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="contact.title">Get in Touch</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" data-translate="contact.description">
+                        Ready to transform your farming success? Our expert team is here to guide you on your agricultural journey.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div class="bg-gradient-to-br from-agri-green to-agri-light rounded-2xl p-8 text-white" data-aos="fade-right">
+                        <h3 class="text-2xl font-bold mb-6" data-translate="contact.form_title">Start Your Success Journey</h3>
+                        <form class="space-y-6" id="contact-form">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2" data-translate="contact.first_name">First Name</label>
+                                    <input type="text" required 
+                                           class="w-full px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-agri-gold text-base"
+                                           data-translate-placeholder="contact.first_name_placeholder">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2" data-translate="contact.last_name">Last Name</label>
+                                    <input type="text" required 
+                                           class="w-full px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-agri-gold text-base"
+                                           data-translate-placeholder="contact.last_name_placeholder">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate="contact.email">Email Address</label>
+                                <input type="email" required 
+                                       class="w-full px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-agri-gold text-base"
+                                       data-translate-placeholder="contact.email_placeholder">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate="contact.farm_type">Farm Type</label>
+                                <select class="w-full px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-agri-gold">
+                                    <option data-translate="contact.crop_farming">Crop Farming</option>
+                                    <option data-translate="contact.livestock">Livestock</option>
+                                    <option data-translate="contact.mixed_farming">Mixed Farming</option>
+                                    <option data-translate="contact.organic">Organic Farming</option>
+                                    <option data-translate="contact.other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2" data-translate="contact.message">How can we help you succeed?</label>
+                                <textarea rows="4" required 
+                                          class="w-full px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-agri-gold text-base resize-none"
+                                          data-translate-placeholder="contact.message_placeholder"></textarea>
+                            </div>
+                            <button type="submit" 
+                                    class="w-full bg-agri-gold hover:bg-agri-accent text-gray-900 font-semibold py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-gold">
+                                <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i><span data-translate="contact.send_message">Send Message</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="space-y-8" data-aos="fade-left">
+                        <!-- Contact Methods -->
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-agri-green/10 dark:bg-agri-green/20 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-envelope text-agri-green text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white" data-translate="contact.email_us">Email Us</h4>
+                                    <a href="mailto:success@agriclimateconnect.com" class="text-agri-green hover:text-agri-dark transition-colors">
+                                        success@agriclimateconnect.com
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-agri-blue/10 dark:bg-agri-blue/20 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-phone text-agri-blue text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white" data-translate="contact.call_us">Call Us</h4>
+                                    <a href="tel:+1-800-AGRI-SUCCESS" class="text-agri-blue hover:text-blue-700 transition-colors">
+                                        +1-800-AGRI-SUCCESS
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-agri-accent/10 dark:bg-agri-accent/20 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-map-marker-alt text-agri-accent text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white" data-translate="contact.visit_us">Visit Us</h4>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="contact.address">
+                                        123 Agricultural Innovation Center<br>
+                                        Green Valley, CA 95014
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Support -->
+                        <div class="bg-gray-50 dark:bg-agri-night-light rounded-2xl p-6">
+                            <h4 class="font-semibold text-gray-900 dark:text-white mb-4" data-translate="contact.quick_support">Quick Support</h4>
+                            <div class="space-y-3">
+                                <button class="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                                    <i class="fas fa-comments mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="contact.live_chat">Live Chat Support</span>
+                                </button>
+                                <button class="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                                    <i class="fas fa-video mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="contact.video_call">Schedule Video Call</span>
+                                </button>
+                                <button class="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                                    <i class="fas fa-book mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="contact.knowledge_base">Knowledge Base</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Response Time -->
+                        <div class="bg-agri-green/10 dark:bg-agri-green/20 rounded-lg p-4 border-l-4 border-agri-green">
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-agri-green mr-3" aria-hidden="true"></i>
+                                <div>
+                                    <div class="font-medium text-gray-900 dark:text-white" data-translate="contact.response_time">Response Time</div>
+                                    <div class="text-sm text-gray-600 dark:text-gray-300" data-translate="contact.response_detail">We respond to all inquiries within 24 hours</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Empowering Farmers with Knowledge</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Transforming agriculture worldwide through comprehensive knowledge tools, expert guidance, and AI-powered insights for guaranteed farming success.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.quick_links">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#knowledge-empowerment" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.knowledge_tools">Knowledge Tools</a></li>
+                        <li><a href="#weather" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.weather_insights">Weather Insights</a></li>
+                        <li><a href="#crops" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.crop_advisory">Crop Advisory</a></li>
+                        <li><a href="#livestock" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.livestock">Livestock Management</a></li>
+                        <li><a href="#market" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.marketplace">Marketplace</a></li>
+                        <li><a href="#community" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.community">Community</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.support">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.help_center">Help Center</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.documentation">Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.training">Training Programs</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.contact_support">Contact Support</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.success_stories">Success Stories</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.webinars">Webinars</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-gray-800 dark:bg-gray-900 rounded-2xl p-8 mb-8">
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2" data-translate="footer.newsletter_title">Join Our Success Network</h4>
+                        <p class="text-gray-300" data-translate="footer.newsletter_description">Get exclusive farming insights, expert tips, and success strategies delivered to your inbox weekly.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <input type="email" placeholder="Enter your email" 
+                               class="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-green text-base text-white placeholder-gray-400"
+                               data-translate-placeholder="footer.email_placeholder">
+                        <button class="bg-agri-green hover:bg-agri-dark text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                            <span data-translate="footer.subscribe">Subscribe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.cookie">Cookie Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Chat Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="chat-toggle" class="w-16 h-16 bg-gradient-to-r from-agri-green to-agri-light text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Open chat">
+            <i class="fas fa-comments text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="fixed bottom-24 right-6 w-96 h-96 bg-white dark:bg-agri-night rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 transform scale-0 origin-bottom-right transition-transform z-50">
+        <div class="h-full flex flex-col">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-agri-green to-agri-light text-white p-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold" data-translate="chat.title">AgriBot Expert</h4>
+                            <p class="text-xs opacity-75" data-translate="chat.subtitle">Your Knowledge Assistant</p>
+                        </div>
+                    </div>
+                    <button id="chat-close" class="hover:bg-white/20 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close chat">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 overflow-y-auto" id="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+                <div class="flex items-start space-x-2 mb-4">
+                    <div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs">
+                        <i class="fas fa-robot" aria-hidden="true"></i>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+                        <p class="text-sm text-gray-900 dark:text-white" data-translate="chat.welcome">Hi! I'm your AI farming expert. How can I help you succeed today?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex space-x-2">
+                    <input type="text" 
+                           placeholder="Ask about farming success..."
+                           class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-green text-sm text-gray-900 dark:text-white dark:bg-gray-800"
+                           id="widget-chat-input"
+                           data-translate-placeholder="chat.input_placeholder">
+                    <button class="bg-agri-green hover:bg-agri-dark text-white px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" id="widget-send-chat" aria-label="Send message">
+                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather & Climate Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.forum': 'Discussion Forum',
+                'nav.knowledge_center': 'Knowledge Center',
+                'nav.expert_network': 'Expert Network',
+                'nav.events': 'Events & Training',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'cta.get_started': 'Get Started',
+                'hero.empowering': 'Empowering',
+                'hero.farmers': 'Farmers',
+                'hero.with_knowledge': 'with Knowledge Tools',
+                'hero.for_success': 'for Success',
+                'hero.description': 'Transform your farming with AI-powered insights, comprehensive training resources, and a global community of agricultural experts. Master every aspect of modern farming for guaranteed success.',
+                'cta.start_learning': 'Start Learning Free',
+                'cta.watch_demo': 'Watch Demo',
+                'stats.farmers_empowered': 'Farmers Empowered',
+                'stats.countries': 'Countries Served',
+                'stats.success_rate': '% Success Rate',
+                'widget.knowledge_dashboard': 'Knowledge Dashboard',
+                'widget.auto_detect': 'Auto-detect',
+                'widget.getting_location': 'Getting location...',
+                'widget.humidity': 'Humidity',
+                'widget.wind_speed': 'Wind Speed',
+                'widget.crop_guides': 'Crop Guides',
+                'widget.market_analysis': 'Market Analysis',
+                'widget.ask_ai': 'Ask our AI farming expert...',
+                'scroll.explore': 'Scroll to explore knowledge',
+                'contact.title': 'Get in Touch',
+                'contact.description': 'Ready to transform your farming success? Our expert team is here to guide you on your agricultural journey.',
+                'chat.welcome': 'Hi! I\'m your AI farming expert. How can I help you succeed today?',
+                'chat.input_placeholder': 'Ask about farming success...'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.weather_climate': 'Inteligencia Climática y Meteorológica',
+                'nav.crop_advisory': 'Asesoramiento Inteligente de Cultivos',
+                'nav.livestock': 'Gestión de Ganado',
+                'nav.market_hub': 'Inteligencia de Mercado',
+                'nav.ai_tools': 'Herramientas con IA',
+                'nav.community': 'Comunidad',
+                'nav.forum': 'Foro de Discusión',
+                'nav.knowledge_center': 'Centro de Conocimiento',
+                'nav.expert_network': 'Red de Expertos',
+                'nav.events': 'Eventos y Entrenamiento',
+                'nav.about': 'Acerca de Nosotros',
+                'nav.contact': 'Contáctanos',
+                'cta.get_started': 'Comenzar',
+                'hero.empowering': 'Empoderando',
+                'hero.farmers': 'Agricultores',
+                'hero.with_knowledge': 'con Herramientas de Conocimiento',
+                'hero.for_success': 'para el Éxito',
+                'hero.description': 'Transforma tu agricultura con perspectivas impulsadas por IA, recursos integrales de entrenamiento y una comunidad global de expertos agrícolas. Domina cada aspecto de la agricultura moderna para el éxito garantizado.',
+                'cta.start_learning': 'Comenzar Aprendizaje Gratis',
+                'cta.watch_demo': 'Ver Demo',
+                'stats.farmers_empowered': 'Agricultores Empoderados',
+                'stats.countries': 'Países Atendidos',
+                'stats.success_rate': '% Tasa de Éxito',
+                'widget.knowledge_dashboard': 'Panel de Conocimiento',
+                'widget.auto_detect': 'Auto-detectar',
+                'widget.getting_location': 'Obteniendo ubicación...',
+                'widget.humidity': 'Humedad',
+                'widget.wind_speed': 'Velocidad del Viento',
+                'widget.crop_guides': 'Guías de Cultivos',
+                'widget.market_analysis': 'Análisis de Mercado',
+                'widget.ask_ai': 'Pregunta a nuestro experto agrícola IA...',
+                'scroll.explore': 'Desplázate para explorar conocimiento',
+                'contact.title': 'Ponte en Contacto',
+                'contact.description': '¿Listo para transformar tu éxito agrícola? Nuestro equipo experto está aquí para guiarte en tu viaje agrícola.',
+                'chat.welcome': '¡Hola! Soy tu experto agrícola IA. ¿Cómo puedo ayudarte a tener éxito hoy?',
+                'chat.input_placeholder': 'Pregunta sobre éxito agrícola...'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.weather_climate': 'Intelligence Météorologique et Climatique',
+                'nav.crop_advisory': 'Conseil Intelligent des Cultures',
+                'nav.livestock': 'Gestion du Bétail',
+                'nav.market_hub': 'Intelligence du Marché',
+                'nav.ai_tools': 'Outils IA',
+                'nav.community': 'Communauté',
+                'nav.forum': 'Forum de Discussion',
+                'nav.knowledge_center': 'Centre de Connaissance',
+                'nav.expert_network': 'Réseau d\'Experts',
+                'nav.events': 'Événements et Formation',
+                'nav.about': 'À Propos',
+                'nav.contact': 'Nous Contacter',
+                'cta.get_started': 'Commencer',
+                'hero.empowering': 'Autonomiser',
+                'hero.farmers': 'les Agriculteurs',
+                'hero.with_knowledge': 'avec des Outils de Connaissance',
+                'hero.for_success': 'pour le Succès',
+                'hero.description': 'Transformez votre agriculture avec des insights alimentés par l\'IA, des ressources de formation complètes et une communauté mondiale d\'experts agricoles. Maîtrisez chaque aspect de l\'agriculture moderne pour un succès garanti.',
+                'cta.start_learning': 'Commencer l\'Apprentissage Gratuit',
+                'cta.watch_demo': 'Voir la Démo',
+                'stats.farmers_empowered': 'Agriculteurs Autonomisés',
+                'stats.countries': 'Pays Servis',
+                'stats.success_rate': '% Taux de Succès',
+                'widget.knowledge_dashboard': 'Tableau de Bord Connaissance',
+                'widget.auto_detect': 'Auto-détecter',
+                'widget.getting_location': 'Obtention de la localisation...',
+                'widget.humidity': 'Humidité',
+                'widget.wind_speed': 'Vitesse du Vent',
+                'widget.crop_guides': 'Guides de Culture',
+                'widget.market_analysis': 'Analyse de Marché',
+                'widget.ask_ai': 'Demandez à notre expert agricole IA...',
+                'scroll.explore': 'Faites défiler pour explorer les connaissances',
+                'contact.title': 'Entrer en Contact',
+                'contact.description': 'Prêt à transformer votre succès agricole? Notre équipe d\'experts est là pour vous guider dans votre parcours agricole.',
+                'chat.welcome': 'Salut! Je suis votre expert agricole IA. Comment puis-je vous aider à réussir aujourd\'hui?',
+                'chat.input_placeholder': 'Demandez sur le succès agricole...'
+            },
+            sw: {
+                'nav.home': 'Nyumbani',
+                'nav.knowledge_tools': 'Zana za Maarifa',
+                'nav.weather_climate': 'Akili ya Hali ya Hewa na Tabianchi',
+                'nav.crop_advisory': 'Ushauri wa Mazao',
+                'nav.livestock': 'Uongozi wa Mifugo',
+                'nav.market_hub': 'Akili ya Soko',
+                'nav.ai_tools': 'Zana za AI',
+                'nav.community': 'Jamii',
+                'nav.forum': 'Jukwaa la Mjadala',
+                'nav.knowledge_center': 'Kituo cha Maarifa',
+                'nav.expert_network': 'Mtandao wa Wataalamu',
+                'nav.events': 'Matukio na Mafunzo',
+                'nav.about': 'Kutuhusu',
+                'nav.contact': 'Wasiliana Nasi',
+                'cta.get_started': 'Anza',
+                'hero.empowering': 'Kuwezesha',
+                'hero.farmers': 'Wakulima',
+                'hero.with_knowledge': 'kwa Zana za Maarifa',
+                'hero.for_success': 'kwa Mafanikio',
+                'hero.description': 'Badilisha kilimo chako kwa maarifa yanayoongozwa na AI, rasilimali za mafunzo kamili, na jamii ya kimataifa ya wataalamu wa kilimo. Jifunze kila kipengele cha kilimo cha kisasa kwa mafanikio yaliyohakikishwa.',
+                'cta.start_learning': 'Anza Kujifunza Bure',
+                'cta.watch_demo': 'Tazama Onyesho',
+                'stats.farmers_empowered': 'Wakulima Waliowezesha',
+                'stats.countries': 'Nchi Zinazotumikia',
+                'stats.success_rate': '% Kiwango cha Mafanikio',
+                'widget.knowledge_dashboard': 'Dashibodi ya Maarifa',
+                'widget.auto_detect': 'Tambua-kiotomatiki',
+                'widget.getting_location': 'Inapata mahali...',
+                'widget.humidity': 'Unyevu',
+                'widget.wind_speed': 'Kasi ya Upepo',
+                'widget.crop_guides': 'Miongozo ya Mazao',
+                'widget.market_analysis': 'Uchambuzi wa Soko',
+                'widget.ask_ai': 'Uliza mtaalamu wetu wa kilimo AI...',
+                'scroll.explore': 'Sogeza ili uchunguze maarifa',
+                'contact.title': 'Wasiliana',
+                'contact.description': 'Uko tayari kubadilisha mafanikio yako ya kilimo? Timu yetu ya wataalamu iko hapa kukuongoza katika safari yako ya kilimo.',
+                'chat.welcome': 'Habari! Mimi ni mtaalamu wako wa kilimo AI. Ninawezaje kukusaidia kufanikisha leo?',
+                'chat.input_placeholder': 'Uliza kuhusu mafanikio ya kilimo...'
+            },
+            hi: {
+                'nav.home': 'मुख्य पृष्ठ',
+                'nav.knowledge_tools': 'ज्ञान उपकरण',
+                'nav.weather_climate': 'मौसम और जलवायु बुद्धिमत्ता',
+                'nav.crop_advisory': 'स्मार्ट फसल सलाह',
+                'nav.livestock': 'पशुधन प्रबंधन',
+                'nav.market_hub': 'बाजार बुद्धिमत्ता',
+                'nav.ai_tools': 'AI उपकरण',
+                'nav.community': 'समुदाय',
+                'nav.forum': 'चर्चा मंच',
+                'nav.knowledge_center': 'ज्ञान केंद्र',
+                'nav.expert_network': 'विशेषज्ञ नेटवर्क',
+                'nav.events': 'कार्यक्रम और प्रशिक्षण',
+                'nav.about': 'हमारे बारे में',
+                'nav.contact': 'संपर्क करें',
+                'cta.get_started': 'शुरू करें',
+                'hero.empowering': 'सशक्त बनाना',
+                'hero.farmers': 'किसानों को',
+                'hero.with_knowledge': 'ज्ञान उपकरणों के साथ',
+                'hero.for_success': 'सफलता के लिए',
+                'hero.description': 'AI-संचालित अंतर्दृष्टि, व्यापक प्रशिक्षण संसाधनों और कृषि विशेषज्ञों के वैश्विक समुदाय के साथ अपनी खेती को बदलें। गारंटीशुदा सफलता के लिए आधुनिक खेती के हर पहलू में महारत हासिल करें।',
+                'cta.start_learning': 'मुफ्त सीखना शुरू करें',
+                'cta.watch_demo': 'डेमो देखें',
+                'stats.farmers_empowered': 'सशक्त किसान',
+                'stats.countries': 'सेवा किए गए देश',
+                'stats.success_rate': '% सफलता दर',
+                'widget.knowledge_dashboard': 'ज्ञान डैशबोर्ड',
+                'widget.auto_detect': 'स्वतः पहचान',
+                'widget.getting_location': 'स्थान प्राप्त कर रहे हैं...',
+                'widget.humidity': 'आर्द्रता',
+                'widget.wind_speed': 'हवा की गति',
+                'widget.crop_guides': 'फसल गाइड',
+                'widget.market_analysis': 'बाजार विश्लेषण',
+                'widget.ask_ai': 'हमारे AI कृषि विशेषज्ञ से पूछें...',
+                'scroll.explore': 'ज्ञान की खोज के लिए स्क्रॉल करें',
+                'contact.title': 'संपर्क में रहें',
+                'contact.description': 'अपनी खेती की सफलता को बदलने के लिए तैयार हैं? हमारी विशेषज्ञ टीम आपकी कृषि यात्रा में आपका मार्गदर्शन करने के लिए यहाँ है।',
+                'chat.welcome': 'नमस्ते! मैं आपका AI कृषि विशेषज्ञ हूँ। आज मैं आपकी सफलता में कैसे मदद कर सकता हूँ?',
+                'chat.input_placeholder': 'कृषि सफलता के बारे में पूछें...'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality with enhanced styling
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            // Add visual feedback
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            // Visual feedback
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        // Load high contrast preference
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality with smooth animations
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            // Animate hamburger to X
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Mobile dropdown functionality
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(`mobile-${id}`);
+            const button = dropdown.previousElementSibling;
+            const icon = button.querySelector('i');
+            
+            dropdown.classList.toggle('hidden');
+            icon.style.transform = dropdown.classList.contains('hidden') ? '' : 'rotate(180deg)';
+            
+            button.setAttribute('aria-expanded', !dropdown.classList.contains('hidden'));
+        }
+
+        // Text size adjustment with accessibility
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            // Update button states
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        // Initialize text size
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Enhanced counter animation with intersection observer
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000; // 2 seconds
+                        const increment = target / (duration / 16); // 60fps
+                        let current = 0;
+                        
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.textContent = Math.floor(current).toLocaleString();
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Weather API functionality with enhanced error handling
+        const WEATHER_API_KEY = 'demo_key'; // Replace with actual API key
+        
+        async function getWeatherData(lat, lon) {
+            try {
+                // For demo purposes, we'll use sample data
+                // In production, replace with actual API call
+                const demoData = {
+                    name: 'Sample Location',
+                    main: { temp: 28, humidity: 65 },
+                    weather: [{ description: 'partly cloudy', icon: '02d' }],
+                    wind: { speed: 3.5 }
+                };
+                
+                updateWeatherWidget(demoData);
+                getForecastData(lat, lon);
+            } catch (error) {
+                console.log('Weather API error:', error);
+                showWeatherError();
+            }
+        }
+
+        async function getForecastData(lat, lon) {
+            try {
+                // Demo forecast data
+                const demoForecast = {
+                    list: Array.from({length: 7}, (_, i) => ({
+                        dt_txt: new Date(Date.now() + i * 24 * 60 * 60 * 1000).toISOString(),
+                        main: { temp: 25 + Math.random() * 10 },
+                        weather: [{ icon: ['01d', '02d', '03d', '04d'][Math.floor(Math.random() * 4)] }]
+                    }))
+                };
+                
+                updateForecastWidget(demoForecast);
+            } catch (error) {
+                console.log('Forecast API error:', error);
+            }
+        }
+
+        function updateWeatherWidget(data) {
+            document.getElementById('temperature').textContent = Math.round(data.main.temp) + '°C';
+            document.getElementById('location').textContent = data.name || 'Current Location';
+            document.getElementById('weather-description').textContent = data.weather[0].description;
+            document.getElementById('humidity').textContent = data.main.humidity + '%';
+            document.getElementById('wind-speed').textContent = data.wind.speed + ' m/s';
+            
+            // Enhanced weather icon mapping
+            const iconMap = {
+                '01d': '☀️', '01n': '🌙', '02d': '⛅', '02n': '☁️',
+                '03d': '☁️', '03n': '☁️', '04d': '☁️', '04n': '☁️',
+                '09d': '🌦️', '09n': '🌦️', '10d': '🌧️', '10n': '🌧️',
+                '11d': '⛈️', '11n': '⛈️', '13d': '❄️', '13n': '❄️',
+                '50d': '🌫️', '50n': '🌫️'
+            };
+            
+            document.getElementById('weather-icon').textContent = iconMap[data.weather[0].icon] || '🌤️';
+        }
+
+        function updateForecastWidget(data) {
+            const forecastContainer = document.getElementById('seven-day-forecast');
+            if (!forecastContainer) return;
+            
+            const dailyData = data.list.slice(0, 7);
+            
+            forecastContainer.innerHTML = dailyData.map(day => {
+                const date = new Date(day.dt_txt);
+                const dayName = date.toLocaleDateString(currentLanguage, { weekday: 'short' });
+                const temp = Math.round(day.main.temp);
+                const iconMap = {
+                    '01d': '☀️', '02d': '⛅', '03d': '☁️', '04d': '☁️',
+                    '09d': '🌦️', '10d': '🌧️', '11d': '⛈️', '13d': '❄️', '50d': '🌫️'
+                };
+                const icon = iconMap[day.weather[0].icon] || '🌤️';
+                
+                return `
+                    <div class="text-center p-2 hover:bg-white/20 dark:hover:bg-gray-700/20 rounded-lg transition-colors">
+                        <div class="text-xs text-gray-600 dark:text-gray-400 mb-1">${dayName}</div>
+                        <div class="text-2xl mb-1">${icon}</div>
+                        <div class="text-sm font-semibold text-gray-900 dark:text-white">${temp}°</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showWeatherError() {
+            document.getElementById('weather-content').innerHTML = `
+                <div class="text-center text-white/80">
+                    <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
+                    <p>Weather data temporarily unavailable</p>
+                </div>
+            `;
+        }
+
+        // Enhanced geolocation with better error handling
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 300000 // 5 minutes
+                };
+                
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        getWeatherData(position.coords.latitude, position.coords.longitude);
+                    },
+                    error => {
+                        console.log('Geolocation error:', error);
+                        // Use default location (Agricultural region)
+                        getWeatherData(40.7128, -74.0060); // New York as demo
+                    },
+                    options
+                );
+            } else {
+                getWeatherData(40.7128, -74.0060);
+            }
+        }
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            // Animate language change
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // Enhanced chat functionality
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWidget = document.getElementById('chat-widget');
+        const chatClose = document.getElementById('chat-close');
+        const widgetChatInput = document.getElementById('widget-chat-input');
+        const widgetSendBtn = document.getElementById('widget-send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatToggle.addEventListener('click', () => {
+            const isVisible = !chatWidget.classList.contains('scale-0');
+            chatWidget.classList.toggle('scale-0');
+            
+            if (!isVisible) {
+                setTimeout(() => widgetChatInput.focus(), 300);
+            }
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.add('scale-0');
+        });
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-2 mb-4 ${isUser ? 'justify-end' : ''} animate-fade-in`;
+            
+            messageDiv.innerHTML = `
+                ${!isUser ? '<div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>' : ''}
+                <div class="bg-${isUser ? 'agri-green text-white' : 'gray-100 dark:bg-gray-700'} rounded-lg p-3 max-w-xs shadow-sm">
+                    <p class="text-sm ${isUser ? 'text-white' : 'text-gray-900 dark:text-white'}">${message}</p>
+                </div>
+                ${isUser ? '<div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>' : ''}
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function simulateAIResponse(userMessage) {
+            const responses = {
+                'weather': 'Based on current weather data, I recommend checking for potential changes in the next 3 days. Consider adjusting your farming schedule accordingly for optimal results.',
+                'crop': 'For optimal crop selection, I need to know your location and soil type. Our knowledge base includes detailed guides for over 200 crop varieties with success strategies.',
+                'pest': 'To identify pests accurately, you can upload images through our AI analysis tool. I can also recommend integrated pest management strategies for your specific crops.',
+                'market': 'Current market trends show strong demand for sustainable farming products. Our market intelligence shows pricing trends and optimal selling times for maximum profit.',
+                'livestock': 'For livestock success, focus on nutrition optimization and health monitoring. Our expert network includes veterinarians and livestock specialists ready to help.',
+                'training': 'We offer comprehensive training programs covering modern farming techniques, sustainable practices, and business management. Would you like to explore our course catalog?',
+                'success': 'Success in farming comes from combining traditional knowledge with modern technology. Our platform provides tools for weather prediction, soil analysis, and market intelligence.',
+                'default': 'I\'m here to help you succeed in farming! Ask me about crops, weather, markets, livestock, training programs, or any agricultural challenge you\'re facing.'
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            let response = responses.default;
+
+            for (const key in responses) {
+                if (lowerMessage.includes(key)) {
+                    response = responses[key];
+                    break;
+                }
+            }
+
+            // Simulate typing delay
+            setTimeout(() => {
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendMessage(input) {
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                simulateAIResponse(message);
+            }
+        }
+
+        widgetSendBtn.addEventListener('click', () => sendMessage(widgetChatInput));
+
+        widgetChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage(widgetChatInput);
+            }
+        });
+
+        // Enhanced form handling
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Show success message (replace with actual form submission)
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+                    submitBtn.classList.add('bg-green-500');
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('bg-green-500');
+                        contactForm.reset();
+                    }, 2000);
+                }, 2000);
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80; // Account for fixed header
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced feature card interactions
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize components
+            translatePage(currentLanguage);
+            getCurrentLocation();
+            animateCounters();
+            
+            // Add loading complete class for animations
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - Empowering Farmers with Knowledge Tools for Success!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            // Escape key to close modals/dropdowns
+            if (e.key === 'Escape') {
+                chatWidget.classList.add('scale-0');
+                mobileMenu.classList.add('hidden');
+            }
+            
+            // Enter key for buttons with role="button"
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Performance optimization: Lazy loading for non-critical features
+        const lazyElements = document.querySelectorAll('[data-aos]');
+        const lazyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        });
+
+        lazyElements.forEach(el => lazyObserver.observe(el));
+        const videoModal = document.createElement("div");
+  videoModal.id = "videoModal";
+  videoModal.innerHTML = `
+    <div id="videoModalContent">
+      <button id="closeModal">&times;</button>
+      <video id="demoVideo" width="100%" height="100%" controls>
+        <source src="Screen Recording 2025-10-26 at 11.40.30.mov" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <button id="fullscreenBtn">⛶ Fullscreen</button>
+    </div>
+  `;
+  document.body.appendChild(videoModal);
+
+  const watchDemoBtn = document.getElementById("watchDemoBtn");
+  const closeModal = document.getElementById("closeModal");
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
+  const demoVideo = document.getElementById("demoVideo");
+
+  // Open modal on button click
+  watchDemoBtn.addEventListener("click", () => {
+    videoModal.style.display = "flex";
+    demoVideo.play();
+  });
+
+  // Close modal
+  closeModal.addEventListener("click", () => {
+    demoVideo.pause();
+    videoModal.style.display = "none";
+  });
+
+  // Fullscreen toggle
+  fullscreenBtn.addEventListener("click", () => {
+    if (demoVideo.requestFullscreen) {
+      demoVideo.requestFullscreen();
+    } else if (demoVideo.webkitRequestFullscreen) {
+      demoVideo.webkitRequestFullscreen();
+    } else if (demoVideo.msRequestFullscreen) {
+      demoVideo.msRequestFullscreen();
+    }
+  });
+
+  // Close modal when clicking outside video
+  videoModal.addEventListener("click", (e) => {
+    if (e.target === videoModal) {
+      demoVideo.pause();
+      videoModal.style.display = "none";
+    }
+  });
+    </script>
+</body>
+</html>

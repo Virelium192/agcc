@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - AgriClimate Connect | Get Expert Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-in': 'slideIn 0.8s ease-out',
+                        'shake': 'shake 0.6s ease-in-out'
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #2F7D32 0%, #4CAF50 50%, #81C784 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #2F7D32 70%, #4CAF50 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .contact-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark .contact-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark .contact-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #2F7D32, #4CAF50, #FF8F00);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .dark .form-input {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        .form-input:invalid:not(:placeholder-shown) {
+            border-color: #ef4444;
+            animation: shake 0.6s ease-in-out;
+        }
+        
+        .form-label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: #6b7280;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus ~ .form-label,
+        .form-input:not(:placeholder-shown) ~ .form-label {
+            transform: translateY(-2.5rem) scale(0.9);
+            color: #4CAF50;
+            background: white;
+            padding: 0 0.5rem;
+        }
+        
+        .dark .form-input:focus ~ .form-label,
+        .dark .form-input:not(:placeholder-shown) ~ .form-label {
+            background: #0f172a;
+        }
+        
+        .status-indicator {
+            position: relative;
+        }
+        
+        .status-indicator::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Accessibility Enhancements */
+        .focus\:ring-agri:focus {
+            ring-color: #4CAF50;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .glass-effect, .contact-card {
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #000;
+            }
+            
+            .dark .glass-effect, .dark .contact-card {
+                background: rgba(0, 0, 0, 0.9);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2F7D32;
+        }
+
+        .map-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 1rem;
+        }
+
+        .office-hours {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(46, 125, 50, 0.1));
+        }
+
+        .dark .office-hours {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-agri-green text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">
+                            <a href="index.html" class="hover:text-agri-green transition-colors">AgriClimate Connect</a>
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Expert Agricultural Support</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather & Climate Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community -->
+                    <a href="index.html#community" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.community">Community</a>
+                    
+                    <!-- About Us -->
+                    <a href="index.html#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us - Active -->
+                    <a href="#contact" class="nav-link text-agri-green dark:text-agri-light font-semibold bg-agri-green/10 dark:bg-agri-green/20 px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-agri-green rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Emergency Support Button -->
+                    <button class="hidden md:block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500" id="emergency-support">
+                        <i class="fas fa-exclamation-triangle mr-1" aria-hidden="true"></i><span data-translate="nav.emergency">Emergency Support</span>
+                    </button>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    <a href="index.html#community" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.community">Community</a>
+                    <a href="index.html#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="#contact" class="block py-2 text-agri-green font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <button class="w-full mt-4 bg-red-500 hover:bg-red-600 text-white py-2 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-red-500" id="mobile-emergency-support">
+                        <i class="fas fa-exclamation-triangle mr-1" aria-hidden="true"></i><span data-translate="nav.emergency">Emergency Support</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="contact-hero" class="min-h-screen pt-20 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+            
+            <!-- Floating Contact Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-agri-blue/20 dark:bg-agri-blue/30 rounded-full animate-float flex items-center justify-center" aria-hidden="true">
+                <i class="fas fa-headset text-agri-blue text-2xl"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-white/20 dark:bg-agri-light/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-envelope text-white dark:text-agri-light text-xl"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-accent/20 dark:bg-agri-accent/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-map-marker-alt text-agri-accent text-2xl"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <nav class="mb-6" aria-label="Breadcrumb">
+                            <ol class="flex items-center space-x-2 text-sm text-white/80">
+                                <li><a href="index.html" class="hover:text-agri-gold transition-colors" data-translate="breadcrumb.home">Home</a></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li class="text-agri-gold font-medium" data-translate="breadcrumb.contact">Contact Us</li>
+                            </ol>
+                        </nav>
+                        
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.get">Get</span> <span class="text-agri-gold" data-translate="hero.expert">Expert</span><br>
+                            <span data-translate="hero.support">Support</span><br>
+                            <span class="text-agri-light" data-translate="hero.today">Today</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Connect with our team of agricultural experts, get personalized solutions, and accelerate your farming success with 24/7 professional support.</span>
+                        </p>
+                        
+                        <!-- Response Time Promise -->
+                        <div class="bg-white/20 dark:bg-agri-night/50 backdrop-blur-sm rounded-2xl p-6 mb-8">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-16 h-16 bg-agri-gold rounded-full flex items-center justify-center">
+                                    <i class="fas fa-clock text-white text-2xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-semibold mb-1" data-translate="hero.promise_title">Response Time Promise</h3>
+                                    <p class="text-gray-200" data-translate="hero.promise_description">We respond to all inquiries within 2 hours during business hours, and within 24 hours on weekends.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Contact Options -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="bg-agri-blue hover:bg-blue-700 text-white font-semibold px-6 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-blue" id="phone-cta">
+                                <i class="fas fa-phone mr-2" aria-hidden="true"></i><span data-translate="hero.call_now">Call Now</span>
+                            </button>
+                            <button class="border-2 border-white text-white hover:bg-white hover:text-agri-green font-semibold px-6 py-4 rounded-full text-lg transition-all focus:outline-none focus:ring-2 focus:ring-white" id="chat-cta">
+                                <i class="fas fa-comments mr-2" aria-hidden="true"></i><span data-translate="hero.live_chat">Live Chat</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Support Status Dashboard -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- Support Status Widget -->
+                        <div class="glass-effect rounded-2xl p-6 text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold" data-translate="widget.support_status">Support Status</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                    <span class="text-sm status-indicator" data-translate="widget.online_now">Online Now</span>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="text-center">
+                                    <div class="text-3xl mb-2">👨‍🌾</div>
+                                    <div class="text-lg font-bold">12</div>
+                                    <div class="text-sm opacity-75" data-translate="widget.experts_available">Experts Available</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-3xl mb-2">⚡</div>
+                                    <div class="text-lg font-bold">< 2min</div>
+                                    <div class="text-sm opacity-75" data-translate="widget.avg_response">Avg Response Time</div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/20 dark:border-gray-600/30">
+                                <div class="text-center">
+                                    <div class="text-sm opacity-75" data-translate="widget.phone_support">Phone Support</div>
+                                    <div class="font-semibold text-green-400" data-translate="widget.available">Available</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-sm opacity-75" data-translate="widget.live_chat">Live Chat</div>
+                                    <div class="font-semibold text-green-400" data-translate="widget.active">Active</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-sm opacity-75" data-translate="widget.video_call">Video Call</div>
+                                    <div class="font-semibold text-yellow-400" data-translate="widget.by_appointment">By Appointment</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Support Categories -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-light" tabindex="0" role="button" onclick="openSupportCategory('technical')">
+                                <i class="fas fa-cog text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.technical_support">Technical Support</div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-light" tabindex="0" role="button" onclick="openSupportCategory('consultation')">
+                                <i class="fas fa-user-tie text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.expert_consultation">Expert Consultation</div>
+                            </div>
+                        </div>
+
+                        <!-- Emergency Alert -->
+                        <div class="bg-red-500/20 border border-red-500 rounded-xl p-4 text-white">
+                            <div class="flex items-center space-x-3">
+                                <i class="fas fa-exclamation-triangle text-red-400 text-xl" aria-hidden="true"></i>
+                                <div>
+                                    <h4 class="font-semibold" data-translate="widget.emergency_title">Emergency Agricultural Support</h4>
+                                    <p class="text-sm text-gray-200" data-translate="widget.emergency_desc">For urgent crop/livestock emergencies, call our hotline immediately</p>
+                                    <button class="mt-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
+                                        <span data-translate="widget.call_hotline">Call Emergency Hotline</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.contact_methods">Explore contact methods</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Methods Section -->
+        <section id="contact-methods" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="methods.title">Multiple Ways to Connect</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
+                        <span data-translate="methods.description">Choose the communication method that works best for you. Our expert team is ready to assist through phone, email, chat, or video call.</span>
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Phone Support -->
+                    <div class="contact-card rounded-2xl p-8 text-center shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-20 h-20 bg-gradient-to-br from-agri-blue to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-phone text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="phone.title">Phone Support</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="phone.description">
+                            Talk directly with our agricultural experts for immediate assistance and personalized guidance.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="text-lg font-bold text-agri-blue">+1-800-AGRI-HELP</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">(+1-800-247-4435)</div>
+                        </div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                            <div data-translate="phone.hours_label">Hours:</div>
+                            <div data-translate="phone.hours">Mon-Fri: 6AM-10PM EST</div>
+                            <div data-translate="phone.weekend">Sat-Sun: 8AM-6PM EST</div>
+                        </div>
+                        <button class="w-full bg-agri-blue hover:bg-blue-700 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue" onclick="initiatePhoneCall()">
+                            <i class="fas fa-phone mr-2" aria-hidden="true"></i><span data-translate="phone.call_now">Call Now</span>
+                        </button>
+                    </div>
+
+                    <!-- Email Support -->
+                    <div class="contact-card rounded-2xl p-8 text-center shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-20 h-20 bg-gradient-to-br from-agri-green to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-envelope text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="email.title">Email Support</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="email.description">
+                            Send detailed questions and receive comprehensive written responses from our experts.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="text-lg font-bold text-agri-green">support@agriclimate.com</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400" data-translate="email.response_time">Response within 2 hours</div>
+                        </div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                            <div data-translate="email.includes">Includes:</div>
+                            <div>• <span data-translate="email.detailed_guides">Detailed guides</span></div>
+                            <div>• <span data-translate="email.resource_links">Resource links</span></div>
+                            <div>• <span data-translate="email.follow_up">Follow-up support</span></div>
+                        </div>
+                        <button class="w-full bg-agri-green hover:bg-agri-dark text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="openEmailClient()">
+                            <i class="fas fa-envelope mr-2" aria-hidden="true"></i><span data-translate="email.send_email">Send Email</span>
+                        </button>
+                    </div>
+
+                    <!-- Live Chat -->
+                    <div class="contact-card rounded-2xl p-8 text-center shadow-xl" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-20 h-20 bg-gradient-to-br from-agri-accent to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-comments text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="chat.title">Live Chat</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="chat.description">
+                            Get instant answers through our live chat system with real-time expert assistance.
+                        </p>
+                        <div class="flex items-center justify-center space-x-2 mb-6">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-lg font-bold text-green-600" data-translate="chat.online_now">12 Experts Online Now</span>
+                        </div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                            <div data-translate="chat.features">Features:</div>
+                            <div>• <span data-translate="chat.instant_responses">Instant responses</span></div>
+                            <div>• <span data-translate="chat.file_sharing">File sharing</span></div>
+                            <div>• <span data-translate="chat.session_history">Session history</span></div>
+                        </div>
+                        <button class="w-full bg-agri-accent hover:bg-orange-600 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-accent" id="start-live-chat">
+                            <i class="fas fa-comments mr-2" aria-hidden="true"></i><span data-translate="chat.start_chat">Start Live Chat</span>
+                        </button>
+                    </div>
+
+                    <!-- Video Call -->
+                    <div class="contact-card rounded-2xl p-8 text-center shadow-xl" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-video text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="video.title">Video Consultation</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="video.description">
+                            Schedule face-to-face consultations with our senior agricultural specialists for complex issues.
+                        </p>
+                        <div class="space-y-2 mb-6">
+                            <div class="text-lg font-bold text-purple-600" data-translate="video.duration">30-60 Minutes</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400" data-translate="video.price">Free for premium members</div>
+                        </div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+                            <div data-translate="video.perfect_for">Perfect for:</div>
+                            <div>• <span data-translate="video.complex_issues">Complex issues</span></div>
+                            <div>• <span data-translate="video.farm_planning">Farm planning</span></div>
+                            <div>• <span data-translate="video.visual_diagnosis">Visual diagnosis</span></div>
+                        </div>
+                        <button class="w-full bg-purple-500 hover:bg-purple-700 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500" onclick="scheduleVideoCall()">
+                            <i class="fas fa-calendar mr-2" aria-hidden="true"></i><span data-translate="video.schedule">Schedule Call</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="contact-form" class="py-20 bg-gradient-to-br from-green-50 to-blue-50 dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-16" data-aos="fade-up">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                            <span data-translate="form.title">Send Us a Message</span>
+                        </h2>
+                        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                            <span data-translate="form.description">Fill out the form below and our expert team will get back to you with personalized solutions for your agricultural needs.</span>
+                        </p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-12">
+                        <!-- Contact Form -->
+                        <div class="contact-card rounded-2xl p-8 shadow-xl" data-aos="fade-right">
+                            <form id="contact-form" class="space-y-6" novalidate>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="form-group">
+                                        <input type="text" id="firstName" name="firstName" required class="form-input" placeholder=" " autocomplete="given-name">
+                                        <label for="firstName" class="form-label" data-translate="form.first_name">First Name *</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" id="lastName" name="lastName" required class="form-input" placeholder=" " autocomplete="family-name">
+                                        <label for="lastName" class="form-label" data-translate="form.last_name">Last Name *</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input type="email" id="email" name="email" required class="form-input" placeholder=" " autocomplete="email">
+                                    <label for="email" class="form-label" data-translate="form.email">Email Address *</label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input type="tel" id="phone" name="phone" class="form-input" placeholder=" " autocomplete="tel">
+                                    <label for="phone" class="form-label" data-translate="form.phone">Phone Number</label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <select id="category" name="category" required class="form-input" autocomplete="off">
+                                        <option value="" disabled selected></option>
+                                        <option value="general" data-translate="form.category.general">General Inquiry</option>
+                                        <option value="technical" data-translate="form.category.technical">Technical Support</option>
+                                        <option value="consultation" data-translate="form.category.consultation">Expert Consultation</option>
+                                        <option value="partnership" data-translate="form.category.partnership">Partnership</option>
+                                        <option value="training" data-translate="form.category.training">Training Programs</option>
+                                        <option value="emergency" data-translate="form.category.emergency">Emergency Support</option>
+                                    </select>
+                                    <label for="category" class="form-label" data-translate="form.category_label">Category *</label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <select id="farmType" name="farmType" class="form-input" autocomplete="off">
+                                        <option value="" disabled selected></option>
+                                        <option value="crop" data-translate="form.farm_type.crop">Crop Farming</option>
+                                        <option value="livestock" data-translate="form.farm_type.livestock">Livestock</option>
+                                        <option value="mixed" data-translate="form.farm_type.mixed">Mixed Farming</option>
+                                        <option value="organic" data-translate="form.farm_type.organic">Organic Farming</option>
+                                        <option value="greenhouse" data-translate="form.farm_type.greenhouse">Greenhouse</option>
+                                        <option value="other" data-translate="form.farm_type.other">Other</option>
+                                    </select>
+                                    <label for="farmType" class="form-label" data-translate="form.farm_type_label">Farm Type</label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <textarea id="message" name="message" required class="form-input resize-none" rows="5" placeholder=" "></textarea>
+                                    <label for="message" class="form-label" data-translate="form.message">Message *</label>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <input type="checkbox" id="newsletter" name="newsletter" class="mt-1 rounded border-gray-300 text-agri-green focus:ring-agri-green">
+                                    <label for="newsletter" class="text-sm text-gray-600 dark:text-gray-300">
+                                        <span data-translate="form.newsletter">I'd like to receive helpful agricultural tips and updates via email.</span>
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="w-full bg-gradient-to-r from-agri-green to-agri-light text-white font-semibold py-4 rounded-lg hover:shadow-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-agri-green disabled:opacity-50 disabled:cursor-not-allowed" id="submit-btn">
+                                    <span class="flex items-center justify-center">
+                                        <i class="fas fa-paper-plane mr-2" aria-hidden="true"></i>
+                                        <span data-translate="form.send_message">Send Message</span>
+                                    </span>
+                                </button>
+                                
+                                <p class="text-sm text-gray-500 dark:text-gray-400 text-center">
+                                    <span data-translate="form.privacy_notice">We respect your privacy and will never share your information with third parties.</span>
+                                </p>
+                            </form>
+                        </div>
+
+                        <!-- Contact Information & Map -->
+                        <div class="space-y-8" data-aos="fade-left">
+                            <!-- Office Locations -->
+                            <div class="contact-card rounded-2xl p-8 shadow-xl">
+                                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6" data-translate="info.locations_title">Our Locations</h3>
+                                
+                                <div class="space-y-6">
+                                    <!-- Main Office -->
+                                    <div class="border-l-4 border-agri-green pl-4">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white text-lg" data-translate="info.main_office">Main Office (Headquarters)</h4>
+                                        <p class="text-gray-600 dark:text-gray-300">
+                                            123 Agricultural Innovation Center<br>
+                                            Green Valley, CA 95014<br>
+                                            United States
+                                        </p>
+                                        <p class="text-agri-green font-semibold mt-2">+1 (555) 123-4567</p>
+                                    </div>
+                                    
+                                    <!-- Regional Offices -->
+                                    <div class="border-l-4 border-agri-blue pl-4">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white text-lg" data-translate="info.regional_office">Regional Office - East Africa</h4>
+                                        <p class="text-gray-600 dark:text-gray-300">
+                                            45 Innovation Hub<br>
+                                            Nairobi, Kenya
+                                        </p>
+                                        <p class="text-agri-blue font-semibold mt-2">+254 700 123 456</p>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-agri-accent pl-4">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white text-lg" data-translate="info.regional_office_south_america">Regional Office - South America</h4>
+                                        <p class="text-gray-600 dark:text-gray-300">
+                                            Rua Agricultura, 789<br>
+                                            São Paulo, Brazil
+                                        </p>
+                                        <p class="text-agri-accent font-semibold mt-2">+55 11 9876-5432</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Office Hours -->
+                            <div class="office-hours rounded-2xl p-8 border border-agri-green/30">
+                                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
+                                    <i class="fas fa-clock mr-3 text-agri-green" aria-hidden="true"></i>
+                                    <span data-translate="info.office_hours">Office Hours</span>
+                                </h3>
+                                
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-3" data-translate="info.support_hours">Support Hours (All Regions)</h4>
+                                        <div class="space-y-2 text-gray-600 dark:text-gray-300">
+                                            <div class="flex justify-between">
+                                                <span data-translate="info.monday_friday">Monday - Friday:</span>
+                                                <span>6:00 AM - 10:00 PM</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span data-translate="info.saturday">Saturday:</span>
+                                                <span>8:00 AM - 6:00 PM</span>
+                                            </div>
+                                            <div class="flex justify-between">
+                                                <span data-translate="info.sunday">Sunday:</span>
+                                                <span>10:00 AM - 4:00 PM</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-3" data-translate="info.emergency_hours">Emergency Hotline</h4>
+                                        <div class="text-gray-600 dark:text-gray-300">
+                                            <div class="flex items-center space-x-2 mb-2">
+                                                <i class="fas fa-exclamation-triangle text-red-500" aria-hidden="true"></i>
+                                                <span class="font-semibold text-red-500" data-translate="info.available_24_7">Available 24/7</span>
+                                            </div>
+                                            <p class="text-sm" data-translate="info.emergency_desc">For urgent agricultural emergencies including pest outbreaks, disease, or severe weather damage.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Social Media Links -->
+                            <div class="contact-card rounded-2xl p-8 shadow-xl">
+                                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6" data-translate="info.follow_us">Follow Us</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                                        <i class="fab fa-facebook text-blue-600 text-xl" aria-hidden="true"></i>
+                                        <span class="text-gray-700 dark:text-gray-300">Facebook</span>
+                                    </a>
+                                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                                        <i class="fab fa-twitter text-blue-400 text-xl" aria-hidden="true"></i>
+                                        <span class="text-gray-700 dark:text-gray-300">Twitter</span>
+                                    </a>
+                                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                                        <i class="fab fa-linkedin text-blue-700 text-xl" aria-hidden="true"></i>
+                                        <span class="text-gray-700 dark:text-gray-300">LinkedIn</span>
+                                    </a>
+                                    <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                                        <i class="fab fa-youtube text-red-600 text-xl" aria-hidden="true"></i>
+                                        <span class="text-gray-700 dark:text-gray-300">YouTube</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="faq.title">Frequently Asked Questions</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span data-translate="faq.description">Quick answers to common questions about our services, support, and how we can help your farming operation succeed.</span>
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="space-y-4" data-aos="fade-up">
+                        <!-- FAQ Item 1 -->
+                        <div class="contact-card rounded-2xl shadow-lg">
+                            <button class="faq-button w-full px-8 py-6 text-left focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="toggleFAQ(1)" aria-expanded="false" aria-controls="faq-content-1">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-translate="faq.q1">How quickly can I expect a response to my inquiry?</h3>
+                                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300" id="faq-icon-1" aria-hidden="true"></i>
+                                </div>
+                            </button>
+                            <div id="faq-content-1" class="faq-content hidden px-8 pb-6">
+                                <p class="text-gray-600 dark:text-gray-300" data-translate="faq.a1">
+                                    We pride ourselves on quick response times. For general inquiries submitted during business hours, expect a response within 2 hours. For urgent technical issues, we aim to respond within 30 minutes. Emergency agricultural situations receive immediate attention through our 24/7 hotline.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="contact-card rounded-2xl shadow-lg">
+                            <button class="faq-button w-full px-8 py-6 text-left focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="toggleFAQ(2)" aria-expanded="false" aria-controls="faq-content-2">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-translate="faq.q2">Do you provide support in multiple languages?</h3>
+                                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300" id="faq-icon-2" aria-hidden="true"></i>
+                                </div>
+                            </button>
+                            <div id="faq-content-2" class="faq-content hidden px-8 pb-6">
+                                <p class="text-gray-600 dark:text-gray-300" data-translate="faq.a2">
+                                    Yes! We provide support in English, Spanish, French, Kiswahili, Hindi, Portuguese, and Arabic. Our multilingual support team ensures you can communicate in your preferred language for the most effective assistance.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="contact-card rounded-2xl shadow-lg">
+                            <button class="faq-button w-full px-8 py-6 text-left focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="toggleFAQ(3)" aria-expanded="false" aria-controls="faq-content-3">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-translate="faq.q3">What types of agricultural issues can you help with?</h3>
+                                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300" id="faq-icon-3" aria-hidden="true"></i>
+                                </div>
+                            </button>
+                            <div id="faq-content-3" class="faq-content hidden px-8 pb-6">
+                                <p class="text-gray-600 dark:text-gray-300" data-translate="faq.a3">
+                                    Our expert team can assist with crop management, livestock care, pest and disease control, soil health, irrigation systems, climate adaptation strategies, market analysis, sustainable farming practices, and technology implementation. We cover all aspects of modern agriculture.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="contact-card rounded-2xl shadow-lg">
+                            <button class="faq-button w-full px-8 py-6 text-left focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="toggleFAQ(4)" aria-expanded="false" aria-controls="faq-content-4">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-translate="faq.q4">Is there a cost for consultations and support?</h3>
+                                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300" id="faq-icon-4" aria-hidden="true"></i>
+                                </div>
+                            </button>
+                            <div id="faq-content-4" class="faq-content hidden px-8 pb-6">
+                                <p class="text-gray-600 dark:text-gray-300" data-translate="faq.a4">
+                                    Basic support through phone, email, and live chat is free for all users. Premium video consultations and specialized on-site visits may have associated costs, but we offer these services at subsidized rates to support farming communities worldwide.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 5 -->
+                        <div class="contact-card rounded-2xl shadow-lg">
+                            <button class="faq-button w-full px-8 py-6 text-left focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="toggleFAQ(5)" aria-expanded="false" aria-controls="faq-content-5">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white" data-translate="faq.q5">Can you provide on-site visits to my farm?</h3>
+                                    <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300" id="faq-icon-5" aria-hidden="true"></i>
+                                </div>
+                            </button>
+                            <div id="faq-content-5" class="faq-content hidden px-8 pb-6">
+                                <p class="text-gray-600 dark:text-gray-300" data-translate="faq.a5">
+                                    Yes, we offer on-site consultation services in select regions. Our field experts can visit your farm for comprehensive assessments, soil testing, system installations, and hands-on training. Contact us to check availability in your area.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Expert Agricultural Support</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Connecting farmers worldwide with expert support, innovative solutions, and comprehensive knowledge tools for sustainable agricultural success.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.quick_links">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.home">Home</a></li>
+                        <li><a href="index.html#about" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.about">About Us</a></li>
+                        <li><a href="index.html#community" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.community">Community</a></li>
+                        <li><a href="#contact-methods" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.contact_methods">Contact Methods</a></li>
+                        <li><a href="#faq" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.faq">FAQ</a></li>
+                        <li><a href="#emergency" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.emergency">Emergency Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.contact_info">Contact Information</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-agri-green" aria-hidden="true"></i>
+                            <span class="text-gray-300">+1-800-AGRI-HELP</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-agri-green" aria-hidden="true"></i>
+                            <span class="text-gray-300">support@agriclimate.com</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-exclamation-triangle text-red-500" aria-hidden="true"></i>
+                            <span class="text-gray-300" data-translate="footer.emergency_hotline">Emergency: 24/7 Hotline</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-clock text-agri-blue" aria-hidden="true"></i>
+                            <span class="text-gray-300" data-translate="footer.hours">Mon-Fri: 6AM-10PM EST</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-comments text-agri-accent" aria-hidden="true"></i>
+                            <span class="text-gray-300" data-translate="footer.live_chat_available">Live Chat Available</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Emergency Contact Banner -->
+            <div class="bg-red-600/20 border border-red-500 rounded-2xl p-6 mb-8">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                            <i class="fas fa-exclamation-triangle text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold" data-translate="footer.emergency_banner_title">Agricultural Emergency?</h4>
+                            <p class="text-sm text-gray-300" data-translate="footer.emergency_banner_desc">Call our 24/7 emergency hotline for immediate assistance with urgent farming situations</p>
+                        </div>
+                    </div>
+                    <button class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <i class="fas fa-phone mr-2" aria-hidden="true"></i><span data-translate="footer.call_emergency">Call Emergency Line</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.cookie">Cookie Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Chat Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="chat-toggle" class="w-16 h-16 bg-gradient-to-r from-agri-green to-agri-light text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Open support chat">
+            <i class="fas fa-headset text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="fixed bottom-24 right-6 w-96 h-96 bg-white dark:bg-agri-night rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 transform scale-0 origin-bottom-right transition-transform z-50">
+        <div class="h-full flex flex-col">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-agri-green to-agri-light text-white p-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-headset" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold" data-translate="chat.title">Support Team</h4>
+                            <p class="text-xs opacity-75" data-translate="chat.subtitle">We're here to help!</p>
+                        </div>
+                    </div>
+                    <button id="chat-close" class="hover:bg-white/20 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close chat">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 overflow-y-auto" id="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+                <div class="flex items-start space-x-2 mb-4">
+                    <div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs">
+                        <i class="fas fa-headset" aria-hidden="true"></i>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+                        <p class="text-sm text-gray-900 dark:text-white" data-translate="chat.welcome">Hello! I'm here to help with any questions about our services or agricultural support. How can I assist you today?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex space-x-2">
+                    <input type="text" 
+                           placeholder="Type your message..."
+                           class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-green text-sm text-gray-900 dark:text-white dark:bg-gray-800"
+                           id="widget-chat-input"
+                           data-translate-placeholder="chat.input_placeholder">
+                    <button class="bg-agri-green hover:bg-agri-dark text-white px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" id="widget-send-chat" aria-label="Send message">
+                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="message-container" class="fixed top-20 right-4 z-50 space-y-2" aria-live="polite" role="status"></div>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for contact page
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather & Climate Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'nav.emergency': 'Emergency Support',
+                'breadcrumb.home': 'Home',
+                'breadcrumb.contact': 'Contact Us',
+                'hero.get': 'Get',
+                'hero.expert': 'Expert',
+                'hero.support': 'Support',
+                'hero.today': 'Today',
+                'hero.description': 'Connect with our team of agricultural experts, get personalized solutions, and accelerate your farming success with 24/7 professional support.',
+                'hero.promise_title': 'Response Time Promise',
+                'hero.promise_description': 'We respond to all inquiries within 2 hours during business hours, and within 24 hours on weekends.',
+                'hero.call_now': 'Call Now',
+                'hero.live_chat': 'Live Chat',
+                'widget.support_status': 'Support Status',
+                'widget.online_now': 'Online Now',
+                'widget.experts_available': 'Experts Available',
+                'widget.avg_response': 'Avg Response Time',
+                'widget.phone_support': 'Phone Support',
+                'widget.live_chat': 'Live Chat',
+                'widget.video_call': 'Video Call',
+                'widget.available': 'Available',
+                'widget.active': 'Active',
+                'widget.by_appointment': 'By Appointment',
+                'widget.technical_support': 'Technical Support',
+                'widget.expert_consultation': 'Expert Consultation',
+                'widget.emergency_title': 'Emergency Agricultural Support',
+                'widget.emergency_desc': 'For urgent crop/livestock emergencies, call our hotline immediately',
+                'widget.call_hotline': 'Call Emergency Hotline',
+                'scroll.contact_methods': 'Explore contact methods',
+                'methods.title': 'Multiple Ways to Connect',
+                'methods.description': 'Choose the communication method that works best for you. Our expert team is ready to assist through phone, email, chat, or video call.',
+                'chat.welcome': 'Hello! I\'m here to help with any questions about our services or agricultural support. How can I assist you today?',
+                'chat.input_placeholder': 'Type your message...',
+                'chat.title': 'Support Team',
+                'chat.subtitle': 'We\'re here to help!'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.weather_climate': 'Inteligencia Climática',
+                'nav.crop_advisory': 'Asesoría de Cultivos',
+                'nav.livestock': 'Gestión de Ganado',
+                'nav.market_hub': 'Inteligencia de Mercado',
+                'nav.ai_tools': 'Herramientas de IA',
+                'nav.community': 'Comunidad',
+                'nav.about': 'Acerca de Nosotros',
+                'nav.contact': 'Contáctanos',
+                'nav.emergency': 'Soporte de Emergencia',
+                'breadcrumb.home': 'Inicio',
+                'breadcrumb.contact': 'Contáctanos',
+                'hero.get': 'Obtener',
+                'hero.expert': 'Soporte',
+                'hero.support': 'Experto',
+                'hero.today': 'Hoy',
+                'hero.description': 'Conéctese con nuestro equipo de expertos agrícolas, obtenga soluciones personalizadas y acelere su éxito agrícola con soporte profesional 24/7.',
+                'hero.promise_title': 'Promesa de Tiempo de Respuesta',
+                'hero.promise_description': 'Respondemos a todas las consultas dentro de 2 horas durante horas de oficina, y dentro de 24 horas los fines de semana.',
+                'hero.call_now': 'Llamar Ahora',
+                'hero.live_chat': 'Chat en Vivo',
+                'widget.support_status': 'Estado del Soporte',
+                'widget.online_now': 'En Línea Ahora',
+                'widget.experts_available': 'Expertos Disponibles',
+                'widget.avg_response': 'Tiempo de Respuesta Promedio',
+                'widget.phone_support': 'Soporte Telefónico',
+                'widget.live_chat': 'Chat en Vivo',
+                'widget.video_call': 'Videollamada',
+                'widget.available': 'Disponible',
+                'widget.active': 'Activo',
+                'widget.by_appointment': 'Por Cita',
+                'widget.technical_support': 'Soporte Técnico',
+                'widget.expert_consultation': 'Consulta Experta',
+                'widget.emergency_title': 'Soporte Agrícola de Emergencia',
+                'widget.emergency_desc': 'Para emergencias urgentes de cultivos/ganado, llame a nuestra línea directa inmediatamente',
+                'widget.call_hotline': 'Llamar Línea de Emergencia',
+                'scroll.contact_methods': 'Explorar métodos de contacto',
+                'methods.title': 'Múltiples Formas de Conectar',
+                'methods.description': 'Elija el método de comunicación que funcione mejor para usted. Nuestro equipo experto está listo para ayudar por teléfono, email, chat o videollamada.',
+                'chat.welcome': '¡Hola! Estoy aquí para ayudar con cualquier pregunta sobre nuestros servicios o soporte agrícola. ¿Cómo puedo asistirte hoy?',
+                'chat.input_placeholder': 'Escribe tu mensaje...',
+                'chat.title': 'Equipo de Soporte',
+                'chat.subtitle': '¡Estamos aquí para ayudar!'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.weather_climate': 'Intelligence Climatique',
+                'nav.crop_advisory': 'Conseil des Cultures',
+                'nav.livestock': 'Gestion du Bétail',
+                'nav.market_hub': 'Intelligence du Marché',
+                'nav.ai_tools': 'Outils IA',
+                'nav.community': 'Communauté',
+                'nav.about': 'À Propos de Nous',
+                'nav.contact': 'Nous Contacter',
+                'nav.emergency': 'Support d\'Urgence',
+                'breadcrumb.home': 'Accueil',
+                'breadcrumb.contact': 'Nous Contacter',
+                'hero.get': 'Obtenir',
+                'hero.expert': 'Support',
+                'hero.support': 'Expert',
+                'hero.today': 'Aujourd\'hui',
+                'hero.description': 'Connectez-vous avec notre équipe d\'experts agricoles, obtenez des solutions personnalisées et accélérez votre succès agricole avec un support professionnel 24/7.',
+                'hero.promise_title': 'Promesse de Temps de Réponse',
+                'hero.promise_description': 'Nous répondons à toutes les demandes dans les 2 heures pendant les heures de bureau, et dans les 24 heures le week-end.',
+                'hero.call_now': 'Appeler Maintenant',
+                'hero.live_chat': 'Chat en Direct',
+                'widget.support_status': 'État du Support',
+                'widget.online_now': 'En Ligne Maintenant',
+                'widget.experts_available': 'Experts Disponibles',
+                'widget.avg_response': 'Temps de Réponse Moyen',
+                'widget.phone_support': 'Support Téléphonique',
+                'widget.live_chat': 'Chat en Direct',
+                'widget.video_call': 'Appel Vidéo',
+                'widget.available': 'Disponible',
+                'widget.active': 'Actif',
+                'widget.by_appointment': 'Sur Rendez-vous',
+                'widget.technical_support': 'Support Technique',
+                'widget.expert_consultation': 'Consultation d\'Expert',
+                'widget.emergency_title': 'Support Agricole d\'Urgence',
+                'widget.emergency_desc': 'Pour les urgences de cultures/bétail, appelez notre ligne d\'urgence immédiatement',
+                'widget.call_hotline': 'Appeler Ligne d\'Urgence',
+                'scroll.contact_methods': 'Explorer les méthodes de contact',
+                'methods.title': 'Plusieurs Façons de Se Connecter',
+                'methods.description': 'Choisissez la méthode de communication qui vous convient le mieux. Notre équipe d\'experts est prête à vous aider par téléphone, email, chat ou appel vidéo.',
+                'chat.welcome': 'Bonjour! Je suis ici pour aider avec toute question sur nos services ou support agricole. Comment puis-je vous aider aujourd\'hui?',
+                'chat.input_placeholder': 'Tapez votre message...',
+                'chat.title': 'Équipe de Support',
+                'chat.subtitle': 'Nous sommes là pour aider!'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Text size adjustment
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // Contact form functionality
+        const contactForm = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData);
+            
+            // Validate required fields
+            const requiredFields = ['firstName', 'lastName', 'email', 'category', 'message'];
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!data[field] || data[field].trim() === '') {
+                    input.classList.add('border-red-500');
+                    input.style.animation = 'shake 0.6s ease-in-out';
+                    isValid = false;
+                } else {
+                    input.classList.remove('border-red-500');
+                    input.style.animation = '';
+                }
+            });
+
+            if (!isValid) {
+                showMessage('Please fill in all required fields', 'error');
+                return;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                document.getElementById('email').classList.add('border-red-500');
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+
+            // Show loading state
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            submitBtn.disabled = true;
+
+            try {
+                // Simulate form submission (replace with actual API call)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Success state
+                submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+                submitBtn.classList.remove('bg-gradient-to-r', 'from-agri-green', 'to-agri-light');
+                submitBtn.classList.add('bg-green-500');
+                
+                showMessage('Thank you! Your message has been sent successfully. We\'ll respond within 2 hours.', 'success');
+                contactForm.reset();
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.classList.remove('bg-green-500');
+                    submitBtn.classList.add('bg-gradient-to-r', 'from-agri-green', 'to-agri-light');
+                    submitBtn.disabled = false;
+                }, 3000);
+
+            } catch (error) {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                showMessage('Sorry, there was an error sending your message. Please try again.', 'error');
+            }
+        });
+
+        // FAQ functionality
+        function toggleFAQ(index) {
+            const content = document.getElementById(`faq-content-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            const button = content.previousElementSibling;
+            
+            const isHidden = content.classList.contains('hidden');
+            
+            content.classList.toggle('hidden');
+            icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+            button.setAttribute('aria-expanded', isHidden);
+        }
+
+        // Chat functionality
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWidget = document.getElementById('chat-widget');
+        const chatClose = document.getElementById('chat-close');
+        const widgetChatInput = document.getElementById('widget-chat-input');
+        const widgetSendBtn = document.getElementById('widget-send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatToggle.addEventListener('click', () => {
+            const isVisible = !chatWidget.classList.contains('scale-0');
+            chatWidget.classList.toggle('scale-0');
+            
+            if (!isVisible) {
+                setTimeout(() => widgetChatInput.focus(), 300);
+            }
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.add('scale-0');
+        });
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-2 mb-4 ${isUser ? 'justify-end' : ''} animate-fade-in`;
+            
+            messageDiv.innerHTML = `
+                ${!isUser ? '<div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-headset"></i></div>' : ''}
+                <div class="bg-${isUser ? 'agri-green text-white' : 'gray-100 dark:bg-gray-700'} rounded-lg p-3 max-w-xs shadow-sm">
+                    <p class="text-sm ${isUser ? 'text-white' : 'text-gray-900 dark:text-white'}">${message}</p>
+                </div>
+                ${isUser ? '<div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>' : ''}
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function simulateSupportResponse(userMessage) {
+            const responses = {
+                'phone': 'You can reach us at +1-800-AGRI-HELP (247-4435). Our phone support is available Monday-Friday 6AM-10PM EST, and weekends 8AM-6PM EST.',
+                'email': 'You can email us at support@agriclimate.com. We respond to all emails within 2 hours during business hours.',
+                'emergency': 'For agricultural emergencies, call our 24/7 hotline immediately. We have experts standing by for urgent crop and livestock situations.',
+                'hours': 'Our support hours are Monday-Friday 6AM-10PM EST, Saturday 8AM-6PM EST, and Sunday 10AM-4PM EST. Emergency support is available 24/7.',
+                'video': 'Video consultations are available by appointment for premium members. They\'re perfect for complex issues, farm planning, and visual diagnosis.',
+                'cost': 'Basic support through phone, email, and live chat is free. Premium video consultations may have costs, but we offer subsidized rates.',
+                'languages': 'We provide support in English, Spanish, French, Kiswahili, Hindi, Portuguese, and Arabic.',
+                'response': 'We typically respond within 2 hours during business hours, and within 24 hours on weekends. Emergency situations receive immediate attention.',
+                'default': 'I\'m here to help! You can contact us via phone (+1-800-AGRI-HELP), email (support@agriclimate.com), live chat, or video consultation. What would you like to know?'
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            let response = responses.default;
+
+            for (const key in responses) {
+                if (lowerMessage.includes(key)) {
+                    response = responses[key];
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendMessage(input) {
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                simulateSupportResponse(message);
+            }
+        }
+
+        widgetSendBtn.addEventListener('click', () => sendMessage(widgetChatInput));
+
+        widgetChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage(widgetChatInput);
+            }
+        });
+
+        // Contact method functions
+        function initiatePhoneCall() {
+            window.location.href = 'tel:+18002474435';
+        }
+
+        function openEmailClient() {
+            window.location.href = 'mailto:support@agriclimate.com?subject=Agricultural Support Inquiry';
+        }
+
+        function scheduleVideoCall() {
+            showMessage('Video call scheduling will open in a new window', 'info');
+            // This would typically open a calendar booking system
+        }
+
+        // Support category functions
+        function openSupportCategory(category) {
+            showMessage(`Opening ${category} support form...`, 'info');
+            // This would typically open a specialized form
+        }
+
+        // Message display function
+        function showMessage(message, type) {
+            const messageContainer = document.getElementById('message-container');
+            const messageDiv = document.createElement('div');
+            
+            const colors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            
+            messageDiv.className = `${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform`;
+            messageDiv.textContent = message;
+            
+            messageContainer.appendChild(messageDiv);
+            
+            // Slide in
+            setTimeout(() => {
+                messageDiv.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                messageDiv.classList.add('translate-x-full');
+                setTimeout(() => {
+                    messageContainer.removeChild(messageDiv);
+                }, 300);
+            }, 5000);
+        }
+
+        // Emergency support buttons
+        document.getElementById('emergency-support')?.addEventListener('click', () => {
+            showMessage('Connecting to emergency agricultural hotline...', 'info');
+            setTimeout(() => {
+                window.location.href = 'tel:+18002474435';
+            }, 1000);
+        });
+
+        document.getElementById('mobile-emergency-support')?.addEventListener('click', () => {
+            showMessage('Connecting to emergency agricultural hotline...', 'info');
+            setTimeout(() => {
+                window.location.href = 'tel:+18002474435';
+            }, 1000);
+        });
+
+        // Live chat start button
+        document.getElementById('start-live-chat')?.addEventListener('click', () => {
+            chatToggle.click();
+        });
+
+        // Hero CTA buttons
+        document.getElementById('phone-cta')?.addEventListener('click', initiatePhoneCall);
+        document.getElementById('chat-cta')?.addEventListener('click', () => chatToggle.click());
+
+        // Form validation improvements
+        const formInputs = document.querySelectorAll('.form-input');
+        formInputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                if (input.hasAttribute('required') && !input.value.trim()) {
+                    input.classList.add('border-red-500');
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+
+            input.addEventListener('input', () => {
+                if (input.classList.contains('border-red-500') && input.value.trim()) {
+                    input.classList.remove('border-red-500');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            translatePage(currentLanguage);
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - Contact Us page loaded successfully!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                chatWidget.classList.add('scale-0');
+                mobileMenu.classList.add('hidden');
+            }
+            
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+    </script>
+</body>
+</html>

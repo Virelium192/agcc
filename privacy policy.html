@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - AgriClimate Connect | Your Data Protection Rights</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #2F7D32 0%, #4CAF50 50%, #81C784 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #2F7D32 70%, #4CAF50 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #2F7D32, #4CAF50, #FF8F00);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        /* Table of Contents Navigation */
+        .toc-nav {
+            position: sticky;
+            top: 100px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .dark .toc-nav {
+            background: rgba(15, 23, 42, 0.95);
+        }
+        
+        .toc-link {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .toc-link:hover, .toc-link.active {
+            border-left-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        /* Privacy Policy Content Styling */
+        .privacy-content h2 {
+            scroll-margin-top: 120px;
+        }
+        
+        .privacy-section {
+            border-left: 4px solid #4CAF50;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(129, 199, 132, 0.05) 100%);
+        }
+        
+        .dark .privacy-section {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+            border-left-color: #4CAF50;
+        }
+        
+        /* Accessibility Enhancements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #000;
+            }
+            
+            .dark .glass-effect {
+                background: rgba(0, 0, 0, 0.9);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2F7D32;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .privacy-section {
+                border-left: 4px solid #000;
+                background: rgba(0, 0, 0, 0.05);
+            }
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-agri-green text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50 no-print" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">
+                            <a href="index.html" class="hover:text-agri-green transition-colors">AgriClimate Connect</a>
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Privacy & Data Protection</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="weather.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather & Climate Intelligence</span>
+                            </a>
+                            <a href="crops.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="livestock.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="market.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="ai-tools.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community -->
+                    <a href="index.html#community" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.community">Community</a>
+                    
+                    <!-- About Us -->
+                    <a href="index.html#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us -->
+                    <a href="index.html#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-agri-green rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Print Button -->
+                        <button id="print-page" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" title="Print privacy policy" aria-label="Print this page">
+                            <i class="fas fa-print text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <a href="index.html" class="hidden md:block bg-gradient-to-r from-agri-green to-agri-light text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover">
+                        <span data-translate="cta.get_started">Get Started</span>
+                    </a>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    <a href="index.html#community" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.community">Community</a>
+                    <a href="index.html#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="index.html#contact" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <a href="index.html" class="block w-full mt-4 bg-gradient-to-r from-agri-green to-agri-light text-white py-2 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-agri-green text-center">
+                        <span data-translate="cta.get_started">Get Started</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pt-20">
+        <!-- Hero Section -->
+        <section class="py-16 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/20 dark:bg-black/40"></div>
+            
+            <!-- Floating Privacy Icons -->
+            <div class="absolute top-10 left-10 w-16 h-16 bg-white/20 dark:bg-agri-light/30 rounded-full animate-float flex items-center justify-center" aria-hidden="true">
+                <i class="fas fa-shield-alt text-white text-2xl"></i>
+            </div>
+            <div class="absolute top-20 right-20 w-12 h-12 bg-agri-gold/20 dark:bg-agri-gold/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-lock text-agri-gold text-xl"></i>
+            </div>
+            <div class="absolute bottom-10 left-1/4 w-20 h-20 bg-agri-accent/20 dark:bg-agri-accent/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-user-shield text-agri-accent text-2xl"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10">
+                <nav class="mb-8" aria-label="Breadcrumb">
+                    <ol class="flex items-center space-x-2 text-sm text-white/80">
+                        <li><a href="index.html" class="hover:text-agri-gold transition-colors" data-translate="breadcrumb.home">Home</a></li>
+                        <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                        <li class="text-agri-gold font-medium" data-translate="breadcrumb.privacy">Privacy Policy</li>
+                    </ol>
+                </nav>
+                
+                <div class="max-w-4xl" data-aos="fade-right">
+                    <h1 class="text-5xl lg:text-6xl font-bold mb-6 text-white text-shadow">
+                        <span data-translate="privacy.title">Privacy Policy</span>
+                    </h1>
+                    <p class="text-xl lg:text-2xl mb-8 text-gray-100 leading-relaxed">
+                        <span data-translate="privacy.subtitle">Your data protection and privacy rights are fundamental to our mission of empowering farmers worldwide.</span>
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <div class="flex items-center text-white">
+                            <i class="fas fa-calendar-alt mr-2 text-agri-gold" aria-hidden="true"></i>
+                            <span data-translate="privacy.last_updated">Last Updated:</span>
+                            <span class="ml-2 font-medium" data-translate="privacy.update_date">December 15, 2024</span>
+                        </div>
+                        <div class="flex items-center text-white">
+                            <i class="fas fa-clock mr-2 text-agri-gold" aria-hidden="true"></i>
+                            <span data-translate="privacy.read_time">Reading Time:</span>
+                            <span class="ml-2 font-medium" data-translate="privacy.time_estimate">15 minutes</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/10 dark:bg-agri-night/50 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                        <h3 class="text-lg font-semibold text-white mb-3" data-translate="privacy.quick_summary">Quick Summary</h3>
+                        <p class="text-gray-100 text-sm leading-relaxed" data-translate="privacy.summary_text">
+                            AgriClimate Connect is committed to protecting your privacy and personal data. We collect minimal necessary information to provide our agricultural knowledge services, never sell your data to third parties, and give you full control over your information. This policy explains our practices in clear, understandable language.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="py-16 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="grid lg:grid-cols-4 gap-12">
+                    <!-- Table of Contents -->
+                    <div class="lg:col-span-1">
+                        <div class="toc-nav rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 no-print">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4" data-translate="privacy.toc_title">Table of Contents</h2>
+                            <nav aria-label="Privacy policy sections">
+                                <ul class="space-y-2">
+                                    <li><a href="#information-collection" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.collection">1. Information Collection</a></li>
+                                    <li><a href="#information-use" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.use">2. How We Use Information</a></li>
+                                    <li><a href="#information-sharing" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.sharing">3. Information Sharing</a></li>
+                                    <li><a href="#data-security" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.security">4. Data Security</a></li>
+                                    <li><a href="#cookies-tracking" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.cookies">5. Cookies & Tracking</a></li>
+                                    <li><a href="#user-rights" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.rights">6. Your Rights</a></li>
+                                    <li><a href="#third-party" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.third_party">7. Third-Party Services</a></li>
+                                    <li><a href="#international" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.international">8. International Users</a></li>
+                                    <li><a href="#children" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.children">9. Children's Privacy</a></li>
+                                    <li><a href="#retention" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.retention">10. Data Retention</a></li>
+                                    <li><a href="#updates" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.updates">11. Policy Updates</a></li>
+                                    <li><a href="#contact-info" class="toc-link block py-2 px-3 rounded text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green focus:outline-none focus:ring-2 focus:ring-agri-green" data-translate="privacy.toc.contact">12. Contact Information</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Policy Content -->
+                    <div class="lg:col-span-3 privacy-content" data-aos="fade-left">
+                        <!-- Section 1: Information Collection -->
+                        <section id="information-collection" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-database mr-3 text-agri-blue" aria-hidden="true"></i>
+                                <span data-translate="privacy.section1.title">1. Information We Collect</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section1.personal_title">Personal Information</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section1.personal_desc">
+                                        We collect personal information that you voluntarily provide when using our agricultural knowledge platform:
+                                    </p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300 ml-4">
+                                        <li data-translate="privacy.section1.personal_item1">Name and contact information (email address, phone number)</li>
+                                        <li data-translate="privacy.section1.personal_item2">Farm location and agricultural interests</li>
+                                        <li data-translate="privacy.section1.personal_item3">Account preferences and settings</li>
+                                        <li data-translate="privacy.section1.personal_item4">Communication preferences</li>
+                                        <li data-translate="privacy.section1.personal_item5">Support requests and feedback</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section1.usage_title">Usage Information</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section1.usage_desc">
+                                        We automatically collect certain information about your interaction with our platform:
+                                    </p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300 ml-4">
+                                        <li data-translate="privacy.section1.usage_item1">Pages visited and features used</li>
+                                        <li data-translate="privacy.section1.usage_item2">Time spent on different sections</li>
+                                        <li data-translate="privacy.section1.usage_item3">Device information and browser type</li>
+                                        <li data-translate="privacy.section1.usage_item4">IP address and general location</li>
+                                        <li data-translate="privacy.section1.usage_item5">Agricultural content preferences and learning progress</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section1.technical_title">Technical Information</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section1.technical_desc">
+                                        To ensure optimal performance of our agricultural tools and AI-powered features, we collect technical data such as system performance metrics, error logs, and feature usage analytics. This helps us improve our services and provide better farming insights.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 2: How We Use Information -->
+                        <section id="information-use" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-cogs mr-3 text-agri-green" aria-hidden="true"></i>
+                                <span data-translate="privacy.section2.title">2. How We Use Your Information</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section2.service_title">Service Delivery</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section2.service_desc">
+                                        Your information helps us provide personalized agricultural knowledge and tools:
+                                    </p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300 ml-4">
+                                        <li data-translate="privacy.section2.service_item1">Customize weather and climate recommendations for your region</li>
+                                        <li data-translate="privacy.section2.service_item2">Provide relevant crop and livestock management advice</li>
+                                        <li data-translate="privacy.section2.service_item3">Deliver market intelligence suited to your farming interests</li>
+                                        <li data-translate="privacy.section2.service_item4">Enable AI-powered tools and predictive analytics</li>
+                                        <li data-translate="privacy.section2.service_item5">Track your learning progress and achievements</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section2.communication_title">Communication</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section2.communication_desc">
+                                        We use your contact information to send important updates about agricultural conditions, new knowledge resources, platform improvements, and respond to your support requests. You can control these communications through your account settings.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section2.improvement_title">Service Improvement</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section2.improvement_desc">
+                                        We analyze usage patterns to enhance our agricultural knowledge platform, develop new features that benefit farmers, improve AI accuracy, and ensure the reliability of our weather and market data services.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 3: Information Sharing -->
+                        <section id="information-sharing" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-share-alt mr-3 text-agri-accent" aria-hidden="true"></i>
+                                <span data-translate="privacy.section3.title">3. Information Sharing</span>
+                            </h2>
+                            
+                            <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-6">
+                                <div class="flex items-start">
+                                    <i class="fas fa-shield-check text-green-600 mt-1 mr-3" aria-hidden="true"></i>
+                                    <div>
+                                        <h4 class="font-semibold text-green-800 dark:text-green-300 mb-2" data-translate="privacy.section3.promise_title">Our Commitment</h4>
+                                        <p class="text-green-700 dark:text-green-300 text-sm" data-translate="privacy.section3.promise_text">
+                                            We never sell, rent, or trade your personal information to third parties for marketing purposes. Your agricultural data and farming insights remain confidential and are used solely to improve your experience on our platform.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section3.limited_title">Limited Sharing Scenarios</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section3.limited_desc">
+                                        We only share your information in these specific circumstances:
+                                    </p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300 ml-4">
+                                        <li data-translate="privacy.section3.limited_item1">With trusted service providers who help operate our platform (under strict confidentiality agreements)</li>
+                                        <li data-translate="privacy.section3.limited_item2">When required by law or to protect our legal rights</li>
+                                        <li data-translate="privacy.section3.limited_item3">With your explicit consent for specific partnerships or collaborations</li>
+                                        <li data-translate="privacy.section3.limited_item4">In anonymized, aggregated form for agricultural research that benefits the farming community</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section3.partners_title">Trusted Partners</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section3.partners_desc">
+                                        We work with reputable agricultural organizations, weather data providers, and technology partners who share our commitment to farmer privacy. All partnerships are governed by strict data protection agreements that align with our privacy standards.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 4: Data Security -->
+                        <section id="data-security" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-lock mr-3 text-red-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section4.title">4. Data Security</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section4.measures_title">Security Measures</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section4.measures_desc">
+                                        We implement industry-standard security measures to protect your agricultural data:
+                                    </p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300 ml-4">
+                                        <li data-translate="privacy.section4.measures_item1">End-to-end encryption for data transmission</li>
+                                        <li data-translate="privacy.section4.measures_item2">Secure data storage with regular backups</li>
+                                        <li data-translate="privacy.section4.measures_item3">Multi-factor authentication for account access</li>
+                                        <li data-translate="privacy.section4.measures_item4">Regular security audits and vulnerability assessments</li>
+                                        <li data-translate="privacy.section4.measures_item5">Staff training on data protection and privacy practices</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section4.incident_title">Incident Response</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section4.incident_desc">
+                                        In the unlikely event of a data breach, we have established procedures to quickly identify, contain, and resolve the issue. We will notify affected users within 72 hours and provide clear information about the steps being taken to protect their data.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 5: Cookies & Tracking -->
+                        <section id="cookies-tracking" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-cookie-bite mr-3 text-yellow-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section5.title">5. Cookies & Tracking Technologies</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section5.essential_title">Essential Cookies</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section5.essential_desc">
+                                        We use necessary cookies to ensure our agricultural platform functions properly. These include session management, security features, language preferences, accessibility settings, and your personalized farming dashboard configuration.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section5.analytics_title">Analytics Cookies</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section5.analytics_desc">
+                                        With your consent, we use analytics cookies to understand how farmers use our knowledge tools, which features are most helpful, and how we can improve the agricultural learning experience. This data helps us develop better farming resources.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section5.control_title">Your Control</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section5.control_desc">
+                                        You can manage cookie preferences through your browser settings or our cookie consent panel. Disabling certain cookies may limit some platform functionality, but core agricultural knowledge features will remain available.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 6: Your Rights -->
+                        <section id="user-rights" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-balance-scale mr-3 text-purple-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section6.title">6. Your Privacy Rights</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section6.access_title">Access & Control</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section6.access_desc">
+                                        You have comprehensive rights regarding your agricultural data and personal information:
+                                    </p>
+                                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300 ml-4">
+                                        <li data-translate="privacy.section6.access_item1">Access and download all your personal data and farming preferences</li>
+                                        <li data-translate="privacy.section6.access_item2">Correct or update any inaccurate information</li>
+                                        <li data-translate="privacy.section6.access_item3">Delete your account and associated data</li>
+                                        <li data-translate="privacy.section6.access_item4">Port your data to another agricultural platform</li>
+                                        <li data-translate="privacy.section6.access_item5">Object to certain data processing activities</li>
+                                        <li data-translate="privacy.section6.access_item6">Request restriction of data processing</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section6.exercise_title">Exercising Your Rights</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section6.exercise_desc">
+                                        To exercise any of these rights, contact our privacy team at privacy@agriclimateconnect.com. We will respond within 30 days and verify your identity to protect your data. Most actions can also be performed directly through your account settings.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 7: Third-Party Services -->
+                        <section id="third-party" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-external-link-alt mr-3 text-indigo-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section7.title">7. Third-Party Services</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section7.weather_title">Weather & Climate Data</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section7.weather_desc">
+                                        We integrate with trusted weather services to provide accurate agricultural forecasts. These services may use your general location to deliver relevant climate information, but they do not receive your personal identification details.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section7.payment_title">Payment Processing</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section7.payment_desc">
+                                        Payment transactions for premium agricultural courses and tools are processed by certified third-party payment processors. We do not store your payment information on our servers, and all transactions are secured with industry-standard encryption.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section7.links_title">External Links</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section7.links_desc">
+                                        Our platform may contain links to external agricultural resources, government agencies, and educational institutions. These websites have their own privacy policies, and we encourage you to review them before sharing personal information.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 8: International Users -->
+                        <section id="international" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-globe mr-3 text-green-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section8.title">8. International Users</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section8.global_title">Global Agricultural Community</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section8.global_desc">
+                                        AgriClimate Connect serves farmers worldwide, and we comply with international data protection regulations including GDPR, CCPA, and other applicable privacy laws. Your data may be processed in different countries to provide optimal agricultural services.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section8.transfer_title">Data Transfers</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section8.transfer_desc">
+                                        When we transfer data internationally for agricultural services, we ensure appropriate safeguards are in place, including standard contractual clauses, adequacy decisions, and certification schemes that provide equivalent protection to your home country's privacy laws.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section8.local_title">Local Privacy Laws</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section8.local_desc">
+                                        If you are located in a region with specific privacy laws (such as the EU, California, or Canada), you may have additional rights under those laws. Please contact us to learn more about rights specific to your jurisdiction.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 9: Children's Privacy -->
+                        <section id="children" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-child mr-3 text-pink-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section9.title">9. Children's Privacy</span>
+                            </h2>
+                            
+                            <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-600 mt-1 mr-3" aria-hidden="true"></i>
+                                    <div>
+                                        <h4 class="font-semibold text-yellow-800 dark:text-yellow-300 mb-2" data-translate="privacy.section9.age_title">Age Requirement</h4>
+                                        <p class="text-yellow-700 dark:text-yellow-300 text-sm" data-translate="privacy.section9.age_text">
+                                            Our agricultural knowledge platform is designed for users aged 13 and older. We do not knowingly collect personal information from children under 13 without parental consent.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section9.young_title">Young Farmers Program</h3>
+                                <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section9.young_desc">
+                                    For our educational programs aimed at young farmers (ages 13-17), we require parental or guardian consent and take additional measures to protect young users:
+                                </p>
+                                <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300 ml-4">
+                                    <li data-translate="privacy.section9.young_item1">Limited data collection focused on educational needs</li>
+                                    <li data-translate="privacy.section9.young_item2">Enhanced privacy controls and parental oversight</li>
+                                    <li data-translate="privacy.section9.young_item3">Restricted communication features</li>
+                                    <li data-translate="privacy.section9.young_item4">Regular review of accounts by our education team</li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <!-- Section 10: Data Retention -->
+                        <section id="retention" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-archive mr-3 text-gray-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section10.title">10. Data Retention</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section10.active_title">Active Accounts</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section10.active_desc">
+                                        We retain your agricultural data and learning progress while your account is active and for a reasonable period afterward to provide continuous farming insights and allow for account recovery. Your data helps us improve seasonal predictions and agricultural recommendations.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section10.inactive_title">Inactive Accounts</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section10.inactive_desc">
+                                        If you don't use your account for 3 years, we will contact you about account status. After 4 years of inactivity, we may delete your account and associated data, except for information we are legally required to retain for agricultural reporting or regulatory purposes.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section10.legal_title">Legal Requirements</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section10.legal_desc">
+                                        Some agricultural data may be retained longer to comply with legal obligations, resolve disputes, enforce our agreements, or support agricultural research that benefits the farming community. This includes anonymized crop yield data and climate adaptation insights.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 11: Policy Updates -->
+                        <section id="updates" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-sync-alt mr-3 text-blue-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section11.title">11. Privacy Policy Updates</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section11.changes_title">Policy Changes</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section11.changes_desc">
+                                        As agricultural technology evolves and privacy regulations develop, we may need to update this privacy policy. We are committed to maintaining transparency about how we protect farmer data and will clearly communicate any changes that affect your privacy rights.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section11.notification_title">Change Notifications</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section11.notification_desc">
+                                        For significant changes to our privacy practices, we will notify you at least 30 days in advance via email, platform notifications, or prominent website notices. Minor updates will be reflected in the "Last Updated" date at the top of this policy.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section11.consent_title">Continued Use</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section11.consent_desc">
+                                        Your continued use of AgriClimate Connect after policy updates constitutes acceptance of the revised terms. If you disagree with changes, you may discontinue using our services and request deletion of your data.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Section 12: Contact Information -->
+                        <section id="contact-info" class="privacy-section rounded-2xl p-8 mb-8 shadow-lg">
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                                <i class="fas fa-envelope mr-3 text-green-600" aria-hidden="true"></i>
+                                <span data-translate="privacy.section12.title">12. Contact Information</span>
+                            </h2>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section12.privacy_title">Privacy Questions</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4" data-translate="privacy.section12.privacy_desc">
+                                        For any questions about this privacy policy or your data rights, please contact our dedicated privacy team:
+                                    </p>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="privacy.section12.email_title">Email</h4>
+                                            <a href="mailto:privacy@agriclimateconnect.com" class="text-agri-green hover:text-agri-dark transition-colors">privacy@agriclimateconnect.com</a>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                                            <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="privacy.section12.response_title">Response Time</h4>
+                                            <p class="text-gray-600 dark:text-gray-300" data-translate="privacy.section12.response_text">Within 48 hours</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="privacy.section12.company_title">Company Information</h3>
+                                    <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                                        <p class="text-gray-600 dark:text-gray-300 mb-2">
+                                            <strong data-translate="privacy.section12.company_name">AgriClimate Connect, LLC</strong>
+                                        </p>
+                                        <p class="text-gray-600 dark:text-gray-300 mb-2" data-translate="privacy.section12.company_address">
+                                            123 Agricultural Innovation Center<br>
+                                            Green Valley, CA 95014<br>
+                                            United States
+                                        </p>
+                                        <p class="text-gray-600 dark:text-gray-300">
+                                            <span data-translate="privacy.section12.general_inquiries">General Inquiries:</span> 
+                                            <a href="mailto:hello@agriclimateconnect.com" class="text-agri-green hover:text-agri-dark transition-colors ml-2">hello@agriclimateconnect.com</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Conclusion -->
+                        <section class="bg-gradient-to-r from-agri-green to-agri-light rounded-2xl p-8 text-white text-center" data-aos="fade-up">
+                            <h2 class="text-2xl font-bold mb-4" data-translate="privacy.conclusion.title">Thank You for Trusting Us</h2>
+                            <p class="text-lg leading-relaxed" data-translate="privacy.conclusion.text">
+                                Your privacy is fundamental to our mission of empowering farmers worldwide. We are committed to protecting your data while providing the best agricultural knowledge and tools to help you succeed.
+                            </p>
+                            <div class="mt-6">
+                                <a href="index.html" class="bg-white text-agri-green px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-white">
+                                    <span data-translate="privacy.conclusion.cta">Return to AgriClimate Connect</span>
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16 no-print" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Empowering Farmers with Knowledge</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Committed to protecting your privacy while providing world-class agricultural knowledge and tools for farming success.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Legal Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.legal">Legal</h4>
+                    <ul class="space-y-3">
+                        <li><a href="privacy-policy.html" class="text-agri-light hover:text-agri-light/80 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.privacy_policy">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.terms">Terms of Service</a></li>
+                        <li><a href="cookie-policy.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.cookie">Cookie Policy</a></li>
+                        <li><a href="data-processing.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.data_processing">Data Processing</a></li>
+                        <li><a href="gdpr.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.gdpr">GDPR Compliance</a></li>
+                        <li><a href="accessibility.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.accessibility">Accessibility</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.support">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#contact" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.contact">Contact Support</a></li>
+                        <li><a href="help.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.help">Help Center</a></li>
+                        <li><a href="privacy-request.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.privacy_request">Privacy Request</a></li>
+                        <li><a href="data-deletion.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.data_deletion">Data Deletion</a></li>
+                        <li><a href="security.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.security">Security Center</a></li>
+                        <li><a href="trust.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.trust">Trust Center</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect. All rights reserved. Privacy protected.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <span class="text-green-400 flex items-center">
+                            <i class="fas fa-shield-check mr-1" aria-hidden="true"></i>
+                            <span data-translate="footer.privacy_protected">Privacy Protected</span>
+                        </span>
+                        <span class="text-blue-400 flex items-center">
+                            <i class="fas fa-lock mr-1" aria-hidden="true"></i>
+                            <span data-translate="footer.secure_data">Secure Data</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for privacy policy
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather & Climate Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'cta.get_started': 'Get Started',
+                
+                'breadcrumb.home': 'Home',
+                'breadcrumb.privacy': 'Privacy Policy',
+                
+                'privacy.title': 'Privacy Policy',
+                'privacy.subtitle': 'Your data protection and privacy rights are fundamental to our mission of empowering farmers worldwide.',
+                'privacy.last_updated': 'Last Updated:',
+                'privacy.update_date': 'December 15, 2024',
+                'privacy.read_time': 'Reading Time:',
+                'privacy.time_estimate': '15 minutes',
+                'privacy.quick_summary': 'Quick Summary',
+                'privacy.summary_text': 'AgriClimate Connect is committed to protecting your privacy and personal data. We collect minimal necessary information to provide our agricultural knowledge services, never sell your data to third parties, and give you full control over your information. This policy explains our practices in clear, understandable language.',
+                
+                'privacy.toc_title': 'Table of Contents',
+                'privacy.toc.collection': '1. Information Collection',
+                'privacy.toc.use': '2. How We Use Information',
+                'privacy.toc.sharing': '3. Information Sharing',
+                'privacy.toc.security': '4. Data Security',
+                'privacy.toc.cookies': '5. Cookies & Tracking',
+                'privacy.toc.rights': '6. Your Rights',
+                'privacy.toc.third_party': '7. Third-Party Services',
+                'privacy.toc.international': '8. International Users',
+                'privacy.toc.children': '9. Children\'s Privacy',
+                'privacy.toc.retention': '10. Data Retention',
+                'privacy.toc.updates': '11. Policy Updates',
+                'privacy.toc.contact': '12. Contact Information',
+                
+                'privacy.conclusion.title': 'Thank You for Trusting Us',
+                'privacy.conclusion.text': 'Your privacy is fundamental to our mission of empowering farmers worldwide. We are committed to protecting your data while providing the best agricultural knowledge and tools to help you succeed.',
+                'privacy.conclusion.cta': 'Return to AgriClimate Connect',
+                
+                'footer.tagline': 'Empowering Farmers with Knowledge',
+                'footer.description': 'Committed to protecting your privacy while providing world-class agricultural knowledge and tools for farming success.',
+                'footer.legal': 'Legal',
+                'footer.privacy_policy': 'Privacy Policy',
+                'footer.terms': 'Terms of Service',
+                'footer.cookie': 'Cookie Policy',
+                'footer.data_processing': 'Data Processing',
+                'footer.gdpr': 'GDPR Compliance',
+                'footer.accessibility': 'Accessibility',
+                'footer.support': 'Support',
+                'footer.contact': 'Contact Support',
+                'footer.help': 'Help Center',
+                'footer.privacy_request': 'Privacy Request',
+                'footer.data_deletion': 'Data Deletion',
+                'footer.security': 'Security Center',
+                'footer.trust': 'Trust Center',
+                'footer.copyright': '© 2024 AgriClimate Connect. All rights reserved. Privacy protected.',
+                'footer.privacy_protected': 'Privacy Protected',
+                'footer.secure_data': 'Secure Data'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.community': 'Comunidad',
+                'nav.about': 'Acerca de Nosotros',
+                'nav.contact': 'Contáctanos',
+                'cta.get_started': 'Comenzar',
+                
+                'breadcrumb.home': 'Inicio',
+                'breadcrumb.privacy': 'Política de Privacidad',
+                
+                'privacy.title': 'Política de Privacidad',
+                'privacy.subtitle': 'Tus derechos de protección de datos y privacidad son fundamentales para nuestra misión de empoderar a los agricultores en todo el mundo.',
+                'privacy.last_updated': 'Última Actualización:',
+                'privacy.update_date': '15 de Diciembre, 2024',
+                'privacy.read_time': 'Tiempo de Lectura:',
+                'privacy.time_estimate': '15 minutos',
+                'privacy.quick_summary': 'Resumen Rápido',
+                'privacy.summary_text': 'AgriClimate Connect está comprometido a proteger tu privacidad y datos personales. Recopilamos información mínima necesaria para proporcionar nuestros servicios de conocimiento agrícola, nunca vendemos tus datos a terceros, y te damos control total sobre tu información.',
+                
+                'privacy.toc_title': 'Tabla de Contenidos',
+                'privacy.conclusion.title': 'Gracias por Confiar en Nosotros',
+                'privacy.conclusion.text': 'Tu privacidad es fundamental para nuestra misión de empoderar a los agricultores en todo el mundo. Estamos comprometidos a proteger tus datos mientras proporcionamos el mejor conocimiento y herramientas agrícolas.',
+                'privacy.conclusion.cta': 'Regresar a AgriClimate Connect',
+                
+                'footer.tagline': 'Empoderando Agricultores con Conocimiento',
+                'footer.description': 'Comprometidos a proteger tu privacidad mientras proporcionamos conocimiento y herramientas agrícolas de clase mundial para el éxito en la agricultura.',
+                'footer.legal': 'Legal',
+                'footer.privacy_policy': 'Política de Privacidad',
+                'footer.copyright': '© 2024 AgriClimate Connect. Todos los derechos reservados. Privacidad protegida.',
+                'footer.privacy_protected': 'Privacidad Protegida',
+                'footer.secure_data': 'Datos Seguros'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.community': 'Communauté',
+                'nav.about': 'À Propos',
+                'nav.contact': 'Nous Contacter',
+                'cta.get_started': 'Commencer',
+                
+                'breadcrumb.home': 'Accueil',
+                'breadcrumb.privacy': 'Politique de Confidentialité',
+                
+                'privacy.title': 'Politique de Confidentialité',
+                'privacy.subtitle': 'Vos droits de protection des données et de confidentialité sont fondamentaux pour notre mission d\'autonomiser les agriculteurs dans le monde entier.',
+                'privacy.last_updated': 'Dernière Mise à Jour:',
+                'privacy.update_date': '15 Décembre, 2024',
+                'privacy.read_time': 'Temps de Lecture:',
+                'privacy.time_estimate': '15 minutes',
+                'privacy.quick_summary': 'Résumé Rapide',
+                'privacy.summary_text': 'AgriClimate Connect s\'engage à protéger votre confidentialité et vos données personnelles. Nous collectons un minimum d\'informations nécessaires pour fournir nos services de connaissances agricoles.',
+                
+                'privacy.toc_title': 'Table des Matières',
+                'privacy.conclusion.title': 'Merci de Nous Faire Confiance',
+                'privacy.conclusion.text': 'Votre confidentialité est fondamentale pour notre mission d\'autonomiser les agriculteurs dans le monde entier.',
+                'privacy.conclusion.cta': 'Retourner à AgriClimate Connect',
+                
+                'footer.tagline': 'Autonomiser les Agriculteurs avec des Connaissances',
+                'footer.description': 'Engagés à protéger votre confidentialité tout en fournissant des connaissances et outils agricoles de classe mondiale.',
+                'footer.copyright': '© 2024 AgriClimate Connect. Tous droits réservés. Confidentialité protégée.'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            // Add visual feedback
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            // Visual feedback
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        // Load high contrast preference
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            // Animate hamburger to X
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Text size adjustment
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            // Update button states
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        // Initialize text size
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            // Animate language change
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // Table of Contents functionality
+        function setupTableOfContents() {
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const sections = document.querySelectorAll('.privacy-content h2[id]');
+            
+            // Smooth scrolling for TOC links
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        const offset = 120; // Account for sticky header and TOC
+                        const elementPosition = targetSection.offsetTop;
+                        const offsetPosition = elementPosition - offset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Highlight current section in TOC
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        tocLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, {
+                rootMargin: '-120px 0px -50% 0px'
+            });
+
+            sections.forEach(section => observer.observe(section));
+        }
+
+        // Print functionality
+        const printBtn = document.getElementById('print-page');
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+        // Smooth scrolling for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 120;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize components
+            translatePage(currentLanguage);
+            setupTableOfContents();
+            
+            // Add loading complete class for animations
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - Privacy Policy loaded successfully!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            // Escape key to close modals/dropdowns
+            if (e.key === 'Escape') {
+                mobileMenu.classList.add('hidden');
+            }
+            
+            // Enter key for buttons with role="button"
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Performance optimization: Lazy loading for non-critical features
+        const lazyElements = document.querySelectorAll('[data-aos]');
+        const lazyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        });
+
+        lazyElements.forEach(el => lazyObserver.observe(el));
+    </script>
+</body>
+</html>

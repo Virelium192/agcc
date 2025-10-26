@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Agriclimate Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        'green-earth': '#2D7D32',
+                        'brown-soil': '#8D6E63',
+                        'blue-sky': '#1976D2',
+                        'yellow-sun': '#FBC02D',
+                        'gold': '#FFD700',
+                        'emerald': '#10B981',
+                        'sapphire': '#3B82F6'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'gradient': 'gradient 15s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'fade-in': 'fade-in 0.6s ease-out',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #f8fafc;
+        }
+        
+        .dark body {
+            background: #0f172a;
+        }
+        
+        .premium-gradient {
+            background: linear-gradient(135deg, #2D7D32 0%, #1976D2 25%, #5D5CDE 50%, #FBC02D 75%, #10B981 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes slide-up {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes bounce-gentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .glass-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(45, 125, 50, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .stat-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(45, 125, 50, 0.15);
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-item:hover {
+            background: rgba(45, 125, 50, 0.1);
+            border-left-color: #2D7D32;
+        }
+        
+        .sidebar-item.active {
+            background: rgba(45, 125, 50, 0.15);
+            border-left-color: #2D7D32;
+            color: #2D7D32;
+        }
+        
+        .dark .sidebar-item:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-left-color: #10B981;
+        }
+        
+        .dark .sidebar-item.active {
+            background: rgba(16, 185, 129, 0.15);
+            border-left-color: #10B981;
+            color: #10B981;
+        }
+        
+        .premium-button {
+            background: linear-gradient(135deg, #2D7D32, #10B981);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-button:hover {
+            background: linear-gradient(135deg, #1976D2, #3B82F6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 125, 50, 0.3);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .farm-zone {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 4px;
+        }
+        
+        .farm-zone:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .alert-banner {
+            background: linear-gradient(135deg, #FBC02D, #FF9800);
+            color: white;
+            animation: pulse-slow;
+        }
+        
+        .success-banner {
+            background: linear-gradient(135deg, #2D7D32, #10B981);
+            color: white;
+        }
+        
+        .warning-banner {
+            background: linear-gradient(135deg, #FF5722, #F44336);
+            color: white;
+        }
+        
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        .dark .loading-skeleton {
+            background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+            background-size: 200% 100%;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .new-user-guide {
+            background: linear-gradient(135deg, rgba(93, 92, 222, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+            border: 2px dashed rgba(93, 92, 222, 0.3);
+        }
+        
+        .dark .new-user-guide {
+            background: linear-gradient(135deg, rgba(93, 92, 222, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border: 2px dashed rgba(93, 92, 222, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-slate-900 font-inter">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 premium-gradient flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="w-20 h-20 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <h2 class="text-2xl font-bold text-white mb-2">Loading Your Farm Dashboard</h2>
+            <p class="text-white/80">Fetching your latest data...</p>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Container -->
+    <div id="dashboard-container" class="hidden min-h-screen">
+        <!-- Top Header Bar -->
+        <header class="fixed top-0 w-full h-16 glass-card border-b border-gray-200 dark:border-gray-700 z-40">
+            <div class="flex items-center justify-between h-full px-4">
+                <!-- Left Section -->
+                <div class="flex items-center space-x-4">
+                    <!-- Mobile Menu Toggle -->
+                    <button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <i class="fas fa-bars text-gray-600 dark:text-gray-400"></i>
+                    </button>
+                    
+                    <!-- Logo & Page Title -->
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-earth to-emerald rounded-full flex items-center justify-center">
+                            <i class="fas fa-seedling text-white text-lg"></i>
+                        </div>
+                        <div class="hidden sm:block">
+                            <div class="font-bold text-lg text-gray-900 dark:text-white">Agriclimate Connect</div>
+                            <div class="text-xs text-gray-500 dark:text-gray-400" id="page-title">Dashboard</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Center Search -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" id="global-search" 
+                               placeholder="Search crops, insights, reports..." 
+                               class="w-full px-4 py-2 pl-10 pr-4 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-green-earth focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Right Section -->
+                <div class="flex items-center space-x-3">
+                    <!-- Notifications -->
+                    <button id="notifications-btn" class="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <i class="fas fa-bell text-gray-600 dark:text-gray-400"></i>
+                        <span id="notification-count" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                    
+                    <!-- Settings -->
+                    <button id="settings-btn" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <i class="fas fa-cog text-gray-600 dark:text-gray-400"></i>
+                    </button>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <i class="fas fa-moon text-gray-600 dark:text-gray-400 dark:hidden"></i>
+                        <i class="fas fa-sun text-gray-300 hidden dark:block"></i>
+                    </button>
+                    
+                    <!-- User Profile -->
+                    <div class="relative">
+                        <button id="user-menu-btn" class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-green-earth to-emerald flex items-center justify-center">
+                                <i id="user-avatar-icon" class="fas fa-user text-white text-sm"></i>
+                                <img id="user-avatar-img" class="w-8 h-8 rounded-full hidden" src="" alt="Profile">
+                            </div>
+                            <span id="user-name-header" class="hidden sm:block text-sm font-medium text-gray-900 dark:text-white">Loading...</span>
+                            <i class="fas fa-chevron-down text-xs text-gray-500"></i>
+                        </button>
+                        
+                        <!-- User Dropdown -->
+                        <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-64 glass-card rounded-xl shadow-lg py-2 z-50">
+                            <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-earth to-emerald flex items-center justify-center">
+                                        <i id="user-dropdown-icon" class="fas fa-user text-white"></i>
+                                        <img id="user-dropdown-img" class="w-12 h-12 rounded-full hidden" src="" alt="Profile">
+                                    </div>
+                                    <div>
+                                        <div id="user-dropdown-name" class="font-semibold text-gray-900 dark:text-white">Loading...</div>
+                                        <div id="user-dropdown-email" class="text-sm text-gray-500 dark:text-gray-400">Loading...</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="/profile.html" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <i class="fas fa-user-circle mr-3"></i>My Profile
+                            </a>
+                            <a href="/settings.html" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <i class="fas fa-cog mr-3"></i>Account Settings
+                            </a>
+                            <a href="/billing.html" class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <i class="fas fa-credit-card mr-3"></i>Billing & Plans
+                            </a>
+                            <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                            <button onclick="logout()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <i class="fas fa-sign-out-alt mr-3"></i>Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Layout Container -->
+        <div class="flex pt-16 min-h-screen">
+            <!-- Left Sidebar -->
+            <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-30 w-64 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+                <div class="h-full glass-card border-r border-gray-200 dark:border-gray-700">
+                    <nav class="p-4 space-y-2">
+                        <a href="#" class="sidebar-item active flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="dashboard">
+                            <i class="fas fa-home text-lg"></i>
+                            <span class="font-medium">Dashboard</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="ai-advisor">
+                            <i class="fas fa-robot text-lg"></i>
+                            <span class="font-medium">AI Advisor</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="farm-overview">
+                            <i class="fas fa-map text-lg"></i>
+                            <span class="font-medium">Farm Overview</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="climate-hub">
+                            <i class="fas fa-cloud-sun text-lg"></i>
+                            <span class="font-medium">Climate Intelligence</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="soil-water">
+                            <i class="fas fa-tint text-lg"></i>
+                            <span class="font-medium">Soil & Water Health</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="livestock">
+                            <i class="fas fa-horse text-lg"></i>
+                            <span class="font-medium">Livestock Management</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="crop-planner">
+                            <i class="fas fa-seedling text-lg"></i>
+                            <span class="font-medium">Crop Planner</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="market-insights">
+                            <i class="fas fa-chart-line text-lg"></i>
+                            <span class="font-medium">Market Insights</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="financials">
+                            <i class="fas fa-dollar-sign text-lg"></i>
+                            <span class="font-medium">Farm Financials</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="learning-hub">
+                            <i class="fas fa-graduation-cap text-lg"></i>
+                            <span class="font-medium">Learning Hub</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="community">
+                            <i class="fas fa-users text-lg"></i>
+                            <span class="font-medium">Community Forum</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="marketplace">
+                            <i class="fas fa-store text-lg"></i>
+                            <span class="font-medium">Marketplace</span>
+                        </a>
+                        <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg" data-section="reports">
+                            <i class="fas fa-chart-bar text-lg"></i>
+                            <span class="font-medium">Reports & Analytics</span>
+                        </a>
+                    </nav>
+                    
+                    <!-- Sidebar Footer -->
+                    <div class="absolute bottom-4 left-4 right-4">
+                        <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
+                            <p>Last sync: <span id="last-sync">5 mins ago</span></p>
+                            <p class="mt-2">Powered by AgriAI™</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Mobile Sidebar Overlay -->
+            <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 lg:ml-0 min-h-screen">
+                <div class="p-6">
+                    <!-- Dashboard Content -->
+                    <div id="dashboard-section" class="dashboard-section">
+                        <!-- New User Welcome Banner -->
+                        <div id="new-user-banner" class="hidden new-user-guide rounded-2xl p-6 mb-6 animate-slide-up">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-16 h-16 bg-gradient-to-br from-primary to-emerald rounded-full flex items-center justify-center animate-bounce-gentle">
+                                    <i class="fas fa-seedling text-white text-2xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                        🌱 Welcome to Your Smart Farm Dashboard!
+                                    </h2>
+                                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                                        Let's get you started on your journey to smarter, more sustainable farming. We'll guide you through setting up your farm profile and connecting your first data sources.
+                                    </p>
+                                    <div class="flex flex-wrap gap-3">
+                                        <button onclick="startOnboarding()" class="premium-button px-4 py-2 text-white rounded-lg text-sm font-medium">
+                                            <i class="fas fa-play mr-2"></i>Start Setup Guide
+                                        </button>
+                                        <button onclick="completeProfile()" class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700">
+                                            <i class="fas fa-user-edit mr-2"></i>Complete Profile
+                                        </button>
+                                        <button onclick="dismissNewUserBanner()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-4 py-2 text-sm">
+                                            <i class="fas fa-times mr-2"></i>Skip for now
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Greeting & Overview Strip -->
+                        <div class="mb-8 animate-slide-up">
+                            <div class="mb-6">
+                                <h1 id="greeting" class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Good Morning! 🌅</h1>
+                                <p id="weather-summary" class="text-gray-600 dark:text-gray-300">
+                                    Today's looking perfect for farming activities. Here's your farm overview.
+                                </p>
+                            </div>
+                            
+                            <!-- Stats Overview -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                                <div class="stat-card rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Temperature</p>
+                                            <p id="current-temp" class="text-2xl font-bold text-gray-900 dark:text-white">--°C</p>
+                                        </div>
+                                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-sun to-gold rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-thermometer-half text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Soil Moisture</p>
+                                            <p id="soil-moisture" class="text-2xl font-bold text-gray-900 dark:text-white">--%</p>
+                                        </div>
+                                        <div class="w-12 h-12 bg-gradient-to-br from-blue-sky to-sapphire rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-tint text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Crop Health</p>
+                                            <p id="crop-health" class="text-2xl font-bold text-gray-900 dark:text-white">Good</p>
+                                        </div>
+                                        <div class="w-12 h-12 bg-gradient-to-br from-green-earth to-emerald rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-leaf text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">AI Alerts</p>
+                                            <p id="ai-alerts-count" class="text-2xl font-bold text-gray-900 dark:text-white">0</p>
+                                        </div>
+                                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-sapphire rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-robot text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="stat-card rounded-xl p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Farm Profit</p>
+                                            <p id="farm-profit" class="text-2xl font-bold text-gray-900 dark:text-white">$0</p>
+                                        </div>
+                                        <div class="w-12 h-12 bg-gradient-to-br from-emerald to-green-earth rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-dollar-sign text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Dashboard Grid -->
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <!-- Left Column -->
+                            <div class="lg:col-span-2 space-y-6">
+                                <!-- AI Farm Overview Panel -->
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                                            <i class="fas fa-map mr-3 text-green-earth"></i>Farm Overview
+                                        </h3>
+                                        <button class="text-sm text-green-earth hover:text-emerald font-medium">
+                                            <i class="fas fa-expand-arrows-alt mr-1"></i>Expand View
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="farm-map-container" class="relative">
+                                        <!-- Farm Zone Grid -->
+                                        <div id="farm-zones" class="flex flex-wrap justify-center gap-2 p-4 bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-xl">
+                                            <!-- Zones will be dynamically generated -->
+                                        </div>
+                                        
+                                        <div class="mt-4 text-center">
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                Click on any zone to view detailed AI insights
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Climate & Weather Panel -->
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                                            <i class="fas fa-cloud-sun mr-3 text-blue-sky"></i>Weather Forecast
+                                        </h3>
+                                        <button class="text-sm text-blue-sky hover:text-sapphire font-medium">
+                                            <i class="fas fa-external-link-alt mr-1"></i>Detailed Forecast
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="chart-container">
+                                        <canvas id="weather-chart"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Farm Performance Panel -->
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                                            <i class="fas fa-chart-bar mr-3 text-emerald"></i>Performance Metrics
+                                        </h3>
+                                        <div class="flex space-x-2">
+                                            <button class="text-sm bg-emerald text-white px-3 py-1 rounded-lg">This Month</button>
+                                            <button class="text-sm text-gray-500 hover:text-gray-700 px-3 py-1 rounded-lg">This Year</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="chart-container">
+                                        <canvas id="performance-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="space-y-6">
+                                <!-- AI Recommendations Panel -->
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                                            <i class="fas fa-robot mr-3 text-primary"></i>AI Recommendations
+                                        </h3>
+                                        <button class="text-sm text-primary hover:text-blue-sky font-medium">
+                                            <i class="fas fa-plus mr-1"></i>View All
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="ai-recommendations" class="space-y-4">
+                                        <!-- Recommendations will be loaded here -->
+                                    </div>
+                                </div>
+
+                                <!-- Market Insights Panel -->
+                                <div class="glass-card rounded-2xl p-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                                            <i class="fas fa-chart-line mr-3 text-yellow-sun"></i>Market Insights
+                                        </h3>
+                                        <button class="text-sm text-yellow-sun hover:text-gold font-medium">
+                                            <i class="fas fa-external-link-alt mr-1"></i>Full Market
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="market-insights" class="space-y-4">
+                                        <!-- Market data will be loaded here -->
+                                    </div>
+                                </div>
+
+                                <!-- Quick Actions Panel -->
+                                <div class="glass-card rounded-2xl p-6">
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">
+                                        <i class="fas fa-bolt mr-3 text-gold"></i>Quick Actions
+                                    </h3>
+                                    
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <button onclick="logActivity()" class="premium-button p-3 rounded-xl text-white text-sm font-medium">
+                                            <i class="fas fa-plus mb-2 block text-lg"></i>
+                                            Log Activity
+                                        </button>
+                                        <button onclick="askAI()" class="bg-primary hover:bg-blue-sky p-3 rounded-xl text-white text-sm font-medium transition-colors">
+                                            <i class="fas fa-question mb-2 block text-lg"></i>
+                                            Ask AI
+                                        </button>
+                                        <button onclick="uploadImage()" class="bg-blue-sky hover:bg-sapphire p-3 rounded-xl text-white text-sm font-medium transition-colors">
+                                            <i class="fas fa-camera mb-2 block text-lg"></i>
+                                            Scan Crop
+                                        </button>
+                                        <button onclick="newReport()" class="bg-yellow-sun hover:bg-gold p-3 rounded-xl text-white text-sm font-medium transition-colors">
+                                            <i class="fas fa-file-alt mb-2 block text-lg"></i>
+                                            New Report
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Other Sections (Hidden by Default) -->
+                    <div id="ai-advisor-section" class="dashboard-section hidden">
+                        <div class="text-center py-20">
+                            <i class="fas fa-robot text-6xl text-gray-400 mb-4"></i>
+                            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">AI Advisor Coming Soon</h2>
+                            <p class="text-gray-600 dark:text-gray-400">Advanced AI farming recommendations will be available here.</p>
+                        </div>
+                    </div>
+
+                    <!-- Add more sections as needed -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Smart Alerts Strip -->
+        <div id="smart-alerts" class="fixed bottom-6 right-6 max-w-md z-30">
+            <!-- Alerts will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notifications-panel" class="fixed top-16 right-6 w-96 max-h-96 overflow-y-auto glass-card rounded-2xl shadow-xl z-40 hidden">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="font-bold text-gray-900 dark:text-white">Notifications</h3>
+        </div>
+        <div id="notifications-list" class="p-4 space-y-3">
+            <!-- Notifications will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://xvwzpoahmxkqosqkgjvy.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh2d3pwb2FobXhrcW9zcWtnanZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5MDMyMDAsImV4cCI6MjAyNTQ3OTIwMH0.y8Kj9RfX8Q8iI7BZjJm8Rp9L1k6aP5vK2Z8Q3Xj4Y8U';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Global variables
+        let currentUser = null;
+        let userProfile = null;
+        let isNewUser = false;
+        let dashboardData = {};
+
+        // Initialize Dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDashboard();
+        });
+
+        async function initializeDashboard() {
+            try {
+                // Initialize dark mode
+                initializeDarkMode();
+                
+                // Check authentication
+                await checkAuthentication();
+                
+                // Load user profile
+                await loadUserProfile();
+                
+                // Determine if user is new
+                checkIfNewUser();
+                
+                // Initialize dashboard components
+                await initializeDashboardComponents();
+                
+                // Setup event listeners
+                setupEventListeners();
+                
+                // Hide loading screen and show dashboard
+                document.getElementById('loading-screen').classList.add('hidden');
+                document.getElementById('dashboard-container').classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Dashboard initialization error:', error);
+                showErrorMessage('Failed to load dashboard. Please refresh the page.');
+            }
+        }
+
+        // Dark mode initialization
+        function initializeDarkMode() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                if (event.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            });
+        }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // Authentication check
+        async function checkAuthentication() {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                
+                if (!user) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+                
+                currentUser = user;
+                
+                // Update header with user info
+                document.getElementById('user-dropdown-email').textContent = user.email;
+                
+            } catch (error) {
+                console.error('Authentication check failed:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
+        // Load user profile from database
+        async function loadUserProfile() {
+            try {
+                const { data, error } = await supabase
+                    .from('user_profiles')
+                    .select('*')
+                    .eq('id', currentUser.id)
+                    .single();
+
+                if (error && error.code !== 'PGRST116') {
+                    throw error;
+                }
+
+                userProfile = data;
+                
+                if (userProfile) {
+                    updateUIWithProfile();
+                    await trackUserActivity('dashboard_visit');
+                } else {
+                    // Profile doesn't exist, user needs to complete signup
+                    isNewUser = true;
+                    createBasicProfile();
+                }
+
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                isNewUser = true;
+            }
+        }
+
+        // Update UI with user profile data
+        function updateUIWithProfile() {
+            const displayName = userProfile.display_name || userProfile.full_name || 'Farmer';
+            const firstName = displayName.split(' ')[0];
+            
+            // Update header
+            document.getElementById('user-name-header').textContent = firstName;
+            document.getElementById('user-dropdown-name').textContent = displayName;
+            
+            // Update greeting
+            const currentHour = new Date().getHours();
+            let greeting = 'Good Morning';
+            let emoji = '🌅';
+            
+            if (currentHour >= 12 && currentHour < 17) {
+                greeting = 'Good Afternoon';
+                emoji = '☀️';
+            } else if (currentHour >= 17) {
+                greeting = 'Good Evening';
+                emoji = '🌙';
+            }
+            
+            document.getElementById('greeting').innerHTML = `${greeting}, ${firstName}! ${emoji}`;
+            
+            // Update profile photos if available
+            if (userProfile.profile_photo_url) {
+                document.getElementById('user-avatar-icon').classList.add('hidden');
+                document.getElementById('user-avatar-img').classList.remove('hidden');
+                document.getElementById('user-avatar-img').src = userProfile.profile_photo_url;
+                
+                document.getElementById('user-dropdown-icon').classList.add('hidden');
+                document.getElementById('user-dropdown-img').classList.remove('hidden');
+                document.getElementById('user-dropdown-img').src = userProfile.profile_photo_url;
+            }
+            
+            // Load farm-specific data
+            loadFarmData();
+        }
+
+        // Check if user is new (less than 7 days since signup or incomplete profile)
+        function checkIfNewUser() {
+            if (!userProfile) {
+                isNewUser = true;
+                return;
+            }
+            
+            const signupDate = new Date(userProfile.created_at);
+            const daysSinceSignup = (new Date() - signupDate) / (1000 * 60 * 60 * 24);
+            
+            // Consider user "new" if:
+            // 1. Signed up less than 7 days ago, OR
+            // 2. Profile completion is less than 50%, OR
+            // 3. No farm data entered yet
+            isNewUser = daysSinceSignup < 7 || 
+                       userProfile.profile_completion_percentage < 50 ||
+                       !userProfile.farm_size ||
+                       !userProfile.primary_crops?.length;
+            
+            if (isNewUser) {
+                document.getElementById('new-user-banner').classList.remove('hidden');
+            }
+        }
+
+        // Create basic profile for users who haven't completed signup
+        async function createBasicProfile() {
+            try {
+                const basicProfile = {
+                    id: currentUser.id,
+                    full_name: currentUser.user_metadata?.full_name || 'New Farmer',
+                    display_name: currentUser.user_metadata?.display_name || 'New Farmer',
+                    country: 'US',
+                    state: 'california',
+                    farm_size: 0,
+                    farm_size_unit: 'acres',
+                    farm_type: ['crop_farming'],
+                    farm_scale: 'small',
+                    temperature_units: 'fahrenheit',
+                    rainfall_units: 'inches',
+                    smartphone_usage: 'yes',
+                    internet_connectivity: 'wifi',
+                    sells_produce: true,
+                    payment_currency: 'USD',
+                    farming_experience: 0,
+                    preferred_languages: ['en'],
+                    time_zone: 'UTC-8',
+                    alert_consent: true,
+                    agree_terms: true,
+                    agree_privacy: true,
+                    account_status: 'active',
+                    profile_completion_percentage: 10
+                };
+
+                const { data, error } = await supabase
+                    .from('user_profiles')
+                    .insert([basicProfile])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                userProfile = data;
+                isNewUser = true;
+                updateUIWithProfile();
+
+            } catch (error) {
+                console.error('Error creating basic profile:', error);
+            }
+        }
+
+        // Load farm-specific data
+        function loadFarmData() {
+            if (!userProfile) return;
+            
+            // Update farm stats
+            if (userProfile.farm_size) {
+                const farmSizeText = `${userProfile.farm_size} ${userProfile.farm_size_unit}`;
+                // You can display this somewhere in the UI
+            }
+            
+            // Generate farm zones based on farm size
+            generateFarmZones();
+            
+            // Load weather data for user's location
+            if (userProfile.latitude && userProfile.longitude) {
+                loadWeatherData(userProfile.latitude, userProfile.longitude);
+            } else if (userProfile.state && userProfile.country) {
+                loadWeatherDataByLocation(userProfile.state, userProfile.country);
+            }
+            
+            // Load market data for user's crops
+            if (userProfile.primary_crops?.length) {
+                loadMarketData(userProfile.primary_crops, userProfile.country);
+            }
+            
+            // Load AI recommendations
+            loadAIRecommendations();
+        }
+
+        // Generate farm zones visualization
+        function generateFarmZones() {
+            const farmZonesContainer = document.getElementById('farm-zones');
+            farmZonesContainer.innerHTML = '';
+            
+            const farmSize = userProfile.farm_size || 1;
+            let zoneCount = Math.min(Math.max(Math.floor(farmSize / 2), 4), 16); // Between 4-16 zones
+            
+            const zoneTypes = ['crop', 'soil', 'water', 'livestock', 'storage', 'processing'];
+            const zoneColors = {
+                crop: 'bg-green-500',
+                soil: 'bg-yellow-600',
+                water: 'bg-blue-500',
+                livestock: 'bg-purple-500',
+                storage: 'bg-gray-500',
+                processing: 'bg-orange-500'
+            };
+            
+            const zoneIcons = {
+                crop: 'fas fa-seedling',
+                soil: 'fas fa-mountain',
+                water: 'fas fa-tint',
+                livestock: 'fas fa-horse',
+                storage: 'fas fa-warehouse',
+                processing: 'fas fa-cogs'
+            };
+            
+            for (let i = 0; i < zoneCount; i++) {
+                const zoneType = zoneTypes[Math.floor(Math.random() * zoneTypes.length)];
+                const zone = document.createElement('div');
+                zone.className = `farm-zone ${zoneColors[zoneType]} text-white`;
+                zone.innerHTML = `<i class="${zoneIcons[zoneType]}"></i>`;
+                zone.onclick = () => showZoneDetails(i + 1, zoneType);
+                farmZonesContainer.appendChild(zone);
+            }
+        }
+
+        // Show zone details
+        function showZoneDetails(zoneNumber, zoneType) {
+            const details = {
+                crop: 'Crop production area with AI-monitored growth patterns',
+                soil: 'Soil health monitoring zone with pH and nutrient tracking',
+                water: 'Water management area with irrigation optimization',
+                livestock: 'Livestock grazing area with health monitoring',
+                storage: 'Storage facility for harvested produce',
+                processing: 'Processing area for value-added products'
+            };
+            
+            showSmartAlert(`Zone ${zoneNumber}: ${details[zoneType]}`, 'info');
+        }
+
+        // Load weather data
+        async function loadWeatherData(lat, lon) {
+            try {
+                // Simulate weather data (replace with actual API call)
+                const weatherData = {
+                    temperature: Math.floor(Math.random() * 15) + 20, // 20-35°C
+                    humidity: Math.floor(Math.random() * 30) + 60,    // 60-90%
+                    soilMoisture: Math.floor(Math.random() * 40) + 40 // 40-80%
+                };
+                
+                // Update UI
+                document.getElementById('current-temp').textContent = `${weatherData.temperature}°${userProfile.temperature_units === 'fahrenheit' ? 'F' : 'C'}`;
+                document.getElementById('soil-moisture').textContent = `${weatherData.soilMoisture}%`;
+                
+                // Update weather chart
+                updateWeatherChart();
+                
+            } catch (error) {
+                console.error('Error loading weather data:', error);
+            }
+        }
+
+        async function loadWeatherDataByLocation(state, country) {
+            // Fallback weather loading by location name
+            loadWeatherData(0, 0); // Use default coordinates for now
+        }
+
+        // Load market data
+        async function loadMarketData(crops, country) {
+            try {
+                const marketInsights = document.getElementById('market-insights');
+                marketInsights.innerHTML = '';
+                
+                crops.slice(0, 3).forEach(crop => {
+                    const price = (Math.random() * 100 + 50).toFixed(2);
+                    const change = (Math.random() * 10 - 5).toFixed(1);
+                    const isPositive = parseFloat(change) >= 0;
+                    
+                    const insightCard = document.createElement('div');
+                    insightCard.className = 'p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700';
+                    insightCard.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white capitalize">${crop.replace('_', ' ')}</h4>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white">$${price}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm ${isPositive ? 'text-green-600' : 'text-red-600'}">
+                                    ${isPositive ? '+' : ''}${change}%
+                                </p>
+                                <p class="text-xs text-gray-500">vs last week</p>
+                            </div>
+                        </div>
+                    `;
+                    marketInsights.appendChild(insightCard);
+                });
+                
+            } catch (error) {
+                console.error('Error loading market data:', error);
+            }
+        }
+
+        // Load AI recommendations
+        async function loadAIRecommendations() {
+            try {
+                const { data: recommendations, error } = await supabase
+                    .from('ai_insights')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .order('created_at', { ascending: false })
+                    .limit(5);
+
+                if (error) throw error;
+
+                const container = document.getElementById('ai-recommendations');
+                container.innerHTML = '';
+
+                if (recommendations && recommendations.length > 0) {
+                    recommendations.forEach(rec => {
+                        const recCard = createRecommendationCard(rec);
+                        container.appendChild(recCard);
+                    });
+                } else {
+                    // Show sample recommendations for new users
+                    const sampleRecommendations = [
+                        {
+                            title: 'Optimal Planting Time',
+                            description: 'Based on weather patterns, consider planting corn in the next 2 weeks.',
+                            confidence_score: 0.85,
+                            insight_type: 'planting_recommendation'
+                        },
+                        {
+                            title: 'Soil Health Check',
+                            description: 'Your soil pH might need adjustment. Schedule a soil test soon.',
+                            confidence_score: 0.72,
+                            insight_type: 'soil_health'
+                        },
+                        {
+                            title: 'Market Opportunity',
+                            description: 'Tomato prices are trending up. Good time to plan additional planting.',
+                            confidence_score: 0.91,
+                            insight_type: 'market_forecast'
+                        }
+                    ];
+                    
+                    sampleRecommendations.forEach(rec => {
+                        const recCard = createRecommendationCard(rec);
+                        container.appendChild(recCard);
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error loading AI recommendations:', error);
+            }
+        }
+
+        // Create recommendation card
+        function createRecommendationCard(recommendation) {
+            const card = document.createElement('div');
+            card.className = 'p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow';
+            
+            const confidenceColor = recommendation.confidence_score >= 0.8 ? 'text-green-600' : 
+                                   recommendation.confidence_score >= 0.6 ? 'text-yellow-600' : 'text-gray-600';
+            
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-3">
+                    <h4 class="font-semibold text-gray-900 dark:text-white text-sm">${recommendation.title}</h4>
+                    <span class="text-xs ${confidenceColor} font-medium">${Math.round((recommendation.confidence_score || 0.8) * 100)}%</span>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">${recommendation.description}</p>
+                <div class="flex space-x-2">
+                    <button onclick="applyRecommendation('${recommendation.id || 'sample'}')" 
+                            class="flex-1 bg-green-earth text-white px-3 py-2 rounded-lg text-xs font-medium hover:bg-emerald transition-colors">
+                        <i class="fas fa-check mr-1"></i>Apply
+                    </button>
+                    <button onclick="viewReasoning('${recommendation.id || 'sample'}')" 
+                            class="flex-1 border border-gray-300 dark:border-gray-600 px-3 py-2 rounded-lg text-xs font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-info-circle mr-1"></i>Details
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Initialize dashboard components
+        async function initializeDashboardComponents() {
+            // Initialize charts
+            updateWeatherChart();
+            updatePerformanceChart();
+            
+            // Load notifications
+            await loadNotifications();
+            
+            // Update last sync time
+            updateLastSyncTime();
+            
+            // Set up periodic updates
+            setInterval(updateDashboardData, 300000); // Update every 5 minutes
+        }
+
+        // Update weather chart
+        function updateWeatherChart() {
+            const ctx = document.getElementById('weather-chart').getContext('2d');
+            
+            const weatherChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [
+                        {
+                            label: 'Temperature (°C)',
+                            data: [22, 25, 23, 28, 26, 24, 27],
+                            borderColor: '#FBC02D',
+                            backgroundColor: 'rgba(251, 192, 45, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Rainfall (mm)',
+                            data: [0, 2, 5, 0, 1, 3, 0],
+                            borderColor: '#1976D2',
+                            backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#374151'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280'
+                            },
+                            grid: {
+                                color: document.documentElement.classList.contains('dark') ? '#374151' : '#e5e7eb'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280'
+                            },
+                            grid: {
+                                color: document.documentElement.classList.contains('dark') ? '#374151' : '#e5e7eb'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update performance chart
+        function updatePerformanceChart() {
+            const ctx = document.getElementById('performance-chart').getContext('2d');
+            
+            const performanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [
+                        {
+                            label: 'Income',
+                            data: [1200, 1900, 1500, 2200],
+                            backgroundColor: 'rgba(45, 125, 50, 0.8)',
+                            borderColor: '#2D7D32',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Expenses',
+                            data: [800, 1200, 900, 1400],
+                            backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                            borderColor: '#EF4444',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#374151'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280'
+                            },
+                            grid: {
+                                color: document.documentElement.classList.contains('dark') ? '#374151' : '#e5e7eb'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280'
+                            },
+                            grid: {
+                                color: document.documentElement.classList.contains('dark') ? '#374151' : '#e5e7eb'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Load notifications
+        async function loadNotifications() {
+            try {
+                const { data: alerts, error } = await supabase
+                    .from('weather_alerts')
+                    .select('*')
+                    .eq('user_id', currentUser.id)
+                    .eq('is_read', false)
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+
+                if (error) throw error;
+
+                const notificationsList = document.getElementById('notifications-list');
+                const notificationCount = document.getElementById('notification-count');
+                
+                if (alerts && alerts.length > 0) {
+                    notificationCount.textContent = alerts.length;
+                    notificationCount.classList.remove('hidden');
+                    document.getElementById('ai-alerts-count').textContent = alerts.length;
+                    
+                    notificationsList.innerHTML = alerts.map(alert => `
+                        <div class="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                            <h4 class="font-semibold text-yellow-800 dark:text-yellow-200 text-sm">${alert.alert_type.replace('_', ' ')}</h4>
+                            <p class="text-sm text-yellow-700 dark:text-yellow-300 mt-1">${alert.message}</p>
+                            <p class="text-xs text-yellow-600 dark:text-yellow-400 mt-2">${new Date(alert.created_at).toLocaleString()}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    notificationCount.classList.add('hidden');
+                    document.getElementById('ai-alerts-count').textContent = '0';
+                    
+                    notificationsList.innerHTML = '<p class="text-center text-gray-500 py-4">No new notifications</p>';
+                }
+
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-toggle').addEventListener('click', toggleMobileMenu);
+            
+            // Sidebar overlay
+            document.getElementById('sidebar-overlay').addEventListener('click', closeMobileMenu);
+            
+            // User dropdown toggle
+            document.getElementById('user-menu-btn').addEventListener('click', toggleUserDropdown);
+            
+            // Notifications toggle
+            document.getElementById('notifications-btn').addEventListener('click', toggleNotifications);
+            
+            // Sidebar navigation
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = e.currentTarget.getAttribute('data-section');
+                    switchDashboardSection(section);
+                });
+            });
+            
+            // Global search
+            document.getElementById('global-search').addEventListener('input', handleGlobalSearch);
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#user-menu-btn')) {
+                    document.getElementById('user-dropdown').classList.add('hidden');
+                }
+                if (!e.target.closest('#notifications-btn') && !e.target.closest('#notifications-panel')) {
+                    document.getElementById('notifications-panel').classList.add('hidden');
+                }
+            });
+        }
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebar-overlay').classList.add('hidden');
+        }
+
+        // Toggle user dropdown
+        function toggleUserDropdown() {
+            document.getElementById('user-dropdown').classList.toggle('hidden');
+        }
+
+        // Toggle notifications
+        function toggleNotifications() {
+            document.getElementById('notifications-panel').classList.toggle('hidden');
+        }
+
+        // Switch dashboard section
+        function switchDashboardSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(s => s.classList.add('hidden'));
+            
+            // Show selected section
+            document.getElementById(`${section}-section`).classList.remove('hidden');
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'ai-advisor': 'AI Advisor',
+                'farm-overview': 'Farm Overview',
+                'climate-hub': 'Climate Intelligence',
+                'soil-water': 'Soil & Water Health',
+                'livestock': 'Livestock Management',
+                'crop-planner': 'Crop Planner',
+                'market-insights': 'Market Insights',
+                'financials': 'Farm Financials',
+                'learning-hub': 'Learning Hub',
+                'community': 'Community Forum',
+                'marketplace': 'Marketplace',
+                'reports': 'Reports & Analytics'
+            };
+            document.getElementById('page-title').textContent = titles[section] || 'Dashboard';
+            
+            // Close mobile menu if open
+            closeMobileMenu();
+        }
+
+        // Handle global search
+        function handleGlobalSearch(e) {
+            const query = e.target.value.toLowerCase();
+            if (query.length < 2) return;
+            
+            // Implement search logic here
+            console.log('Searching for:', query);
+        }
+
+        // Track user activity
+        async function trackUserActivity(activityType, activityData = {}) {
+            try {
+                await supabase.from('user_activity').insert([{
+                    user_id: currentUser.id,
+                    activity_type: activityType,
+                    activity_data: activityData
+                }]);
+            } catch (error) {
+                console.error('Error tracking activity:', error);
+            }
+        }
+
+        // Update last sync time
+        function updateLastSyncTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('last-sync').textContent = `${timeString}`;
+        }
+
+        // Periodic dashboard updates
+        async function updateDashboardData() {
+            try {
+                await loadNotifications();
+                updateLastSyncTime();
+                
+                if (userProfile?.latitude && userProfile?.longitude) {
+                    loadWeatherData(userProfile.latitude, userProfile.longitude);
+                }
+            } catch (error) {
+                console.error('Error updating dashboard data:', error);
+            }
+        }
+
+        // New user onboarding functions
+        function startOnboarding() {
+            window.location.href = '/onboarding.html';
+        }
+
+        function completeProfile() {
+            window.location.href = '/profile.html';
+        }
+
+        function dismissNewUserBanner() {
+            document.getElementById('new-user-banner').classList.add('hidden');
+            localStorage.setItem('newUserBannerDismissed', 'true');
+        }
+
+        // Quick action functions
+        function logActivity() {
+            showSmartAlert('Activity logging feature coming soon!', 'info');
+        }
+
+        function askAI() {
+            showSmartAlert('AI assistant is being prepared for you!', 'info');
+        }
+
+        function uploadImage() {
+            showSmartAlert('Crop scanning feature will be available soon!', 'info');
+        }
+
+        function newReport() {
+            showSmartAlert('Report generator is in development!', 'info');
+        }
+
+        // Recommendation functions
+        function applyRecommendation(id) {
+            showSmartAlert('Recommendation applied! We\'ll track the results.', 'success');
+        }
+
+        function viewReasoning(id) {
+            showSmartAlert('Detailed AI reasoning will be shown in a modal.', 'info');
+        }
+
+        // Smart alerts
+        function showSmartAlert(message, type = 'info') {
+            const alertsContainer = document.getElementById('smart-alerts');
+            const alert = document.createElement('div');
+            
+            const colors = {
+                success: 'success-banner',
+                warning: 'warning-banner',
+                info: 'alert-banner'
+            };
+            
+            const icons = {
+                success: 'fa-check-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+            
+            alert.className = `${colors[type]} p-4 rounded-xl shadow-lg mb-3 animate-slide-up`;
+            alert.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${icons[type]} mr-3"></i>
+                    <span class="flex-1">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-3 hover:bg-white/20 p-1 rounded">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            alertsContainer.appendChild(alert);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (alert.parentElement) {
+                    alert.remove();
+                }
+            }, 5000);
+        }
+
+        function showErrorMessage(message) {
+            showSmartAlert(message, 'warning');
+        }
+
+        // Logout function
+        async function logout() {
+            try {
+                await trackUserActivity('logout');
+                await supabase.auth.signOut();
+                window.location.href = '/login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = '/login.html';
+            }
+        }
+        // Add this JavaScript to your dashboard.html in the script section:
+
+class DashboardAPI {
+    constructor(supabaseClient) {
+        this.supabase = supabaseClient;
+    }
+
+    async getDashboardSummary(userId) {
+        try {
+            const { data, error } = await this.supabase
+                .rpc('get_dashboard_summary', { p_user_id: userId });
+
+            if (error) throw error;
+            return { success: true, data };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async updateDashboardMetric(userId, metricType, metricValue, locationData = null) {
+        try {
+            const { error } = await this.supabase
+                .rpc('update_dashboard_metric', {
+                    p_user_id: userId,
+                    p_metric_type: metricType,
+                    p_metric_value: metricValue,
+                    p_location_data: locationData
+                });
+
+            if (error) throw error;
+            return { success: true };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async getFarmZones(userId) {
+        try {
+            const { data, error } = await this.supabase
+                .from('farm_zones')
+                .select('*')
+                .eq('user_id', userId)
+                .order('zone_name');
+
+            if (error) throw error;
+            return { success: true, data };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async getUserWeather(userId) {
+        try {
+            const { data, error } = await this.supabase
+                .rpc('get_user_weather', { p_user_id: userId });
+
+            if (error) throw error;
+            return { success: true, data };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async saveDashboardPreferences(userId, preferences) {
+        try {
+            const { data, error } = await this.supabase
+                .from('dashboard_preferences')
+                .upsert({
+                    user_id: userId,
+                    ...preferences,
+                    updated_at: new Date().toISOString()
+                })
+                .select();
+
+            if (error) throw error;
+            return { success: true, data };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async getMarketData(crops, country = 'US') {
+        try {
+            // Simulate market data - replace with actual API
+            const marketData = crops.map(crop => ({
+                crop,
+                price: (Math.random() * 100 + 50).toFixed(2),
+                change: (Math.random() * 10 - 5).toFixed(1),
+                currency: country === 'US' ? 'USD' : 'EUR',
+                last_updated: new Date().toISOString()
+            }));
+
+            return { success: true, data: marketData };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+
+    async trackDashboardActivity(userId, action, details = {}) {
+        try {
+            await this.supabase.from('user_activity').insert([{
+                user_id: userId,
+                activity_type: 'dashboard_action',
+                activity_data: {
+                    action,
+                    details,
+                    timestamp: new Date().toISOString()
+                }
+            }]);
+
+            return { success: true };
+        } catch (error) {
+            return { success: false, error: error.message };
+        }
+    }
+}
+
+// Initialize dashboard API
+const dashboardAPI = new DashboardAPI(supabase);
+
+// Enhanced dashboard loading with API integration
+async function loadDashboardWithAPI() {
+    if (!currentUser) return;
+
+    try {
+        // Get comprehensive dashboard summary
+        const summaryResult = await dashboardAPI.getDashboardSummary(currentUser.id);
+        
+        if (summaryResult.success) {
+            const summary = summaryResult.data;
+            
+            // Update UI with comprehensive data
+            if (summary.user_info) {
+                updateUserInterface(summary.user_info);
+            }
+            
+            if (summary.weather) {
+                updateWeatherDisplay(summary.weather);
+            }
+            
+            if (summary.farm_stats) {
+                updateFarmStats(summary.farm_stats);
+            }
+            
+            document.getElementById('ai-alerts-count').textContent = summary.ai_alerts_count || 0;
+        }
+
+        // Load farm zones
+        const zonesResult = await dashboardAPI.getFarmZones(currentUser.id);
+        if (zonesResult.success && zonesResult.data.length > 0) {
+            renderFarmZones(zonesResult.data);
+        }
+
+        // Load weather data
+        const weatherResult = await dashboardAPI.getUserWeather(currentUser.id);
+        if (weatherResult.success) {
+            updateDetailedWeather(weatherResult.data);
+        }
+
+        // Track dashboard visit
+        await dashboardAPI.trackDashboardActivity(currentUser.id, 'dashboard_loaded');
+
+    } catch (error) {
+        console.error('Error loading dashboard with API:', error);
+        showErrorMessage('Failed to load complete dashboard data');
+    }
+}
+
+function updateUserInterface(userInfo) {
+    if (userInfo.display_name) {
+        const firstName = userInfo.display_name.split(' ')[0];
+        document.getElementById('user-name-header').textContent = firstName;
+        document.getElementById('user-dropdown-name').textContent = userInfo.display_name;
+        
+        const greeting = getTimeBasedGreeting();
+        document.getElementById('greeting').innerHTML = `${greeting.text}, ${firstName}! ${greeting.emoji}`;
+    }
+    
+    // Show new user banner if needed
+    if (userInfo.is_new_user && !localStorage.getItem('newUserBannerDismissed')) {
+        document.getElementById('new-user-banner').classList.remove('hidden');
+    }
+}
+
+function updateWeatherDisplay(weather) {
+    document.getElementById('current-temp').textContent = `${weather.temperature || 25}°C`;
+    document.getElementById('soil-moisture').textContent = `${weather.soil_moisture || 70}%`;
+}
+
+function updateFarmStats(farmStats) {
+    // Update farm-related statistics
+    console.log('Farm stats:', farmStats);
+}
+
+function renderFarmZones(zones) {
+    const container = document.getElementById('farm-zones');
+    container.innerHTML = '';
+    
+    const zoneColors = {
+        crop: 'bg-green-500',
+        livestock: 'bg-purple-500',
+        storage: 'bg-gray-500',
+        water: 'bg-blue-500',
+        processing: 'bg-orange-500'
+    };
+    
+    const zoneIcons = {
+        crop: 'fas fa-seedling',
+        livestock: 'fas fa-horse',
+        storage: 'fas fa-warehouse',
+        water: 'fas fa-tint',
+        processing: 'fas fa-cogs'
+    };
+    
+    zones.forEach(zone => {
+        const zoneElement = document.createElement('div');
+        zoneElement.className = `farm-zone ${zoneColors[zone.zone_type] || 'bg-gray-500'} text-white`;
+        zoneElement.innerHTML = `<i class="${zoneIcons[zone.zone_type] || 'fas fa-square'}"></i>`;
+        zoneElement.title = zone.zone_name;
+        zoneElement.onclick = () => showZoneDetails(zone);
+        container.appendChild(zoneElement);
+    });
+}
+
+function getTimeBasedGreeting() {
+    const hour = new Date().getHours();
+    
+    if (hour < 12) return { text: 'Good Morning', emoji: '🌅' };
+    if (hour < 17) return { text: 'Good Afternoon', emoji: '☀️' };
+    return { text: 'Good Evening', emoji: '🌙' };
+}
+
+// Replace the original loadFarmData function call with:
+// loadDashboardWithAPI();
+
+// Call this enhanced function in initializeDashboardComponents
+    </script>
+</body>
+</html>

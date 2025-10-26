@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Agriclimate Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#5D5CDE',
+                        'green-earth': '#2D7D32',
+                        'brown-soil': '#8D6E63',
+                        'blue-sky': '#1976D2',
+                        'yellow-sun': '#FBC02D',
+                        'gold': '#FFD700',
+                        'emerald': '#10B981',
+                        'sapphire': '#3B82F6'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'gradient': 'gradient 15s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'fade-in': 'fade-in 0.6s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        .premium-gradient {
+            background: linear-gradient(135deg, #2D7D32 0%, #1976D2 25%, #5D5CDE 50%, #FBC02D 75%, #10B981 100%);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes slide-up {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .glass-morphism {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .premium-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(45, 125, 50, 0.1);
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.05), 0 8px 32px rgba(45, 125, 50, 0.1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .dark .premium-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-input {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(45, 125, 50, 0.1);
+        }
+        
+        .dark .form-input {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(45, 125, 50, 0.15);
+            border-color: #2D7D32;
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .dark .form-input:focus {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: #10B981;
+        }
+        
+        .premium-button {
+            background: linear-gradient(135deg, #2D7D32, #10B981);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-button:hover {
+            background: linear-gradient(135deg, #1976D2, #3B82F6);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(45, 125, 50, 0.4);
+        }
+        
+        .premium-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .social-button {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(45, 125, 50, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .social-button {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen premium-gradient font-inter relative overflow-x-hidden">
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 glass-morphism">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-earth to-emerald rounded-full flex items-center justify-center shadow-lg">
+                        <i class="fas fa-seedling text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-xl text-white">Agriclimate Connect</div>
+                        <div class="text-xs text-white/80">Empowering Farmers, Sustaining the Future</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleDarkMode()" class="p-3 hover:bg-white/10 rounded-full transition-colors">
+                        <i class="fas fa-moon text-white dark:hidden"></i>
+                        <i class="fas fa-sun text-white hidden dark:block"></i>
+                    </button>
+                    <a href="/signup.html" class="text-white/90 hover:text-white text-sm font-medium transition-colors">
+                        Don't have an account? Sign up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16 relative min-h-screen flex items-center justify-center">
+        <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <!-- Login Form -->
+            <div class="premium-card p-10 rounded-3xl animate-slide-up">
+                <!-- Logo and Title -->
+                <div class="text-center mb-10">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-green-earth to-emerald rounded-full flex items-center justify-center shadow-lg animate-float">
+                        <i class="fas fa-sign-in-alt text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back</h1>
+                    <p class="text-gray-600 dark:text-gray-300">Sign in to your agricultural intelligence platform</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-6" novalidate>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                        <div class="relative">
+                            <input type="email" id="email" name="email" required
+                                   class="form-input w-full px-6 py-4 pl-12 rounded-xl text-lg font-medium"
+                                   placeholder="your.email@example.com">
+                            <i class="fas fa-envelope absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                        <div id="email-error" class="text-sm text-red-500 mt-1 hidden"></div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" required
+                                   class="form-input w-full px-6 py-4 pl-12 pr-14 rounded-xl text-lg font-medium"
+                                   placeholder="Enter your password">
+                            <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <button type="button" onclick="togglePasswordVisibility()" 
+                                    class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-eye" id="password-eye"></i>
+                            </button>
+                        </div>
+                        <div id="password-error" class="text-sm text-red-500 mt-1 hidden"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="remember_me" name="remember_me" 
+                                   class="w-4 h-4 text-green-earth bg-gray-100 border-gray-300 rounded focus:ring-green-earth dark:focus:ring-green-earth dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Remember me</span>
+                        </label>
+                        <a href="/forgot-password.html" class="text-sm text-green-earth hover:text-emerald font-medium transition-colors">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <button type="submit" id="login-btn" 
+                            class="premium-button w-full text-white px-8 py-4 rounded-xl text-lg font-semibold">
+                        <span id="login-btn-text">
+                            <i class="fas fa-sign-in-alt mr-3"></i>Sign In
+                        </span>
+                        <span id="login-btn-loading" class="hidden">
+                            <i class="fas fa-spinner fa-spin mr-3"></i>Signing In...
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="my-8">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-4 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Or continue with</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Login -->
+                <div class="space-y-3">
+                    <button type="button" onclick="signInWithGoogle()" 
+                            class="social-button w-full px-6 py-3 rounded-xl text-gray-700 dark:text-gray-300 font-medium flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Continue with Google
+                    </button>
+                    
+                    <button type="button" onclick="signInWithGithub()" 
+                            class="social-button w-full px-6 py-3 rounded-xl text-gray-700 dark:text-gray-300 font-medium flex items-center justify-center">
+                        <i class="fab fa-github text-xl mr-3"></i>
+                        Continue with GitHub
+                    </button>
+                </div>
+
+                <!-- Sign Up Link -->
+                <div class="mt-8 text-center">
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Don't have an account? 
+                        <a href="/signup.html" class="text-green-earth hover:text-emerald font-semibold transition-colors">
+                            Create your farm profile
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="fixed top-24 right-6 z-50 space-y-4"></div>
+
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://xvwzpoahmxkqosqkgjvy.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh2d3pwb2FobXhrcW9zcWtnanZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk5MDMyMDAsImV4cCI6MjAyNTQ3OTIwMH0.y8Kj9RfX8Q8iI7BZjJm8Rp9L1k6aP5vK2Z8Q3Xj4Y8U';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDarkMode();
+            checkExistingSession();
+            setupFormValidation();
+        });
+
+        // Dark mode initialization
+        function initializeDarkMode() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                if (event.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            });
+        }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Check for existing session
+        async function checkExistingSession() {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                
+                if (session) {
+                    // User is already logged in, redirect to dashboard
+                    window.location.href = '/dashboard.html';
+                }
+            } catch (error) {
+                console.error('Session check error:', error);
+            }
+        }
+
+        // Form validation
+        function setupFormValidation() {
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+
+            emailInput.addEventListener('blur', validateEmail);
+            emailInput.addEventListener('input', clearError.bind(null, 'email'));
+            passwordInput.addEventListener('input', clearError.bind(null, 'password'));
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const errorDiv = document.getElementById('email-error');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                showFieldError('email', 'Please enter a valid email address');
+                return false;
+            } else {
+                clearError('email');
+                return true;
+            }
+        }
+
+        function showFieldError(fieldId, message) {
+            const errorDiv = document.getElementById(fieldId + '-error');
+            const inputField = document.getElementById(fieldId);
+            
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            inputField.classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-900/20');
+        }
+
+        function clearError(fieldId) {
+            const errorDiv = document.getElementById(fieldId + '-error');
+            const inputField = document.getElementById(fieldId);
+            
+            errorDiv.classList.add('hidden');
+            inputField.classList.remove('border-red-500', 'bg-red-50', 'dark:bg-red-900/20');
+        }
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const eyeIcon = document.getElementById('password-eye');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Form submission
+        document.getElementById('login-form').addEventListener('submit', handleLogin);
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember_me').checked;
+            
+            // Show loading state
+            setLoadingState(true);
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    throw error;
+                }
+
+                // Log login activity
+                await supabase.from('user_activity').insert([{
+                    user_id: data.user.id,
+                    activity_type: 'login',
+                    activity_data: { 
+                        login_method: 'email',
+                        remember_me: rememberMe,
+                        timestamp: new Date().toISOString()
+                    }
+                }]);
+
+                showNotification('Login successful! Redirecting to dashboard...', 'success');
+
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = '/dashboard.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Login error:', error);
+                setLoadingState(false);
+                
+                let errorMessage = 'Login failed. Please try again.';
+                
+                if (error.message.includes('Invalid login credentials')) {
+                    errorMessage = 'Invalid email or password. Please check your credentials.';
+                } else if (error.message.includes('Email not confirmed')) {
+                    errorMessage = 'Please verify your email address before signing in.';
+                    showNotification('Please check your email and click the verification link.', 'warning');
+                    return;
+                } else if (error.message.includes('Too many requests')) {
+                    errorMessage = 'Too many login attempts. Please try again later.';
+                }
+                
+                showNotification(errorMessage, 'error');
+            }
+        }
+
+        function validateForm() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            let isValid = true;
+
+            // Clear previous errors
+            clearError('email');
+            clearError('password');
+
+            // Validate email
+            if (!email) {
+                showFieldError('email', 'Email is required');
+                isValid = false;
+            } else if (!validateEmail()) {
+                isValid = false;
+            }
+
+            // Validate password
+            if (!password) {
+                showFieldError('password', 'Password is required');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function setLoadingState(loading) {
+            const loginBtn = document.getElementById('login-btn');
+            const loginText = document.getElementById('login-btn-text');
+            const loginLoading = document.getElementById('login-btn-loading');
+
+            if (loading) {
+                loginBtn.disabled = true;
+                loginText.classList.add('hidden');
+                loginLoading.classList.remove('hidden');
+            } else {
+                loginBtn.disabled = false;
+                loginText.classList.remove('hidden');
+                loginLoading.classList.add('hidden');
+            }
+        }
+
+        // Social login functions
+        async function signInWithGoogle() {
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: `${window.location.origin}/dashboard.html`
+                    }
+                });
+
+                if (error) throw error;
+
+            } catch (error) {
+                console.error('Google login error:', error);
+                showNotification('Google sign-in failed. Please try again.', 'error');
+            }
+        }
+
+        async function signInWithGithub() {
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'github',
+                    options: {
+                        redirectTo: `${window.location.origin}/dashboard.html`
+                    }
+                });
+
+                if (error) throw error;
+
+            } catch (error) {
+                console.error('GitHub login error:', error);
+                showNotification('GitHub sign-in failed. Please try again.', 'error');
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info', duration = 5000) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            
+            const icons = {
+                success: 'fa-check-circle text-green-500',
+                error: 'fa-times-circle text-red-500',
+                warning: 'fa-exclamation-triangle text-yellow-500',
+                info: 'fa-info-circle text-blue-500'
+            };
+            
+            const colors = {
+                success: 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800 text-green-800 dark:text-green-200',
+                error: 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200',
+                warning: 'bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-200',
+                info: 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200'
+            };
+            
+            notification.className = `p-4 rounded-xl border ${colors[type]} max-w-sm shadow-lg backdrop-blur-sm animate-slide-up`;
+            notification.innerHTML = `
+                <div class="flex items-start">
+                    <i class="fas ${icons[type]} mt-0.5 mr-3 text-lg"></i>
+                    <div class="flex-1">
+                        <p class="font-medium">${message}</p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-3 text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, duration);
+        }
+    </script>
+</body>
+</html>

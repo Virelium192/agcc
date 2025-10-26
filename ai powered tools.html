@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Tools - AgriClimate Connect | Smart Farming Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B',
+                        'agri-purple': '#7C3AED',
+                        'agri-pink': '#EC4899'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-in': 'slideIn 0.8s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out',
+                        'rotate': 'rotate 20s linear infinite',
+                        'ai-pulse': 'aiPulse 3s ease-in-out infinite'
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes aiPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #2F7D32 0%, #4CAF50 50%, #81C784 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #2F7D32 70%, #4CAF50 100%);
+        }
+        
+        .ai-gradient {
+            background: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #FF8F00 100%);
+        }
+        
+        .dark .ai-gradient {
+            background: linear-gradient(135deg, #4C1D95 0%, #BE185D 50%, #B45309 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .tool-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark .tool-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark .tool-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #FF8F00);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .ai-brain {
+            background: conic-gradient(from 0deg, #7C3AED, #EC4899, #FF8F00, #4CAF50, #7C3AED);
+            animation: rotate 20s linear infinite;
+        }
+        
+        .upload-zone {
+            border: 2px dashed #4CAF50;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: #2F7D32;
+            background-color: rgba(75, 181, 67, 0.1);
+            transform: scale(1.02);
+        }
+        
+        .dark .upload-zone {
+            border-color: #4CAF50;
+            background-color: rgba(15, 23, 42, 0.5);
+        }
+        
+        .dark .upload-zone:hover, .dark .upload-zone.dragover {
+            border-color: #4CAF50;
+            background-color: rgba(75, 181, 67, 0.2);
+        }
+        
+        .analysis-progress {
+            background: linear-gradient(90deg, #7C3AED 0%, #EC4899 50%, #FF8F00 100%);
+            background-size: 200% 100%;
+            animation: gradient-shift 2s ease-in-out infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        /* Accessibility Enhancements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .tool-card {
+                background: rgba(255, 255, 255, 1);
+                border: 2px solid #000;
+            }
+            
+            .dark .tool-card {
+                background: rgba(0, 0, 0, 1);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #7C3AED;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5B21B6;
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-purple-50 via-blue-50 to-green-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-agri-purple text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">AgriClimate Connect</h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400" data-translate="header.tagline">AI-Powered Farming Intelligence</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-agri-purple dark:text-agri-pink font-semibold hover:text-agri-dark dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#ai-tools" class="block py-2 text-sm font-semibold text-agri-purple dark:text-agri-pink hover:text-agri-dark dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-agri-purple" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                            <a href="#weather" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather Intelligence</span>
+                            </a>
+                            <a href="#crops" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="#livestock" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="#market" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Other Navigation Items -->
+                    <a href="#community" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.community">Community</a>
+                    <a href="#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    <a href="#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-agri-purple rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-agri-purple dark:hover:text-agri-pink transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-agri-purple dark:hover:text-agri-pink transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <button class="hidden md:block ai-gradient text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple glow-on-hover">
+                        <i class="fas fa-brain mr-2" aria-hidden="true"></i><span data-translate="cta.try_ai_tools">Try AI Tools</span>
+                    </button>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    
+                    <div class="py-2">
+                        <button class="w-full text-left text-agri-purple dark:text-agri-pink font-semibold hover:text-agri-dark transition-colors flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" onclick="toggleMobileDropdown('knowledge-tools')" aria-expanded="false">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span>
+                            <i class="fas fa-chevron-down transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div id="mobile-knowledge-tools" class="hidden ml-4 mt-2 space-y-1">
+                            <a href="#ai-tools" class="block py-1 text-sm font-semibold text-agri-purple dark:text-agri-pink hover:text-agri-dark transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" role="menuitem" data-translate="nav.ai_tools">AI-Powered Tools</a>
+                            <a href="#weather" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.weather_climate">Weather Intelligence</a>
+                            <a href="#crops" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.crop_advisory">Crop Advisory</a>
+                            <a href="#livestock" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.livestock">Livestock Management</a>
+                            <a href="#market" class="block py-1 text-sm text-gray-600 dark:text-gray-400 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.market_hub">Market Intelligence</a>
+                        </div>
+                    </div>
+                    
+                    <a href="#community" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.community">Community</a>
+                    <a href="#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="#contact" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <button class="w-full mt-4 ai-gradient text-white py-2 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                        <i class="fas fa-brain mr-2" aria-hidden="true"></i><span data-translate="cta.try_ai_tools">Try AI Tools</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="ai-hero" class="min-h-screen pt-20 ai-gradient relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+            
+            <!-- Floating AI Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white/20 dark:bg-agri-purple/30 rounded-full animate-float flex items-center justify-center" aria-hidden="true">
+                <i class="fas fa-brain text-white dark:text-agri-purple text-2xl"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 ai-brain rounded-full animate-float flex items-center justify-center" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-robot text-white text-xl"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-gold/20 dark:bg-agri-gold/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-microchip text-agri-gold text-2xl"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <div class="mb-6">
+                            <span class="inline-block bg-white/20 dark:bg-agri-night/50 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+                                <i class="fas fa-sparkles mr-2" aria-hidden="true"></i><span data-translate="hero.badge">Next-Generation AI</span>
+                            </span>
+                        </div>
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.ai_powered">AI-Powered</span><br>
+                            <span class="text-agri-gold" data-translate="hero.farming">Farming</span><br>
+                            <span data-translate="hero.intelligence">Intelligence</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Harness the power of artificial intelligence to revolutionize your farming decisions. From crop health analysis to predictive analytics, our AI tools ensure maximum yield and profitability.</span>
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <button class="bg-white text-agri-purple hover:bg-gray-100 font-semibold px-8 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-play mr-2" aria-hidden="true"></i><span data-translate="cta.start_ai_analysis">Start AI Analysis</span>
+                            </button>
+                            <button class="border-2 border-white text-white hover:bg-white hover:text-agri-purple font-semibold px-8 py-4 rounded-full text-lg transition-all focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-video mr-2" aria-hidden="true"></i><span data-translate="cta.watch_ai_demo">Watch AI Demo</span>
+                            </button>
+                        </div>
+
+                        <!-- AI Statistics -->
+                        <div class="grid grid-cols-3 gap-6 mt-12">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="98">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.accuracy">% Accuracy</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="45">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.yield_increase">% Yield Boost</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="24">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.response_time">hr Response</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - AI Interface Demo -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- AI Analysis Preview -->
+                        <div class="glass-effect rounded-2xl p-6 text-white animate-ai-pulse">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold" data-translate="demo.ai_analysis">AI Analysis Center</h3>
+                                <div class="flex items-center text-sm text-green-400">
+                                    <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                                    <span data-translate="demo.ai_active">AI Active</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-white/10 dark:bg-agri-night/50 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm" data-translate="demo.crop_health">Crop Health Analysis</span>
+                                        <span class="text-green-400 font-bold">94%</span>
+                                    </div>
+                                    <div class="bg-white/20 rounded-full h-2">
+                                        <div class="bg-green-400 rounded-full h-2" style="width: 94%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white/10 dark:bg-agri-night/50 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm" data-translate="demo.soil_quality">Soil Quality Score</span>
+                                        <span class="text-yellow-400 font-bold">87%</span>
+                                    </div>
+                                    <div class="bg-white/20 rounded-full h-2">
+                                        <div class="bg-yellow-400 rounded-full h-2" style="width: 87%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white/10 dark:bg-agri-night/50 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm" data-translate="demo.disease_risk">Disease Risk Level</span>
+                                        <span class="text-orange-400 font-bold">23%</span>
+                                    </div>
+                                    <div class="bg-white/20 rounded-full h-2">
+                                        <div class="bg-orange-400 rounded-full h-2" style="width: 23%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Voice Assistant -->
+                        <div class="glass-effect rounded-2xl p-6 text-white">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-agri-purple/30 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-microphone text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold" data-translate="demo.voice_assistant">AI Voice Assistant</h4>
+                                    <p class="text-sm text-gray-300" data-translate="demo.voice_ready">Ready to help with farming questions</p>
+                                </div>
+                            </div>
+                            <button class="w-full bg-white/20 hover:bg-white/30 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white" id="voice-demo">
+                                <i class="fas fa-microphone mr-2" aria-hidden="true"></i><span data-translate="demo.ask_ai">Ask AI Anything</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.explore">Discover AI Tools</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Tools Categories -->
+        <section id="ai-tools" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="tools.title">Complete AI Toolkit</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto" data-translate="tools.description">
+                        Comprehensive artificial intelligence solutions designed specifically for modern agriculture, ensuring data-driven decisions and maximum productivity.
+                    </p>
+                </div>
+
+                <!-- AI Tools Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <!-- Crop Health Analysis -->
+                    <div class="tool-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-leaf text-white text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="tool1.title">Crop Health Analysis</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400" data-translate="tool1.subtitle">AI-Powered Disease Detection</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="tool1.description">
+                            Upload plant images to instantly detect diseases, pests, and nutritional deficiencies with 98% accuracy using advanced computer vision.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-green-600 dark:text-green-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool1.feature1">Real-time disease identification</span>
+                            </div>
+                            <div class="flex items-center text-sm text-green-600 dark:text-green-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool1.feature2">Treatment recommendations</span>
+                            </div>
+                            <div class="flex items-center text-sm text-green-600 dark:text-green-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool1.feature3">Prevention strategies</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-3 rounded-lg hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-green-500" onclick="openTool('crop-health')">
+                            <i class="fas fa-camera mr-2" aria-hidden="true"></i><span data-translate="tool1.cta">Analyze Crop Health</span>
+                        </button>
+                    </div>
+
+                    <!-- Soil Intelligence -->
+                    <div class="tool-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-microscope text-white text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="tool2.title">Soil Intelligence</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400" data-translate="tool2.subtitle">Smart Soil Analysis</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="tool2.description">
+                            AI-driven soil analysis providing detailed insights on pH levels, nutrient content, and optimal fertilization strategies for maximum yield.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-amber-600 dark:text-amber-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool2.feature1">Comprehensive nutrient analysis</span>
+                            </div>
+                            <div class="flex items-center text-sm text-amber-600 dark:text-amber-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool2.feature2">Fertilization recommendations</span>
+                            </div>
+                            <div class="flex items-center text-sm text-amber-600 dark:text-amber-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool2.feature3">pH optimization guides</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white py-3 rounded-lg hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-amber-500" onclick="openTool('soil-analysis')">
+                            <i class="fas fa-flask mr-2" aria-hidden="true"></i><span data-translate="tool2.cta">Analyze Soil</span>
+                        </button>
+                    </div>
+
+                    <!-- Weather Prediction AI -->
+                    <div class="tool-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-cloud-sun text-white text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="tool3.title">Weather Prediction AI</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400" data-translate="tool3.subtitle">Advanced Climate Forecasting</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="tool3.description">
+                            Precision weather forecasting with AI-enhanced models providing hyperlocal predictions for optimal farming schedule planning.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-blue-600 dark:text-blue-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool3.feature1">15-day accurate forecasts</span>
+                            </div>
+                            <div class="flex items-center text-sm text-blue-600 dark:text-blue-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool3.feature2">Extreme weather alerts</span>
+                            </div>
+                            <div class="flex items-center text-sm text-blue-600 dark:text-blue-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool3.feature3">Optimal timing suggestions</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white py-3 rounded-lg hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500" onclick="openTool('weather-ai')">
+                            <i class="fas fa-bolt mr-2" aria-hidden="true"></i><span data-translate="tool3.cta">Get Weather Insights</span>
+                        </button>
+                    </div>
+
+                    <!-- Yield Prediction -->
+                    <div class="tool-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="400">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-chart-line text-white text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="tool4.title">Yield Prediction</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400" data-translate="tool4.subtitle">Harvest Forecasting AI</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="tool4.description">
+                            Predict crop yields with machine learning models analyzing historical data, current conditions, and growth patterns for accurate harvest planning.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-purple-600 dark:text-purple-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool4.feature1">Accurate yield forecasting</span>
+                            </div>
+                            <div class="flex items-center text-sm text-purple-600 dark:text-purple-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool4.feature2">Market timing optimization</span>
+                            </div>
+                            <div class="flex items-center text-sm text-purple-600 dark:text-purple-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool4.feature3">Resource planning assistance</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-purple-500 to-violet-600 text-white py-3 rounded-lg hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-purple-500" onclick="openTool('yield-prediction')">
+                            <i class="fas fa-calculator mr-2" aria-hidden="true"></i><span data-translate="tool4.cta">Predict Yield</span>
+                        </button>
+                    </div>
+
+                    <!-- Market Intelligence -->
+                    <div class="tool-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="500">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-chart-bar text-white text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="tool5.title">Market Intelligence</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400" data-translate="tool5.subtitle">AI Price Predictions</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="tool5.description">
+                            Advanced market analysis using AI to predict price trends, demand patterns, and optimal selling strategies for maximum profitability.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-emerald-600 dark:text-emerald-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool5.feature1">Real-time price tracking</span>
+                            </div>
+                            <div class="flex items-center text-sm text-emerald-600 dark:text-emerald-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool5.feature2">Demand forecasting</span>
+                            </div>
+                            <div class="flex items-center text-sm text-emerald-600 dark:text-emerald-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool5.feature3">Optimal selling timing</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-3 rounded-lg hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-emerald-500" onclick="openTool('market-intelligence')">
+                            <i class="fas fa-trending-up mr-2" aria-hidden="true"></i><span data-translate="tool5.cta">Analyze Market</span>
+                        </button>
+                    </div>
+
+                    <!-- Smart Irrigation -->
+                    <div class="tool-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="600">
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+                                <i class="fas fa-tint text-white text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="tool6.title">Smart Irrigation</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400" data-translate="tool6.subtitle">Water Management AI</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="tool6.description">
+                            Optimize water usage with AI-driven irrigation scheduling based on soil moisture, weather forecasts, and crop water requirements.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-cyan-600 dark:text-cyan-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool6.feature1">Automated irrigation scheduling</span>
+                            </div>
+                            <div class="flex items-center text-sm text-cyan-600 dark:text-cyan-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool6.feature2">Water conservation optimization</span>
+                            </div>
+                            <div class="flex items-center text-sm text-cyan-600 dark:text-cyan-400">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="tool6.feature3">Stress level monitoring</span>
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white py-3 rounded-lg hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-cyan-500" onclick="openTool('irrigation-ai')">
+                            <i class="fas fa-droplet mr-2" aria-hidden="true"></i><span data-translate="tool6.cta">Optimize Irrigation</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive AI Tool -->
+        <section id="ai-demo" class="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-agri-night-light dark:to-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12" data-aos="fade-up">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="demo.title">Try AI Analysis Now</h2>
+                        <p class="text-xl text-gray-600 dark:text-gray-300" data-translate="demo.description">
+                            Upload an image of your crops and experience the power of AI-driven agricultural analysis instantly.
+                        </p>
+                    </div>
+
+                    <!-- AI Analysis Tool -->
+                    <div class="tool-card rounded-2xl p-8 shadow-xl" data-aos="fade-up">
+                        <div id="upload-section">
+                            <div class="upload-zone rounded-xl p-12 text-center" id="upload-zone">
+                                <div class="mb-6">
+                                    <i class="fas fa-cloud-upload-alt text-6xl text-agri-green dark:text-agri-light mb-4" aria-hidden="true"></i>
+                                    <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="upload.title">Upload Crop Image</h3>
+                                    <p class="text-gray-600 dark:text-gray-300" data-translate="upload.description">Drag and drop or click to select an image of your crops for AI analysis</p>
+                                </div>
+                                <input type="file" id="image-input" class="hidden" accept="image/*" aria-label="Select crop image for analysis">
+                                <button class="bg-agri-green hover:bg-agri-dark text-white px-8 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="document.getElementById('image-input').click()">
+                                    <i class="fas fa-camera mr-2" aria-hidden="true"></i><span data-translate="upload.button">Select Image</span>
+                                </button>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-4" data-translate="upload.formats">Supports JPG, PNG, HEIC formats (Max 10MB)</p>
+                            </div>
+                        </div>
+
+                        <!-- Analysis Progress -->
+                        <div id="analysis-section" class="hidden">
+                            <div class="text-center mb-8">
+                                <div class="w-20 h-20 mx-auto mb-4 ai-brain rounded-full flex items-center justify-center">
+                                    <i class="fas fa-brain text-white text-2xl animate-pulse" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2" data-translate="analysis.processing">AI is analyzing your image...</h3>
+                                <p class="text-gray-600 dark:text-gray-300" data-translate="analysis.wait">This may take a few moments</p>
+                            </div>
+                            
+                            <div class="bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-6">
+                                <div class="analysis-progress h-3 rounded-full" id="progress-bar" style="width: 0%"></div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-3 gap-4" id="analysis-steps">
+                                <div class="text-center p-4 bg-gray-50 dark:bg-agri-night-light rounded-lg">
+                                    <i class="fas fa-search text-2xl text-gray-400 mb-2" aria-hidden="true"></i>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="analysis.step1">Image Processing</p>
+                                </div>
+                                <div class="text-center p-4 bg-gray-50 dark:bg-agri-night-light rounded-lg">
+                                    <i class="fas fa-brain text-2xl text-gray-400 mb-2" aria-hidden="true"></i>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="analysis.step2">AI Analysis</p>
+                                </div>
+                                <div class="text-center p-4 bg-gray-50 dark:bg-agri-night-light rounded-lg">
+                                    <i class="fas fa-chart-line text-2xl text-gray-400 mb-2" aria-hidden="true"></i>
+                                    <p class="text-sm text-gray-600 dark:text-gray-300" data-translate="analysis.step3">Results</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div id="results-section" class="hidden">
+                            <div class="mb-8">
+                                <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="results.title">AI Analysis Results</h3>
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <img id="analyzed-image" class="w-full rounded-lg shadow-md" alt="Analyzed crop image">
+                                    </div>
+                                    <div class="space-y-4" id="analysis-results">
+                                        <!-- Results will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-center space-x-4">
+                                <button class="bg-agri-green hover:bg-agri-dark text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="downloadResults()">
+                                    <i class="fas fa-download mr-2" aria-hidden="true"></i><span data-translate="results.download">Download Report</span>
+                                </button>
+                                <button class="border border-agri-green text-agri-green hover:bg-agri-green hover:text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" onclick="resetAnalysis()">
+                                    <i class="fas fa-redo mr-2" aria-hidden="true"></i><span data-translate="results.analyze_another">Analyze Another</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Features Showcase -->
+        <section id="ai-features" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6" data-translate="features.title">Why Choose Our AI?</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto" data-translate="features.description">
+                        Built specifically for agriculture with years of farming data and expert knowledge integrated into every algorithm.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Feature 1: Accuracy -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-20 h-20 ai-gradient rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-bullseye text-white text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="feature1.title">Unmatched Accuracy</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="feature1.description">
+                            Our AI models achieve 98%+ accuracy rates, trained on millions of agricultural images and validated by farming experts worldwide.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature1.point1">Expert-validated results</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature1.point2">Continuous learning system</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature1.point3">Global data integration</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Speed -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-20 h-20 ai-gradient rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-bolt text-white text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="feature2.title">Lightning Fast</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="feature2.description">
+                            Get instant results with our optimized AI infrastructure. Most analyses complete in under 30 seconds with detailed recommendations.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature2.point1">Real-time processing</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature2.point2">Cloud-powered performance</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature2.point3">24/7 availability</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3: Comprehensive -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-20 h-20 ai-gradient rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover">
+                            <i class="fas fa-layer-group text-white text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="feature3.title">Comprehensive Analysis</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6" data-translate="feature3.description">
+                            Complete agricultural intelligence covering crops, soil, weather, pests, diseases, and market conditions in one integrated platform.
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature3.point1">Multi-factor analysis</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature3.point2">Integrated recommendations</span>
+                            </div>
+                            <div class="flex items-center justify-center text-sm text-agri-purple">
+                                <i class="fas fa-check mr-2" aria-hidden="true"></i><span data-translate="feature3.point3">Holistic insights</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">AI-Powered Farming Intelligence</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Revolutionizing agriculture with advanced AI technology, providing farmers worldwide with intelligent tools for sustainable and profitable farming.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.ai_tools">AI Tools</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#crop-health" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.crop_health">Crop Health Analysis</a></li>
+                        <li><a href="#soil-analysis" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.soil_intelligence">Soil Intelligence</a></li>
+                        <li><a href="#weather-ai" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.weather_ai">Weather Prediction AI</a></li>
+                        <li><a href="#yield-prediction" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.yield_prediction">Yield Prediction</a></li>
+                        <li><a href="#market-intelligence" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.market_ai">Market Intelligence</a></li>
+                        <li><a href="#irrigation-ai" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.irrigation_ai">Smart Irrigation</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.support">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.ai_training">AI Training Center</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.api_docs">API Documentation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.accuracy_reports">Accuracy Reports</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.contact_ai_team">Contact AI Team</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.model_updates">Model Updates</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.data_privacy">Data Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-gray-800 dark:bg-gray-900 rounded-2xl p-8 mb-8">
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2" data-translate="footer.newsletter_title">AI Updates & Insights</h4>
+                        <p class="text-gray-300" data-translate="footer.newsletter_description">Stay informed about the latest AI advancements, model updates, and agricultural intelligence breakthroughs.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <input type="email" placeholder="Enter your email" 
+                               class="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-purple text-base text-white placeholder-gray-400"
+                               data-translate-placeholder="footer.email_placeholder">
+                        <button class="ai-gradient text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                            <span data-translate="footer.subscribe">Subscribe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.ai_ethics">AI Ethics</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Assistant Chat Widget -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="ai-chat-toggle" class="w-16 h-16 ai-gradient text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="Open AI assistant">
+            <i class="fas fa-robot text-xl animate-ai-pulse" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- AI Chat Widget -->
+    <div id="ai-chat-widget" class="fixed bottom-24 right-6 w-96 h-96 bg-white dark:bg-agri-night rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 transform scale-0 origin-bottom-right transition-transform z-50">
+        <div class="h-full flex flex-col">
+            <!-- Chat Header -->
+            <div class="ai-gradient text-white p-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-robot animate-ai-pulse" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold" data-translate="ai_chat.title">AI Farm Assistant</h4>
+                            <p class="text-xs opacity-75" data-translate="ai_chat.subtitle">Advanced Agricultural AI</p>
+                        </div>
+                    </div>
+                    <button id="ai-chat-close" class="hover:bg-white/20 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close AI assistant">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 overflow-y-auto" id="ai-chat-messages" role="log" aria-live="polite" aria-label="AI assistant messages">
+                <div class="flex items-start space-x-2 mb-4">
+                    <div class="w-6 h-6 ai-gradient rounded-full flex items-center justify-center text-white text-xs">
+                        <i class="fas fa-robot" aria-hidden="true"></i>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+                        <p class="text-sm text-gray-900 dark:text-white" data-translate="ai_chat.welcome">Hello! I'm your AI farming assistant. I can help with crop analysis, weather predictions, and agricultural insights. What would you like to know?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex space-x-2">
+                    <input type="text" 
+                           placeholder="Ask about AI farming tools..."
+                           class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-purple text-sm text-gray-900 dark:text-white dark:bg-gray-800"
+                           id="ai-chat-input"
+                           data-translate-placeholder="ai_chat.input_placeholder">
+                    <button class="ai-gradient text-white px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" id="ai-chat-send" aria-label="Send message">
+                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for AI Tools page
+        const translations = {
+            en: {
+                'header.tagline': 'AI-Powered Farming Intelligence',
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.weather_climate': 'Weather Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.community': 'Community',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'cta.try_ai_tools': 'Try AI Tools',
+                'hero.badge': 'Next-Generation AI',
+                'hero.ai_powered': 'AI-Powered',
+                'hero.farming': 'Farming',
+                'hero.intelligence': 'Intelligence',
+                'hero.description': 'Harness the power of artificial intelligence to revolutionize your farming decisions. From crop health analysis to predictive analytics, our AI tools ensure maximum yield and profitability.',
+                'cta.start_ai_analysis': 'Start AI Analysis',
+                'cta.watch_ai_demo': 'Watch AI Demo',
+                'stats.accuracy': '% Accuracy',
+                'stats.yield_increase': '% Yield Boost',
+                'stats.response_time': 'hr Response',
+                'demo.ai_analysis': 'AI Analysis Center',
+                'demo.ai_active': 'AI Active',
+                'demo.crop_health': 'Crop Health Analysis',
+                'demo.soil_quality': 'Soil Quality Score',
+                'demo.disease_risk': 'Disease Risk Level',
+                'demo.voice_assistant': 'AI Voice Assistant',
+                'demo.voice_ready': 'Ready to help with farming questions',
+                'demo.ask_ai': 'Ask AI Anything',
+                'scroll.explore': 'Discover AI Tools',
+                'tools.title': 'Complete AI Toolkit',
+                'tools.description': 'Comprehensive artificial intelligence solutions designed specifically for modern agriculture, ensuring data-driven decisions and maximum productivity.',
+                'tool1.title': 'Crop Health Analysis',
+                'tool1.subtitle': 'AI-Powered Disease Detection',
+                'tool1.description': 'Upload plant images to instantly detect diseases, pests, and nutritional deficiencies with 98% accuracy using advanced computer vision.',
+                'tool1.feature1': 'Real-time disease identification',
+                'tool1.feature2': 'Treatment recommendations',
+                'tool1.feature3': 'Prevention strategies',
+                'tool1.cta': 'Analyze Crop Health',
+                'ai_chat.welcome': 'Hello! I\'m your AI farming assistant. I can help with crop analysis, weather predictions, and agricultural insights. What would you like to know?',
+                'ai_chat.input_placeholder': 'Ask about AI farming tools...'
+            },
+            es: {
+                'header.tagline': 'Inteligencia Agrícola Impulsada por IA',
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.ai_tools': 'Herramientas con IA',
+                'nav.weather_climate': 'Inteligencia Meteorológica',
+                'nav.crop_advisory': 'Asesoramiento Inteligente de Cultivos',
+                'nav.livestock': 'Gestión de Ganado',
+                'nav.market_hub': 'Inteligencia de Mercado',
+                'nav.community': 'Comunidad',
+                'nav.about': 'Acerca de Nosotros',
+                'nav.contact': 'Contáctanos',
+                'cta.try_ai_tools': 'Probar Herramientas IA',
+                'hero.badge': 'IA de Nueva Generación',
+                'hero.ai_powered': 'Impulsado por IA',
+                'hero.farming': 'Agricultura',
+                'hero.intelligence': 'Inteligencia',
+                'hero.description': 'Aprovecha el poder de la inteligencia artificial para revolucionar tus decisiones agrícolas. Desde análisis de salud de cultivos hasta análisis predictivo, nuestras herramientas de IA aseguran máximo rendimiento y rentabilidad.',
+                'cta.start_ai_analysis': 'Iniciar Análisis IA',
+                'cta.watch_ai_demo': 'Ver Demo IA',
+                'stats.accuracy': '% Precisión',
+                'stats.yield_increase': '% Aumento de Rendimiento',
+                'stats.response_time': 'hr Respuesta',
+                'demo.ai_analysis': 'Centro de Análisis IA',
+                'demo.ai_active': 'IA Activa',
+                'demo.crop_health': 'Análisis de Salud de Cultivos',
+                'demo.soil_quality': 'Puntuación de Calidad del Suelo',
+                'demo.disease_risk': 'Nivel de Riesgo de Enfermedad',
+                'demo.voice_assistant': 'Asistente de Voz IA',
+                'demo.voice_ready': 'Listo para ayudar con preguntas de agricultura',
+                'demo.ask_ai': 'Pregúntale Cualquier Cosa a la IA',
+                'scroll.explore': 'Descubrir Herramientas IA',
+                'tools.title': 'Kit Completo de IA',
+                'tools.description': 'Soluciones integrales de inteligencia artificial diseñadas específicamente para la agricultura moderna, asegurando decisiones basadas en datos y máxima productividad.',
+                'tool1.title': 'Análisis de Salud de Cultivos',
+                'tool1.subtitle': 'Detección de Enfermedades con IA',
+                'tool1.description': 'Sube imágenes de plantas para detectar instantáneamente enfermedades, plagas y deficiencias nutricionales con 98% de precisión usando visión computarizada avanzada.',
+                'tool1.feature1': 'Identificación de enfermedades en tiempo real',
+                'tool1.feature2': 'Recomendaciones de tratamiento',
+                'tool1.feature3': 'Estrategias de prevención',
+                'tool1.cta': 'Analizar Salud del Cultivo',
+                'ai_chat.welcome': '¡Hola! Soy tu asistente agrícola IA. Puedo ayudar con análisis de cultivos, predicciones meteorológicas e insights agrícolas. ¿Qué te gustaría saber?',
+                'ai_chat.input_placeholder': 'Pregunta sobre herramientas de agricultura IA...'
+            },
+            fr: {
+                'header.tagline': 'Intelligence Agricole Alimentée par l\'IA',
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.ai_tools': 'Outils IA',
+                'nav.weather_climate': 'Intelligence Météorologique',
+                'nav.crop_advisory': 'Conseil Intelligent des Cultures',
+                'nav.livestock': 'Gestion du Bétail',
+                'nav.market_hub': 'Intelligence du Marché',
+                'nav.community': 'Communauté',
+                'nav.about': 'À Propos',
+                'nav.contact': 'Nous Contacter',
+                'cta.try_ai_tools': 'Essayer les Outils IA',
+                'hero.badge': 'IA Nouvelle Génération',
+                'hero.ai_powered': 'Alimenté par IA',
+                'hero.farming': 'Agriculture',
+                'hero.intelligence': 'Intelligence',
+                'hero.description': 'Exploitez la puissance de l\'intelligence artificielle pour révolutionner vos décisions agricoles. De l\'analyse de santé des cultures aux analyses prédictives, nos outils IA assurent un rendement et une rentabilité maximaux.',
+                'cta.start_ai_analysis': 'Commencer l\'Analyse IA',
+                'cta.watch_ai_demo': 'Voir la Démo IA',
+                'stats.accuracy': '% Précision',
+                'stats.yield_increase': '% Augmentation du Rendement',
+                'stats.response_time': 'hr Réponse',
+                'demo.ai_analysis': 'Centre d\'Analyse IA',
+                'demo.ai_active': 'IA Active',
+                'demo.crop_health': 'Analyse de Santé des Cultures',
+                'demo.soil_quality': 'Score de Qualité du Sol',
+                'demo.disease_risk': 'Niveau de Risque de Maladie',
+                'demo.voice_assistant': 'Assistant Vocal IA',
+                'demo.voice_ready': 'Prêt à aider avec les questions agricoles',
+                'demo.ask_ai': 'Demandez N\'importe Quoi à l\'IA',
+                'scroll.explore': 'Découvrir les Outils IA',
+                'tools.title': 'Kit IA Complet',
+                'tools.description': 'Solutions d\'intelligence artificielle complètes conçues spécifiquement pour l\'agriculture moderne, assurant des décisions basées sur les données et une productivité maximale.',
+                'tool1.title': 'Analyse de Santé des Cultures',
+                'tool1.subtitle': 'Détection de Maladies par IA',
+                'tool1.description': 'Téléchargez des images de plantes pour détecter instantanément maladies, parasites et carences nutritionnelles avec 98% de précision en utilisant la vision par ordinateur avancée.',
+                'tool1.feature1': 'Identification de maladies en temps réel',
+                'tool1.feature2': 'Recommandations de traitement',
+                'tool1.feature3': 'Stratégies de prévention',
+                'tool1.cta': 'Analyser la Santé des Cultures',
+                'ai_chat.welcome': 'Bonjour! Je suis votre assistant agricole IA. Je peux aider avec l\'analyse des cultures, les prédictions météorologiques et les insights agricoles. Que souhaitez-vous savoir?',
+                'ai_chat.input_placeholder': 'Demandez sur les outils d\'agriculture IA...'
+            },
+            // Add more languages as needed...
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Mobile dropdown functionality
+        function toggleMobileDropdown(id) {
+            const dropdown = document.getElementById(`mobile-${id}`);
+            const button = dropdown.previousElementSibling;
+            const icon = button.querySelector('i');
+            
+            dropdown.classList.toggle('hidden');
+            icon.style.transform = dropdown.classList.contains('hidden') ? '' : 'rotate(180deg)';
+            
+            button.setAttribute('aria-expanded', !dropdown.classList.contains('hidden'));
+        }
+
+        // Text size adjustment
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000;
+                        const increment = target / (duration / 16);
+                        let current = 0;
+                        
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.textContent = Math.floor(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target;
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // AI Tool Functions
+        function openTool(toolName) {
+            // This would typically open a specific AI tool interface
+            console.log(`Opening ${toolName} tool`);
+            
+            // For demo purposes, scroll to demo section
+            document.getElementById('ai-demo').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // File Upload Functionality
+        const imageInput = document.getElementById('image-input');
+        const uploadZone = document.getElementById('upload-zone');
+        const uploadSection = document.getElementById('upload-section');
+        const analysisSection = document.getElementById('analysis-section');
+        const resultsSection = document.getElementById('results-section');
+
+        // Drag and drop functionality
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleImageUpload(files[0]);
+            }
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleImageUpload(e.target.files[0]);
+            }
+        });
+
+        function handleImageUpload(file) {
+            if (!file.type.startsWith('image/')) {
+                showErrorMessage('Please select a valid image file.');
+                return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) {
+                showErrorMessage('File size must be less than 10MB.');
+                return;
+            }
+
+            // Show analysis section
+            uploadSection.classList.add('hidden');
+            analysisSection.classList.remove('hidden');
+            
+            // Start analysis simulation
+            simulateAIAnalysis(file);
+        }
+
+        function simulateAIAnalysis(file) {
+            const progressBar = document.getElementById('progress-bar');
+            const analysisSteps = document.getElementById('analysis-steps').children;
+            
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                // Update analysis steps
+                if (progress > 30 && !analysisSteps[0].classList.contains('active')) {
+                    analysisSteps[0].classList.add('bg-green-100', 'dark:bg-green-900');
+                    analysisSteps[0].querySelector('i').classList.add('text-green-500');
+                }
+                if (progress > 60 && !analysisSteps[1].classList.contains('active')) {
+                    analysisSteps[1].classList.add('bg-blue-100', 'dark:bg-blue-900');
+                    analysisSteps[1].querySelector('i').classList.add('text-blue-500');
+                }
+                if (progress > 90 && !analysisSteps[2].classList.contains('active')) {
+                    analysisSteps[2].classList.add('bg-purple-100', 'dark:bg-purple-900');
+                    analysisSteps[2].querySelector('i').classList.add('text-purple-500');
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    setTimeout(() => {
+                        showAnalysisResults(file);
+                    }, 1000);
+                }
+            }, 100);
+        }
+
+        function showAnalysisResults(file) {
+            analysisSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+            
+            // Display the analyzed image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('analyzed-image').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            
+            // Generate demo analysis results
+            const resultsContainer = document.getElementById('analysis-results');
+            resultsContainer.innerHTML = `
+                <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-semibold text-green-800 dark:text-green-300">Overall Health Status</h4>
+                        <span class="text-green-600 dark:text-green-400 font-bold">94% Healthy</span>
+                    </div>
+                    <p class="text-sm text-green-700 dark:text-green-300">Excellent crop condition with optimal growth patterns detected.</p>
+                </div>
+                
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-4 border-l-4 border-yellow-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-semibold text-yellow-800 dark:text-yellow-300">Nutrient Deficiency</h4>
+                        <span class="text-yellow-600 dark:text-yellow-400 font-bold">Minor Nitrogen</span>
+                    </div>
+                    <p class="text-sm text-yellow-700 dark:text-yellow-300">Slight nitrogen deficiency detected. Consider nitrogen-rich fertilizer.</p>
+                </div>
+                
+                <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-semibold text-blue-800 dark:text-blue-300">Growth Prediction</h4>
+                        <span class="text-blue-600 dark:text-blue-400 font-bold">+15% Yield</span>
+                    </div>
+                    <p class="text-sm text-blue-700 dark:text-blue-300">Current conditions suggest 15% above-average yield potential.</p>
+                </div>
+                
+                <div class="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border-l-4 border-purple-500">
+                    <h4 class="font-semibold text-purple-800 dark:text-purple-300 mb-2">AI Recommendations</h4>
+                    <ul class="text-sm text-purple-700 dark:text-purple-300 space-y-1">
+                        <li>• Apply nitrogen fertilizer in 2-3 days</li>
+                        <li>• Monitor for early pest signs</li>
+                        <li>• Optimal harvest window: 21-25 days</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function resetAnalysis() {
+            uploadSection.classList.remove('hidden');
+            analysisSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+            imageInput.value = '';
+        }
+
+        function downloadResults() {
+            // This would generate and download a PDF report
+            console.log('Downloading AI analysis report...');
+            // Simulate download
+            const link = document.createElement('a');
+            link.href = 'data:text/plain;charset=utf-8,AI%20Analysis%20Report%0A%0AOverall%20Health:%2094%25%20Healthy%0ANutrient%20Status:%20Minor%20Nitrogen%20Deficiency%0AGrowth%20Prediction:%20+15%25%20Yield';
+            link.download = 'ai-crop-analysis-report.txt';
+            link.click();
+        }
+
+        function showErrorMessage(message) {
+            // Create and show error message
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // AI Chat functionality
+        const aiChatToggle = document.getElementById('ai-chat-toggle');
+        const aiChatWidget = document.getElementById('ai-chat-widget');
+        const aiChatClose = document.getElementById('ai-chat-close');
+        const aiChatInput = document.getElementById('ai-chat-input');
+        const aiChatSend = document.getElementById('ai-chat-send');
+        const aiChatMessages = document.getElementById('ai-chat-messages');
+
+        aiChatToggle.addEventListener('click', () => {
+            const isVisible = !aiChatWidget.classList.contains('scale-0');
+            aiChatWidget.classList.toggle('scale-0');
+            
+            if (!isVisible) {
+                setTimeout(() => aiChatInput.focus(), 300);
+            }
+        });
+
+        aiChatClose.addEventListener('click', () => {
+            aiChatWidget.classList.add('scale-0');
+        });
+
+        function addAIMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-2 mb-4 ${isUser ? 'justify-end' : ''} animate-fade-in`;
+            
+            messageDiv.innerHTML = `
+                ${!isUser ? '<div class="w-6 h-6 ai-gradient rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-robot"></i></div>' : ''}
+                <div class="bg-${isUser ? 'agri-purple text-white' : 'gray-100 dark:bg-gray-700'} rounded-lg p-3 max-w-xs shadow-sm">
+                    <p class="text-sm ${isUser ? 'text-white' : 'text-gray-900 dark:text-white'}">${message}</p>
+                </div>
+                ${isUser ? '<div class="w-6 h-6 bg-agri-purple rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>' : ''}
+            `;
+            
+            aiChatMessages.appendChild(messageDiv);
+            aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+        }
+
+        function simulateAIResponse(userMessage) {
+            const aiResponses = {
+                'crop': 'Our crop health analysis tool can identify diseases, pests, and nutritional deficiencies with 98% accuracy. Would you like to upload an image for analysis?',
+                'soil': 'The soil intelligence tool provides comprehensive analysis of pH levels, nutrient content, and fertilization recommendations. It uses advanced AI to optimize your soil health.',
+                'weather': 'Our weather prediction AI provides hyperlocal 15-day forecasts with extreme weather alerts. It helps you plan optimal farming schedules and protect your crops.',
+                'yield': 'The yield prediction tool uses machine learning to forecast your harvest based on current conditions, historical data, and growth patterns. Accuracy rate is above 95%.',
+                'market': 'Our market intelligence AI tracks real-time prices, demand patterns, and predicts optimal selling times to maximize your profits.',
+                'irrigation': 'Smart irrigation AI optimizes water usage based on soil moisture, weather forecasts, and crop requirements, saving up to 30% water while improving yields.',
+                'accuracy': 'Our AI models achieve 98%+ accuracy through continuous learning from millions of agricultural images and expert validation.',
+                'upload': 'You can upload crop images by clicking the "Select Image" button or dragging and dropping files into the upload zone. We support JPG, PNG, and HEIC formats up to 10MB.',
+                'default': 'I\'m here to help with all our AI farming tools! Ask me about crop health analysis, soil intelligence, weather prediction, yield forecasting, market insights, or smart irrigation.'
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            let response = aiResponses.default;
+
+            for (const key in aiResponses) {
+                if (lowerMessage.includes(key)) {
+                    response = aiResponses[key];
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                addAIMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendAIMessage(input) {
+            const message = input.value.trim();
+            if (message) {
+                addAIMessage(message, true);
+                input.value = '';
+                simulateAIResponse(message);
+            }
+        }
+
+        aiChatSend.addEventListener('click', () => sendAIMessage(aiChatInput));
+
+        aiChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendAIMessage(aiChatInput);
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced feature card interactions
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Voice demo functionality
+        document.getElementById('voice-demo')?.addEventListener('click', () => {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = currentLanguage;
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                const button = document.getElementById('voice-demo');
+                button.innerHTML = '<i class="fas fa-stop mr-2"></i>Listening...';
+                button.classList.add('animate-pulse');
+
+                recognition.start();
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    addAIMessage(transcript, true);
+                    simulateAIResponse(transcript);
+                };
+
+                recognition.onend = () => {
+                    button.innerHTML = '<i class="fas fa-microphone mr-2"></i>Ask AI Anything';
+                    button.classList.remove('animate-pulse');
+                };
+            } else {
+                addAIMessage('Voice recognition is not supported in your browser. Please type your message instead.');
+            }
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            translatePage(currentLanguage);
+            animateCounters();
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - AI-Powered Tools Ready!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                aiChatWidget.classList.add('scale-0');
+                mobileMenu.classList.add('hidden');
+            }
+            
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Performance optimization
+        const lazyElements = document.querySelectorAll('[data-aos]');
+        const lazyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        });
+
+        lazyElements.forEach(el => lazyObserver.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Network - Community | AgriClimate Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B',
+                        'agri-purple': '#7C3AED',
+                        'agri-teal': '#14B8A6'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'network-pulse': 'networkPulse 3s ease-in-out infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes networkPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #7C3AED 0%, #1976D2 30%, #4CAF50 70%, #14B8A6 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 20%, #7C3AED 50%, #1976D2 80%, #4CAF50 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .expert-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark .expert-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .expert-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark .expert-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #7C3AED, #1976D2, #4CAF50, #14B8A6);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        .network-node {
+            position: relative;
+        }
+        
+        .network-node::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: network-pulse 2s ease-in-out infinite;
+        }
+        
+        .expert-specialty-tag {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(25, 118, 210, 0.1) 100%);
+            color: #7C3AED;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        
+        .dark .expert-specialty-tag {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(25, 118, 210, 0.2) 100%);
+            color: #A78BFA;
+            border-color: rgba(124, 58, 237, 0.5);
+        }
+        
+        .connection-line {
+            position: absolute;
+            background: linear-gradient(90deg, #7C3AED, #1976D2);
+            height: 2px;
+            opacity: 0.5;
+            animation: connection-flow 3s ease-in-out infinite;
+        }
+        
+        @keyframes connection-flow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Accessibility Enhancements */
+        .focus\:ring-agri:focus {
+            ring-color: #4CAF50;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .glass-effect, .expert-card {
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #000;
+            }
+            
+            .dark .glass-effect, .dark .expert-card {
+                background: rgba(0, 0, 0, 0.9);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #7C3AED;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5B21B6;
+        }
+        
+        .expert-status {
+            position: relative;
+        }
+        
+        .expert-status.online::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #10B981;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+        
+        .expert-status.busy::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #F59E0B;
+            border: 2px solid white;
+            border-radius: 50%;
+        }
+        
+        .filter-tag {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tag.active {
+            background: #7C3AED;
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-agri-purple text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">
+                            <a href="index.html" class="hover:text-agri-green transition-colors">AgriClimate Connect</a>
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Expert Network Community</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="weather.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather & Climate Intelligence</span>
+                            </a>
+                            <a href="crops.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="livestock.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="market.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="ai-tools.html" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-agri-purple dark:text-agri-purple font-semibold hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.community">Community</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#" class="block py-2 text-sm bg-agri-purple/10 dark:bg-agri-purple/20 rounded-lg px-3 py-2 text-agri-purple dark:text-agri-purple font-medium" role="menuitem">
+                                <i class="fas fa-users mr-3 text-agri-purple" aria-hidden="true"></i><span data-translate="nav.expert_network">Expert Network</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-comments mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.community_forum">Community Forum</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-calendar mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.events">Events & Webinars</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-trophy mr-3 text-agri-gold" aria-hidden="true"></i><span data-translate="nav.success_stories">Success Stories</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- About Us -->
+                    <a href="index.html#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us -->
+                    <a href="index.html#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-agri-green rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <button class="hidden md:block bg-gradient-to-r from-agri-purple to-agri-blue text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple glow-on-hover">
+                        <span data-translate="cta.join_network">Join Network</span>
+                    </button>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    <a href="#" class="block py-2 text-agri-purple dark:text-agri-purple font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.expert_network">Expert Network</a>
+                    <a href="index.html#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="index.html#contact" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <button class="w-full mt-4 bg-gradient-to-r from-agri-purple to-agri-blue text-white py-2 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                        <span data-translate="cta.join_network">Join Network</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="expert-hero" class="min-h-screen pt-20 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+            
+            <!-- Floating Network Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white/20 dark:bg-agri-purple/30 rounded-full animate-float flex items-center justify-center network-node" aria-hidden="true">
+                <i class="fas fa-users text-white dark:text-agri-purple text-2xl"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-agri-gold/20 dark:bg-agri-gold/30 rounded-full animate-float flex items-center justify-center network-node" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-handshake text-agri-gold text-xl"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-teal/20 dark:bg-agri-teal/30 rounded-full animate-float flex items-center justify-center network-node" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-network-wired text-agri-teal text-2xl"></i>
+            </div>
+
+            <!-- Connection Lines -->
+            <div class="connection-line" style="top: 30%; left: 15%; width: 200px; transform: rotate(25deg);" aria-hidden="true"></div>
+            <div class="connection-line" style="top: 50%; right: 20%; width: 150px; transform: rotate(-15deg);" aria-hidden="true"></div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <nav class="mb-6" aria-label="Breadcrumb">
+                            <ol class="flex items-center space-x-2 text-sm text-white/80">
+                                <li><a href="index.html" class="hover:text-agri-gold transition-colors" data-translate="breadcrumb.home">Home</a></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li><span data-translate="breadcrumb.community">Community</span></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li class="text-agri-gold font-medium" data-translate="breadcrumb.expert_network">Expert Network</li>
+                            </ol>
+                        </nav>
+                        
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.connect">Connect</span> <span class="text-agri-gold" data-translate="hero.with">with</span><br>
+                            <span data-translate="hero.agricultural">Agricultural</span><br>
+                            <span class="text-cyan-200" data-translate="hero.experts">Experts</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Join our global network of agricultural professionals, researchers, and industry leaders. Get personalized advice, share knowledge, and grow your farming success through expert connections.</span>
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 font-semibold px-8 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-gold">
+                                <i class="fas fa-user-plus mr-2" aria-hidden="true"></i><span data-translate="cta.find_experts">Find Experts</span>
+                            </button>
+                            <button class="border-2 border-white text-white hover:bg-white hover:text-agri-purple font-semibold px-8 py-4 rounded-full text-lg transition-all focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-graduation-cap mr-2" aria-hidden="true"></i><span data-translate="cta.become_expert">Become Expert</span>
+                            </button>
+                        </div>
+
+                        <!-- Network Statistics -->
+                        <div class="grid grid-cols-3 gap-6 mt-12">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="2500">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.verified_experts">Verified Experts</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="150000">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.connections_made">Connections Made</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="98">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.satisfaction_rate">% Satisfaction Rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Expert Network Preview -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- Live Expert Dashboard -->
+                        <div class="glass-effect rounded-2xl p-6 text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold" data-translate="widget.experts_online">Experts Online Now</h3>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                    <span class="text-sm">245 <span data-translate="widget.active">Active</span></span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3 p-3 bg-white/10 dark:bg-agri-night/50 rounded-lg">
+                                    <div class="expert-status online w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold">
+                                        DR
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold">Dr. Sarah Chen</div>
+                                        <div class="text-sm opacity-75" data-translate="widget.soil_scientist">Soil Scientist</div>
+                                    </div>
+                                    <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-green-500">
+                                        <span data-translate="widget.connect">Connect</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-white/10 dark:bg-agri-night/50 rounded-lg">
+                                    <div class="expert-status busy w-12 h-12 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold">
+                                        MJ
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold">Mark Johnson</div>
+                                        <div class="text-sm opacity-75" data-translate="widget.crop_advisor">Crop Advisor</div>
+                                    </div>
+                                    <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                        <span data-translate="widget.busy">Busy</span>
+                                    </button>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-white/10 dark:bg-agri-night/50 rounded-lg">
+                                    <div class="expert-status online w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
+                                        AL
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold">Ana López</div>
+                                        <div class="text-sm opacity-75" data-translate="widget.livestock_expert">Livestock Expert</div>
+                                    </div>
+                                    <button class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-full text-xs transition-colors focus:outline-none focus:ring-2 focus:ring-green-500">
+                                        <span data-translate="widget.connect">Connect</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-gold" tabindex="0" role="button">
+                                <i class="fas fa-search text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.expert_search">Expert Search</div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-gold" tabindex="0" role="button">
+                                <i class="fas fa-calendar text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.schedule_consultation">Schedule Call</div>
+                            </div>
+                        </div>
+
+                        <!-- AI Matching -->
+                        <div class="glass-effect rounded-full p-2">
+                            <div class="flex items-center">
+                                <input type="text" placeholder="Describe your farming challenge..." 
+                                       class="flex-1 bg-transparent text-white placeholder-gray-300 dark:placeholder-gray-400 px-4 py-2 focus:outline-none text-base"
+                                       id="expert-search"
+                                       data-translate-placeholder="widget.describe_challenge">
+                                <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 p-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-agri-gold" aria-label="Find matching experts">
+                                    <i class="fas fa-magic" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.explore">Explore expert network</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expert Categories Section -->
+        <section id="expert-categories" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="categories.title">Find Your Perfect Expert Match</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
+                        <span data-translate="categories.description">Our network includes world-class experts across all agricultural disciplines, ready to share their knowledge and help you achieve farming excellence.</span>
+                    </p>
+                </div>
+
+                <!-- Expert Category Filter -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12" data-aos="fade-up">
+                    <button class="filter-tag active px-6 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-agri-purple hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple" data-filter="all">
+                        <span data-translate="filter.all">All Experts</span>
+                    </button>
+                    <button class="filter-tag px-6 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-agri-purple hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple" data-filter="crops">
+                        <span data-translate="filter.crops">Crop Science</span>
+                    </button>
+                    <button class="filter-tag px-6 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-agri-purple hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple" data-filter="livestock">
+                        <span data-translate="filter.livestock">Livestock</span>
+                    </button>
+                    <button class="filter-tag px-6 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-agri-purple hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple" data-filter="soil">
+                        <span data-translate="filter.soil">Soil Science</span>
+                    </button>
+                    <button class="filter-tag px-6 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-agri-purple hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple" data-filter="technology">
+                        <span data-translate="filter.technology">AgTech</span>
+                    </button>
+                    <button class="filter-tag px-6 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full hover:bg-agri-purple hover:text-white transition-all focus:outline-none focus:ring-2 focus:ring-agri-purple" data-filter="market">
+                        <span data-translate="filter.market">Market Analysis</span>
+                    </button>
+                </div>
+
+                <!-- Featured Experts Grid -->
+                <div class="grid lg:grid-cols-3 gap-8" id="experts-grid">
+                    <!-- Expert Card 1 -->
+                    <div class="expert-card rounded-2xl p-6 shadow-xl" data-category="crops" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="expert-status online w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">
+                                SC
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Dr. Sarah Chen</h3>
+                                <p class="text-gray-600 dark:text-gray-400" data-translate="expert1.title">Soil Science Professor</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-map-marker-alt text-gray-400 text-sm mr-1" aria-hidden="true"></i>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">UC Davis, California</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.soil_health">Soil Health</span>
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.sustainable_farming">Sustainable Farming</span>
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.nutrient_management">Nutrient Management</span>
+                        </div>
+                        
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="expert1.bio">
+                            Leading researcher in sustainable soil management with 15+ years experience. Specializes in organic farming practices and soil restoration techniques.
+                        </p>
+                        
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">4.9 (127 reviews)</span>
+                            </div>
+                            <span class="text-sm font-medium text-agri-green">$75/hr</span>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-agri-purple hover:bg-purple-700 text-white py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                                <span data-translate="action.connect">Connect</span>
+                            </button>
+                            <button class="px-4 py-2 border border-agri-purple text-agri-purple hover:bg-agri-purple hover:text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                                <i class="fas fa-bookmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Expert Card 2 -->
+                    <div class="expert-card rounded-2xl p-6 shadow-xl" data-category="livestock" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="expert-status busy w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">
+                                MJ
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Mark Johnson</h3>
+                                <p class="text-gray-600 dark:text-gray-400" data-translate="expert2.title">Livestock Veterinarian</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-map-marker-alt text-gray-400 text-sm mr-1" aria-hidden="true"></i>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">Texas A&M, Texas</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.cattle_health">Cattle Health</span>
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.dairy_management">Dairy Management</span>
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.reproduction">Reproduction</span>
+                        </div>
+                        
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="expert2.bio">
+                            Veterinarian with expertise in large animal health, dairy operations, and herd management. 20+ years of field experience with cattle operations.
+                        </p>
+                        
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-gray-300 text-sm" aria-hidden="true"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">4.7 (89 reviews)</span>
+                            </div>
+                            <span class="text-sm font-medium text-agri-green">$90/hr</span>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-gray-400 text-white py-2 rounded-lg cursor-not-allowed" disabled>
+                                <span data-translate="action.busy">Busy</span>
+                            </button>
+                            <button class="px-4 py-2 border border-agri-purple text-agri-purple hover:bg-agri-purple hover:text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                                <i class="fas fa-bookmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Expert Card 3 -->
+                    <div class="expert-card rounded-2xl p-6 shadow-xl" data-category="technology" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="expert-status online w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center text-white text-xl font-bold">
+                                AL
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Ana López</h3>
+                                <p class="text-gray-600 dark:text-gray-400" data-translate="expert3.title">AgTech Consultant</p>
+                                <div class="flex items-center mt-1">
+                                    <i class="fas fa-map-marker-alt text-gray-400 text-sm mr-1" aria-hidden="true"></i>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">AgTech Solutions, Spain</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.precision_farming">Precision Farming</span>
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.drones">Drone Technology</span>
+                            <span class="expert-specialty-tag px-3 py-1 rounded-full text-xs font-medium" data-translate="specialty.iot">IoT Sensors</span>
+                        </div>
+                        
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="expert3.bio">
+                            Technology expert helping farmers integrate modern AgTech solutions. Specializes in precision farming, automation, and data-driven agriculture.
+                        </p>
+                        
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                    <i class="fas fa-star text-yellow-400 text-sm" aria-hidden="true"></i>
+                                </div>
+                                <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">5.0 (45 reviews)</span>
+                            </div>
+                            <span class="text-sm font-medium text-agri-green">$120/hr</span>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-agri-purple hover:bg-purple-700 text-white py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                                <span data-translate="action.connect">Connect</span>
+                            </button>
+                            <button class="px-4 py-2 border border-agri-purple text-agri-purple hover:bg-agri-purple hover:text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                                <i class="fas fa-bookmark" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Additional expert cards can be added here -->
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-12" data-aos="fade-up">
+                    <button class="bg-agri-purple hover:bg-purple-700 text-white px-8 py-3 rounded-full font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple">
+                        <span data-translate="action.load_more">Load More Experts</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-20 bg-gradient-to-br from-purple-50 to-blue-50 dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="how_it_works.title">How Expert Network Works</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span data-translate="how_it_works.description">Connect with agricultural experts in just a few simple steps and get the guidance you need to succeed.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-4 gap-8">
+                    <!-- Step 1 -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-20 h-20 bg-gradient-to-br from-agri-purple to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover relative">
+                            <i class="fas fa-search text-white text-2xl" aria-hidden="true"></i>
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-agri-gold text-gray-900 rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="step1.title">Search & Discover</h3>
+                        <p class="text-gray-600 dark:text-gray-300" data-translate="step1.description">
+                            Search our verified expert database by specialty, location, experience, and ratings to find the perfect match for your farming needs.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-20 h-20 bg-gradient-to-br from-agri-blue to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover relative">
+                            <i class="fas fa-handshake text-white text-2xl" aria-hidden="true"></i>
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-agri-gold text-gray-900 rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="step2.title">Connect & Schedule</h3>
+                        <p class="text-gray-600 dark:text-gray-300" data-translate="step2.description">
+                            Send connection requests, review expert profiles, and schedule consultations at times that work for both of you.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-20 h-20 bg-gradient-to-br from-agri-green to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover relative">
+                            <i class="fas fa-video text-white text-2xl" aria-hidden="true"></i>
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-agri-gold text-gray-900 rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="step3.title">Consult & Learn</h3>
+                        <p class="text-gray-600 dark:text-gray-300" data-translate="step3.description">
+                            Engage in video calls, share farm data, get personalized advice, and receive actionable recommendations from industry experts.
+                        </p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-20 h-20 bg-gradient-to-br from-agri-accent to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6 glow-on-hover relative">
+                            <i class="fas fa-chart-line text-white text-2xl" aria-hidden="true"></i>
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-agri-gold text-gray-900 rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4" data-translate="step4.title">Implement & Grow</h3>
+                        <p class="text-gray-600 dark:text-gray-300" data-translate="step4.description">
+                            Apply expert guidance to your farming operations, track results, and maintain ongoing relationships for continued success.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories Section -->
+        <section id="success-stories" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="success.title">Success Stories</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span data-translate="success.description">Real farmers sharing how expert connections transformed their agricultural operations and increased profitability.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Success Story 1 -->
+                    <div class="expert-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full bg-cover bg-center"></div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">James Patterson</h3>
+                                <p class="text-gray-600 dark:text-gray-400" data-translate="story1.location">Wheat Farmer, Kansas</p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-quote-left text-agri-purple text-xl mr-2" aria-hidden="true"></i>
+                                <span class="text-agri-purple font-semibold" data-translate="story1.improvement">40% Yield Increase</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 italic" data-translate="story1.quote">
+                                "Connecting with Dr. Chen completely changed my approach to soil management. Her sustainable practices increased my wheat yield by 40% while reducing input costs."
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                            <span data-translate="story1.consultation">Soil Health Consultation</span>
+                            <span>⭐ 5.0 Rating</span>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 2 -->
+                    <div class="expert-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full bg-cover bg-center"></div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Maria González</h3>
+                                <p class="text-gray-600 dark:text-gray-400" data-translate="story2.location">Dairy Farm, California</p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-quote-left text-agri-purple text-xl mr-2" aria-hidden="true"></i>
+                                <span class="text-agri-purple font-semibold" data-translate="story2.improvement">25% Milk Production Boost</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 italic" data-translate="story2.quote">
+                                "Mark's expertise in dairy management helped optimize our herd health program. We saw a 25% increase in milk production within 6 months."
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                            <span data-translate="story2.consultation">Livestock Health Program</span>
+                            <span>⭐ 4.9 Rating</span>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 3 -->
+                    <div class="expert-card rounded-2xl p-6 shadow-xl" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full bg-cover bg-center"></div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">David Kim</h3>
+                                <p class="text-gray-600 dark:text-gray-400" data-translate="story3.location">Vegetable Farm, Oregon</p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-quote-left text-agri-purple text-xl mr-2" aria-hidden="true"></i>
+                                <span class="text-agri-purple font-semibold" data-translate="story3.improvement">50% Cost Reduction</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-300 italic" data-translate="story3.quote">
+                                "Ana's AgTech solutions transformed our operation. Precision farming reduced our input costs by 50% while maintaining the same quality output."
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                            <span data-translate="story3.consultation">Technology Integration</span>
+                            <span>⭐ 5.0 Rating</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Expert Network Community</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Connecting farmers with world-class agricultural experts for knowledge sharing, consultation, and farming success through our global expert network.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Expert Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.expert_categories">Expert Categories</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.crop_experts">Crop Science Experts</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.livestock_experts">Livestock Specialists</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.soil_experts">Soil Scientists</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.agtech_experts">AgTech Consultants</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.market_experts">Market Analysts</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.sustainability_experts">Sustainability Experts</a></li>
+                    </ul>
+                </div>
+
+                <!-- For Experts -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.for_experts">For Experts</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.join_network">Join Our Network</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.expert_guidelines">Expert Guidelines</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.verification_process">Verification Process</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.earning_potential">Earning Potential</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.success_stories">Success Stories</a></li>
+                        <li><a href="index.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.back_home">Back to Home</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Network Stats */
+            <div class="bg-gray-800 dark:bg-gray-900 rounded-2xl p-8 mb-8">
+                <div class="grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <div class="text-3xl font-bold text-agri-purple mb-2 counter" data-target="2500">0</div>
+                        <div class="text-gray-300 text-sm" data-translate="footer.stat1">Verified Experts</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-agri-blue mb-2 counter" data-target="150000">0</div>
+                        <div class="text-gray-300 text-sm" data-translate="footer.stat2">Connections Made</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-agri-green mb-2 counter" data-target="85">0</div>
+                        <div class="text-gray-300 text-sm" data-translate="footer.stat3">Countries Represented</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-agri-gold mb-2">4.9</div>
+                        <div class="text-gray-300 text-sm" data-translate="footer.stat4">Average Expert Rating</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect Expert Network. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.expert_agreement">Expert Agreement</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Chat Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="chat-toggle" class="w-16 h-16 bg-gradient-to-r from-agri-purple to-agri-blue text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-purple" aria-label="Open expert network chat">
+            <i class="fas fa-users text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="fixed bottom-24 right-6 w-96 h-96 bg-white dark:bg-agri-night rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 transform scale-0 origin-bottom-right transition-transform z-50">
+        <div class="h-full flex flex-col">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-agri-purple to-agri-blue text-white p-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold" data-translate="chat.title">Expert Network Helper</h4>
+                            <p class="text-xs opacity-75" data-translate="chat.subtitle">Connect with Experts</p>
+                        </div>
+                    </div>
+                    <button id="chat-close" class="hover:bg-white/20 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close chat">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 overflow-y-auto" id="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+                <div class="flex items-start space-x-2 mb-4">
+                    <div class="w-6 h-6 bg-agri-purple rounded-full flex items-center justify-center text-white text-xs">
+                        <i class="fas fa-users" aria-hidden="true"></i>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+                        <p class="text-sm text-gray-900 dark:text-white" data-translate="chat.welcome">Hi! I can help you find the perfect agricultural expert for your needs. What type of expertise are you looking for?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex space-x-2">
+                    <input type="text" 
+                           placeholder="Tell me what expertise you need..."
+                           class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-purple text-sm text-gray-900 dark:text-white dark:bg-gray-800"
+                           id="widget-chat-input"
+                           data-translate-placeholder="chat.input_placeholder">
+                    <button class="bg-agri-purple hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-purple" id="widget-send-chat" aria-label="Send message">
+                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for Expert Network
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather & Climate Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.expert_network': 'Expert Network',
+                'nav.community_forum': 'Community Forum',
+                'nav.events': 'Events & Webinars',
+                'nav.success_stories': 'Success Stories',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'cta.join_network': 'Join Network',
+                'breadcrumb.home': 'Home',
+                'breadcrumb.community': 'Community',
+                'breadcrumb.expert_network': 'Expert Network',
+                'hero.connect': 'Connect',
+                'hero.with': 'with',
+                'hero.agricultural': 'Agricultural',
+                'hero.experts': 'Experts',
+                'hero.description': 'Join our global network of agricultural professionals, researchers, and industry leaders. Get personalized advice, share knowledge, and grow your farming success through expert connections.',
+                'cta.find_experts': 'Find Experts',
+                'cta.become_expert': 'Become Expert',
+                'stats.verified_experts': 'Verified Experts',
+                'stats.connections_made': 'Connections Made',
+                'stats.satisfaction_rate': '% Satisfaction Rate',
+                'widget.experts_online': 'Experts Online Now',
+                'widget.active': 'Active',
+                'widget.soil_scientist': 'Soil Scientist',
+                'widget.crop_advisor': 'Crop Advisor',
+                'widget.livestock_expert': 'Livestock Expert',
+                'widget.connect': 'Connect',
+                'widget.busy': 'Busy',
+                'widget.expert_search': 'Expert Search',
+                'widget.schedule_consultation': 'Schedule Call',
+                'widget.describe_challenge': 'Describe your farming challenge...',
+                'scroll.explore': 'Explore expert network',
+                'chat.title': 'Expert Network Helper',
+                'chat.subtitle': 'Connect with Experts',
+                'chat.welcome': 'Hi! I can help you find the perfect agricultural expert for your needs. What type of expertise are you looking for?',
+                'chat.input_placeholder': 'Tell me what expertise you need...'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.community': 'Comunidad',
+                'nav.expert_network': 'Red de Expertos',
+                'nav.community_forum': 'Foro Comunitario',
+                'nav.events': 'Eventos y Webinarios',
+                'nav.success_stories': 'Historias de Éxito',
+                'nav.about': 'Acerca de',
+                'nav.contact': 'Contacto',
+                'cta.join_network': 'Unirse a la Red',
+                'breadcrumb.home': 'Inicio',
+                'breadcrumb.community': 'Comunidad',
+                'breadcrumb.expert_network': 'Red de Expertos',
+                'hero.connect': 'Conectar',
+                'hero.with': 'con',
+                'hero.agricultural': 'Expertos',
+                'hero.experts': 'Agrícolas',
+                'hero.description': 'Únete a nuestra red global de profesionales agrícolas, investigadores y líderes de la industria. Obtén consejos personalizados, comparte conocimientos y haz crecer tu éxito agrícola a través de conexiones expertas.',
+                'cta.find_experts': 'Encontrar Expertos',
+                'cta.become_expert': 'Convertirse en Experto',
+                'stats.verified_experts': 'Expertos Verificados',
+                'stats.connections_made': 'Conexiones Realizadas',
+                'stats.satisfaction_rate': '% Tasa de Satisfacción',
+                'widget.experts_online': 'Expertos En Línea Ahora',
+                'widget.active': 'Activo',
+                'widget.soil_scientist': 'Científico del Suelo',
+                'widget.crop_advisor': 'Asesor de Cultivos',
+                'widget.livestock_expert': 'Experto en Ganado',
+                'widget.connect': 'Conectar',
+                'widget.busy': 'Ocupado',
+                'widget.expert_search': 'Búsqueda de Expertos',
+                'widget.schedule_consultation': 'Programar Llamada',
+                'widget.describe_challenge': 'Describe tu desafío agrícola...',
+                'scroll.explore': 'Explorar red de expertos',
+                'chat.title': 'Asistente Red de Expertos',
+                'chat.subtitle': 'Conectar con Expertos',
+                'chat.welcome': '¡Hola! Puedo ayudarte a encontrar el experto agrícola perfecto para tus necesidades. ¿Qué tipo de experiencia buscas?',
+                'chat.input_placeholder': 'Dime qué experiencia necesitas...'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.community': 'Communauté',
+                'nav.expert_network': 'Réseau d\'Experts',
+                'nav.community_forum': 'Forum Communautaire',
+                'nav.events': 'Événements et Webinaires',
+                'nav.success_stories': 'Histoires de Succès',
+                'nav.about': 'À Propos',
+                'nav.contact': 'Contact',
+                'cta.join_network': 'Rejoindre le Réseau',
+                'breadcrumb.home': 'Accueil',
+                'breadcrumb.community': 'Communauté',
+                'breadcrumb.expert_network': 'Réseau d\'Experts',
+                'hero.connect': 'Connecter',
+                'hero.with': 'avec',
+                'hero.agricultural': 'Experts',
+                'hero.experts': 'Agricoles',
+                'hero.description': 'Rejoignez notre réseau mondial de professionnels agricoles, chercheurs et leaders de l\'industrie. Obtenez des conseils personnalisés, partagez vos connaissances et développez votre succès agricole grâce aux connexions d\'experts.',
+                'cta.find_experts': 'Trouver des Experts',
+                'cta.become_expert': 'Devenir Expert',
+                'stats.verified_experts': 'Experts Vérifiés',
+                'stats.connections_made': 'Connexions Réalisées',
+                'stats.satisfaction_rate': '% Taux de Satisfaction',
+                'widget.experts_online': 'Experts En Ligne Maintenant',
+                'widget.active': 'Actif',
+                'widget.soil_scientist': 'Scientifique du Sol',
+                'widget.crop_advisor': 'Conseiller en Cultures',
+                'widget.livestock_expert': 'Expert en Bétail',
+                'widget.connect': 'Connecter',
+                'widget.busy': 'Occupé',
+                'widget.expert_search': 'Recherche d\'Experts',
+                'widget.schedule_consultation': 'Planifier Appel',
+                'widget.describe_challenge': 'Décrivez votre défi agricole...',
+                'scroll.explore': 'Explorer réseau d\'experts',
+                'chat.title': 'Assistant Réseau d\'Experts',
+                'chat.subtitle': 'Se Connecter aux Experts',
+                'chat.welcome': 'Salut! Je peux vous aider à trouver l\'expert agricole parfait pour vos besoins. Quel type d\'expertise recherchez-vous?',
+                'chat.input_placeholder': 'Dites-moi quelle expertise vous avez besoin...'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Text size adjustment
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000;
+                        const increment = target / (duration / 16);
+                        let current = 0;
+                        
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.textContent = Math.floor(current).toLocaleString();
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // Expert filtering functionality
+        const filterTags = document.querySelectorAll('.filter-tag');
+        const expertCards = document.querySelectorAll('.expert-card[data-category]');
+
+        filterTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                // Remove active class from all tags
+                filterTags.forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tag
+                tag.classList.add('active');
+                
+                const filter = tag.getAttribute('data-filter');
+                
+                expertCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                        card.style.opacity = '0';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                        }, 100);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Chat functionality
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWidget = document.getElementById('chat-widget');
+        const chatClose = document.getElementById('chat-close');
+        const widgetChatInput = document.getElementById('widget-chat-input');
+        const widgetSendBtn = document.getElementById('widget-send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatToggle.addEventListener('click', () => {
+            const isVisible = !chatWidget.classList.contains('scale-0');
+            chatWidget.classList.toggle('scale-0');
+            
+            if (!isVisible) {
+                setTimeout(() => widgetChatInput.focus(), 300);
+            }
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.add('scale-0');
+        });
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-2 mb-4 ${isUser ? 'justify-end' : ''} animate-fade-in`;
+            
+            messageDiv.innerHTML = `
+                ${!isUser ? '<div class="w-6 h-6 bg-agri-purple rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-users"></i></div>' : ''}
+                <div class="bg-${isUser ? 'agri-purple text-white' : 'gray-100 dark:bg-gray-700'} rounded-lg p-3 max-w-xs shadow-sm">
+                    <p class="text-sm ${isUser ? 'text-white' : 'text-gray-900 dark:text-white'}">${message}</p>
+                </div>
+                ${isUser ? '<div class="w-6 h-6 bg-agri-purple rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>' : ''}
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function simulateExpertNetworkAIResponse(userMessage) {
+            const responses = {
+                'crop': 'For crop expertise, I recommend Dr. Sarah Chen (Soil Science) or Mark Johnson (Crop Advisory). Both have excellent ratings and specialize in sustainable farming practices. Would you like me to show you their profiles?',
+                'soil': 'Dr. Sarah Chen is our top soil scientist with expertise in soil health, nutrient management, and sustainable farming. She has a 4.9/5 rating and is currently available for consultations.',
+                'livestock': 'Mark Johnson is our livestock veterinarian expert specializing in cattle health, dairy management, and reproduction. He has 20+ years of experience and a 4.7/5 rating.',
+                'technology': 'Ana López is our AgTech consultant who helps with precision farming, drone technology, and IoT sensors. She has a perfect 5.0 rating and specializes in technology integration.',
+                'market': 'Our market analysis experts can help with pricing strategies, market trends, and selling timing. Would you like me to connect you with a market specialist?',
+                'sustainable': 'For sustainable farming practices, Dr. Sarah Chen is excellent for soil health approaches, while Ana López can help with technology solutions for sustainability.',
+                'pricing': 'Expert consultation rates vary: Dr. Chen ($75/hr), Mark Johnson ($90/hr), Ana López ($120/hr). All experts offer initial 15-minute consultations free.',
+                'schedule': 'You can schedule consultations directly through expert profiles. Most experts are available for video calls, phone consultations, or on-farm visits depending on location.',
+                'rating': 'All our experts are verified and rated by farmers. Average network rating is 4.9/5. You can see detailed reviews and ratings on each expert\'s profile.',
+                'specialties': 'Our experts cover: Crop Science, Livestock Management, Soil Science, AgTech, Market Analysis, Sustainable Farming, Pest Management, and Irrigation Systems.',
+                'default': 'I can help you find experts in crop science, livestock management, soil health, agricultural technology, market analysis, and more. What specific expertise do you need for your farm?'
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            let response = responses.default;
+
+            for (const key in responses) {
+                if (lowerMessage.includes(key)) {
+                    response = responses[key];
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendMessage(input) {
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                simulateExpertNetworkAIResponse(message);
+            }
+        }
+
+        widgetSendBtn.addEventListener('click', () => sendMessage(widgetChatInput));
+
+        widgetChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage(widgetChatInput);
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced feature card interactions
+        document.querySelectorAll('.expert-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            translatePage(currentLanguage);
+            animateCounters();
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - Expert Network Community Loaded Successfully!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                chatWidget.classList.add('scale-0');
+                mobileMenu.classList.add('hidden');
+            }
+            
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Forum - AgriClimate Connect Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B',
+                        'community-purple': '#7C3AED',
+                        'community-pink': '#EC4899'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'typing': 'typing 1.5s steps(20) infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #7C3AED, 0 0 10px #7C3AED, 0 0 15px #7C3AED; }
+            to { box-shadow: 0 0 10px #7C3AED, 0 0 20px #7C3AED, 0 0 30px #7C3AED; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes typing {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #F59E0B 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #7C3AED 70%, #EC4899 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .forum-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark .forum-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .forum-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .forum-card:hover {
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #7C3AED, #EC4899, #F59E0B);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .online-indicator {
+            position: relative;
+        }
+        
+        .online-indicator::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            background: #10B981;
+            border: 2px solid white;
+            border-radius: 50%;
+            z-index: 10;
+        }
+        
+        .dark .online-indicator::before {
+            border-color: #1E293B;
+        }
+        
+        .expert-badge {
+            background: linear-gradient(45deg, #F59E0B, #D97706);
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .post-content {
+            line-height: 1.7;
+        }
+        
+        .post-content h1, .post-content h2, .post-content h3 {
+            margin: 1rem 0 0.5rem 0;
+            font-weight: 600;
+        }
+        
+        .post-content p {
+            margin: 0.5rem 0;
+        }
+        
+        .post-content ul, .post-content ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .post-content blockquote {
+            border-left: 4px solid #7C3AED;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            background: rgba(124, 58, 237, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+        }
+        
+        .thread-hot {
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+            border-left: 4px solid #EF4444;
+        }
+        
+        .thread-pinned {
+            background: linear-gradient(45deg, rgba(124, 58, 237, 0.1), rgba(109, 40, 217, 0.1));
+            border-left: 4px solid #7C3AED;
+        }
+        
+        .thread-locked {
+            opacity: 0.7;
+            background: linear-gradient(45deg, rgba(107, 114, 128, 0.1), rgba(75, 85, 99, 0.1));
+            border-left: 4px solid #6B7280;
+        }
+        
+        .reputation-score {
+            background: linear-gradient(45deg, #10B981, #059669);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        /* Accessibility Enhancements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .forum-card {
+                background: rgba(255, 255, 255, 1);
+                border: 2px solid #000;
+            }
+            
+            .dark .forum-card {
+                background: rgba(0, 0, 0, 1);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #7C3AED;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6D28D9;
+        }
+        
+        .typing-indicator {
+            display: inline-block;
+            animation: typing 1.5s infinite;
+        }
+        
+        .search-highlight {
+            background: linear-gradient(45deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.3));
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        
+        .thread-preview {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+        
+        .user-role-moderator {
+            background: linear-gradient(45deg, #7C3AED, #6D28D9);
+            color: white;
+        }
+        
+        .user-role-expert {
+            background: linear-gradient(45deg, #F59E0B, #D97706);
+            color: white;
+        }
+        
+        .user-role-member {
+            background: linear-gradient(45deg, #10B981, #059669);
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-community-purple text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">
+                            <a href="index.html" class="hover:text-agri-green transition-colors">AgriClimate Connect</a>
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Community Discussion Forum</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather & Climate Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-community-purple dark:text-community-pink font-semibold hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-community-purple rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.community">Community</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-64 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#" class="block py-2 text-sm bg-community-purple/10 dark:bg-community-purple/20 rounded-lg px-3 py-2 text-community-purple dark:text-community-pink font-medium" role="menuitem">
+                                <i class="fas fa-comments mr-3 text-community-purple" aria-hidden="true"></i><span data-translate="nav.forum">Discussion Forum</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-book mr-3 text-orange-500" aria-hidden="true"></i><span data-translate="nav.knowledge_center">Knowledge Center</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-user-tie mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.expert_network">Expert Network</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-calendar mr-3 text-green-500" aria-hidden="true"></i><span data-translate="nav.events">Events & Training</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- About Us -->
+                    <a href="index.html#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us -->
+                    <a href="index.html#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-community-purple rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-community-purple dark:hover:text-community-pink transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-community-purple dark:hover:text-community-pink transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- User Profile (if logged in) -->
+                    <div class="flex items-center space-x-3">
+                        <!-- Notifications -->
+                        <button class="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Notifications">
+                            <i class="fas fa-bell text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                            <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
+                        </button>
+
+                        <!-- User Avatar -->
+                        <div class="relative">
+                            <div class="w-10 h-10 bg-gradient-to-br from-community-purple to-community-pink rounded-full flex items-center justify-center text-white font-bold online-indicator cursor-pointer">
+                                JD
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <button class="hidden md:block bg-gradient-to-r from-community-purple to-community-pink text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-community-purple glow-on-hover">
+                        <span data-translate="cta.new_topic">New Topic</span>
+                    </button>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    <a href="#" class="block py-2 text-community-purple dark:text-community-pink font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" role="menuitem" data-translate="nav.forum">Discussion Forum</a>
+                    <a href="index.html#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="index.html#contact" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <button class="w-full mt-4 bg-gradient-to-r from-community-purple to-community-pink text-white py-2 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-community-purple">
+                        <span data-translate="cta.new_topic">New Topic</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="forum-hero" class="min-h-screen pt-20 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+            
+            <!-- Floating Community Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-white/20 dark:bg-community-purple/30 rounded-full animate-float flex items-center justify-center" aria-hidden="true">
+                <i class="fas fa-comments text-white dark:text-community-purple text-2xl"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-community-pink/20 dark:bg-community-pink/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-users text-community-pink text-xl"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-gold/20 dark:bg-agri-gold/30 rounded-full animate-float flex items-center justify-center" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-lightbulb text-agri-gold text-2xl"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <nav class="mb-6" aria-label="Breadcrumb">
+                            <ol class="flex items-center space-x-2 text-sm text-white/80">
+                                <li><a href="index.html" class="hover:text-agri-gold transition-colors" data-translate="breadcrumb.home">Home</a></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li><span data-translate="breadcrumb.community">Community</span></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li class="text-agri-gold font-medium" data-translate="breadcrumb.forum">Discussion Forum</li>
+                            </ol>
+                        </nav>
+                        
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.join">Join the</span><br>
+                            <span class="text-agri-gold" data-translate="hero.farming">Farming</span> <span class="text-community-pink" data-translate="hero.community">Community</span><br>
+                            <span class="text-purple-200" data-translate="hero.revolution">Revolution</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Connect with farmers worldwide, share knowledge, get expert advice, and transform your agricultural journey through our vibrant community discussions.</span>
+                        </p>
+                        
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 font-semibold px-8 py-4 rounded-full text-lg transition-all hover:scale-105 shadow-lg glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-gold">
+                                <i class="fas fa-plus mr-2" aria-hidden="true"></i><span data-translate="cta.start_discussion">Start Discussion</span>
+                            </button>
+                            <button class="border-2 border-white text-white hover:bg-white hover:text-community-purple font-semibold px-8 py-4 rounded-full text-lg transition-all focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-eye mr-2" aria-hidden="true"></i><span data-translate="cta.browse_topics">Browse Topics</span>
+                            </button>
+                        </div>
+
+                        <!-- Community Statistics -->
+                        <div class="grid grid-cols-3 gap-6 mt-12">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="25000">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.active_members">Active Members</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="150">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.daily_discussions">Daily Discussions</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="500">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.expert_answers">Expert Answers</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Community Activity Widget -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- Live Activity Feed -->
+                        <div class="forum-card rounded-2xl p-6 text-gray-900 dark:text-white">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold flex items-center">
+                                    <i class="fas fa-pulse mr-2 text-community-purple" aria-hidden="true"></i><span data-translate="widget.live_activity">Live Activity</span>
+                                </h3>
+                                <div class="flex items-center text-sm text-green-500">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                    <span data-translate="widget.online_now">24 Online Now</span>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-3" id="activity-feed">
+                                <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-agri-green to-agri-light rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        MK
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium" data-translate="activity.new_post">Maria posted in Crop Management</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">2 minutes ago</div>
+                                    </div>
+                                    <div class="text-green-500">
+                                        <i class="fas fa-seedling" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-agri-earth to-orange-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        DR
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium" data-translate="activity.expert_answer">Dr. Rodriguez answered livestock question</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">5 minutes ago</div>
+                                    </div>
+                                    <div class="expert-badge text-xs">Expert</div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div class="w-8 h-8 bg-gradient-to-br from-community-purple to-community-pink rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        JS
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium" data-translate="activity.new_topic">John started weather discussion</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">8 minutes ago</div>
+                                    </div>
+                                    <div class="text-agri-blue">
+                                        <i class="fas fa-cloud-sun" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Forums Access -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-gold" tabindex="0" role="button">
+                                <i class="fas fa-seedling text-2xl mb-2 text-agri-green" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.crop_forum">Crop Forum</div>
+                                <div class="text-xs opacity-75">45 active topics</div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-gold" tabindex="0" role="button">
+                                <i class="fas fa-cow text-2xl mb-2 text-agri-earth" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="widget.livestock_forum">Livestock Forum</div>
+                                <div class="text-xs opacity-75">32 active topics</div>
+                            </div>
+                        </div>
+
+                        <!-- Forum Search -->
+                        <div class="glass-effect rounded-full p-2">
+                            <div class="flex items-center">
+                                <input type="text" placeholder="Search discussions..." 
+                                       class="flex-1 bg-transparent text-white placeholder-gray-300 dark:placeholder-gray-400 px-4 py-2 focus:outline-none text-base"
+                                       id="forum-search"
+                                       data-translate-placeholder="widget.search_placeholder">
+                                <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 p-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-agri-gold" aria-label="Search forum">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.explore">Explore community discussions</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forum Categories Section -->
+        <section id="forum-categories" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="categories.title">Forum Categories</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
+                        <span data-translate="categories.description">Explore specialized discussion areas designed for every aspect of modern agriculture and farming success.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Crop Management Category -->
+                    <div class="forum-card rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center mb-6">
+                            <div class="category-icon bg-gradient-to-br from-agri-green to-agri-light text-white mr-4">
+                                <i class="fas fa-seedling" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="category.crop.title">Crop Management</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="category.crop.subtitle">Growing techniques & optimization</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.topics">Topics</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">1,245</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.posts">Posts</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">8,934</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.active_today">Active Today</span>
+                                <span class="font-semibold text-green-600">45</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-translate="category.latest_post">Latest Post:</div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-medium text-gray-900 dark:text-white text-sm" data-translate="category.crop.latest_title">Organic Fertilizer Results</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">by Maria K. • 15 minutes ago</div>
+                                </div>
+                                <div class="w-8 h-8 bg-gradient-to-br from-agri-green to-agri-light rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                    MK
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-agri-green hover:bg-agri-dark text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                            <span data-translate="category.view_discussions">View Discussions</span>
+                        </button>
+                    </div>
+
+                    <!-- Livestock Management Category -->
+                    <div class="forum-card rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center mb-6">
+                            <div class="category-icon bg-gradient-to-br from-agri-earth to-orange-600 text-white mr-4">
+                                <i class="fas fa-cow" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="category.livestock.title">Livestock Management</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="category.livestock.subtitle">Animal care & health discussions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.topics">Topics</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">867</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.posts">Posts</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">6,543</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.active_today">Active Today</span>
+                                <span class="font-semibold text-green-600">32</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-translate="category.latest_post">Latest Post:</div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-medium text-gray-900 dark:text-white text-sm" data-translate="category.livestock.latest_title">Cattle Vaccination Schedule</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">by Dr. Rodriguez • 23 minutes ago</div>
+                                </div>
+                                <div class="w-8 h-8 bg-gradient-to-br from-agri-earth to-orange-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                    DR
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-agri-earth hover:bg-orange-700 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-earth">
+                            <span data-translate="category.view_discussions">View Discussions</span>
+                        </button>
+                    </div>
+
+                    <!-- Weather & Climate Category -->
+                    <div class="forum-card rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center mb-6">
+                            <div class="category-icon bg-gradient-to-br from-agri-blue to-agri-sky text-white mr-4">
+                                <i class="fas fa-cloud-sun" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white" data-translate="category.weather.title">Weather & Climate</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400" data-translate="category.weather.subtitle">Climate adaptation strategies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.topics">Topics</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">634</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.posts">Posts</span>
+                                <span class="font-semibold text-gray-900 dark:text-white">4,721</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600 dark:text-gray-400" data-translate="category.active_today">Active Today</span>
+                                <span class="font-semibold text-green-600">28</span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-2" data-translate="category.latest_post">Latest Post:</div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="font-medium text-gray-900 dark:text-white text-sm" data-translate="category.weather.latest_title">Drought Preparation Tips</div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">by John S. • 31 minutes ago</div>
+                                </div>
+                                <div class="w-8 h-8 bg-gradient-to-br from-agri-blue to-agri-sky rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                    JS
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-agri-blue hover:bg-blue-700 text-white py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-blue">
+                            <span data-translate="category.view_discussions">View Discussions</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Additional Categories Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12" data-aos="fade-up">
+                    <!-- Market Intelligence -->
+                    <div class="forum-card rounded-xl p-6 text-center shadow-lg border border-gray-200 dark:border-gray-700">
+                        <div class="category-icon bg-gradient-to-br from-agri-accent to-agri-gold text-white mx-auto mb-4">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="category.market.title">Market Intelligence</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3" data-translate="category.market.posts">423 posts</p>
+                        <button class="w-full bg-agri-accent/10 dark:bg-agri-accent/20 text-agri-accent py-2 rounded-lg hover:bg-agri-accent/20 dark:hover:bg-agri-accent/30 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-accent">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+
+                    <!-- Technology & Innovation -->
+                    <div class="forum-card rounded-xl p-6 text-center shadow-lg border border-gray-200 dark:border-gray-700">
+                        <div class="category-icon bg-gradient-to-br from-community-purple to-community-pink text-white mx-auto mb-4">
+                            <i class="fas fa-robot" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="category.tech.title">Technology & AI</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3" data-translate="category.tech.posts">356 posts</p>
+                        <button class="w-full bg-community-purple/10 dark:bg-community-purple/20 text-community-purple py-2 rounded-lg hover:bg-community-purple/20 dark:hover:bg-community-purple/30 transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+
+                    <!-- Sustainable Farming -->
+                    <div class="forum-card rounded-xl p-6 text-center shadow-lg border border-gray-200 dark:border-gray-700">
+                        <div class="category-icon bg-gradient-to-br from-green-500 to-emerald-600 text-white mx-auto mb-4">
+                            <i class="fas fa-leaf" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="category.sustainable.title">Sustainable Farming</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3" data-translate="category.sustainable.posts">789 posts</p>
+                        <button class="w-full bg-green-500/10 dark:bg-green-500/20 text-green-600 py-2 rounded-lg hover:bg-green-500/20 dark:hover:bg-green-500/30 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+
+                    <!-- General Discussion -->
+                    <div class="forum-card rounded-xl p-6 text-center shadow-lg border border-gray-200 dark:border-gray-700">
+                        <div class="category-icon bg-gradient-to-br from-gray-500 to-gray-600 text-white mx-auto mb-4">
+                            <i class="fas fa-comments" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="category.general.title">General Discussion</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3" data-translate="category.general.posts">1,234 posts</p>
+                        <button class="w-full bg-gray-500/10 dark:bg-gray-500/20 text-gray-600 dark:text-gray-400 py-2 rounded-lg hover:bg-gray-500/20 dark:hover:bg-gray-500/30 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Discussions Section -->
+        <section id="recent-discussions" class="py-20 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between mb-12" data-aos="fade-up">
+                    <div>
+                        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                            <span data-translate="recent.title">Recent Discussions</span>
+                        </h2>
+                        <p class="text-xl text-gray-600 dark:text-gray-300">
+                            <span data-translate="recent.description">Join the latest conversations and share your expertise</span>
+                        </p>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-4">
+                        <!-- Filter Buttons -->
+                        <button class="bg-community-purple text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" data-filter="all">
+                            <span data-translate="filter.all">All</span>
+                        </button>
+                        <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500" data-filter="hot">
+                            <span data-translate="filter.hot">Hot</span>
+                        </button>
+                        <button class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500" data-filter="unanswered">
+                            <span data-translate="filter.unanswered">Unanswered</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-6" id="discussions-list">
+                    <!-- Pinned Discussion -->
+                    <div class="forum-card thread-pinned rounded-2xl p-6 shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-full flex items-center justify-center text-white font-bold">
+                                AE
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <i class="fas fa-thumbtack text-community-purple" aria-hidden="true"></i>
+                                    <span class="text-xs bg-community-purple text-white px-2 py-1 rounded-full" data-translate="thread.pinned">Pinned</span>
+                                    <span class="expert-badge">Expert</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                                    <a href="#" class="hover:text-community-purple transition-colors" data-translate="thread.pinned.title">Welcome to AgriClimate Connect Community Guidelines</a>
+                                </h3>
+                                <div class="thread-preview text-gray-600 dark:text-gray-300 mb-4" data-translate="thread.pinned.preview">
+                                    Please read our community guidelines to ensure respectful and productive discussions. Learn how to get the most out of our expert network and knowledge sharing platform.
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <span data-translate="thread.by">by AgriExpert</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.pinned.time">2 days ago</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.category.guidelines">Guidelines</span>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-eye mr-1" aria-hidden="true"></i>2.4k
+                                        </span>
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-comment mr-1" aria-hidden="true"></i>156
+                                        </span>
+                                        <span class="flex items-center text-green-600">
+                                            <i class="fas fa-heart mr-1" aria-hidden="true"></i>89
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hot Discussion -->
+                    <div class="forum-card thread-hot rounded-2xl p-6 shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-agri-earth to-orange-600 rounded-full flex items-center justify-center text-white font-bold online-indicator">
+                                MK
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <i class="fas fa-fire text-red-500" aria-hidden="true"></i>
+                                    <span class="text-xs bg-red-500 text-white px-2 py-1 rounded-full" data-translate="thread.hot">Hot</span>
+                                    <span class="reputation-score">+247</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                                    <a href="#" class="hover:text-community-purple transition-colors" data-translate="thread.hot.title">Breakthrough in Drought-Resistant Corn Varieties - Real Results</a>
+                                </h3>
+                                <div class="thread-preview text-gray-600 dark:text-gray-300 mb-4" data-translate="thread.hot.preview">
+                                    After 3 seasons testing new drought-resistant varieties, I've seen 40% better yields in dry conditions. Here's my detailed comparison and recommendations for different climate zones...
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <span data-translate="thread.by">by Maria_Crops</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.hot.time">3 hours ago</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.category.crops">Crop Management</span>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-eye mr-1" aria-hidden="true"></i>847
+                                        </span>
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-comment mr-1" aria-hidden="true"></i>23
+                                        </span>
+                                        <span class="flex items-center text-green-600">
+                                            <i class="fas fa-heart mr-1" aria-hidden="true"></i>67
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Regular Discussions -->
+                    <div class="forum-card rounded-2xl p-6 shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-agri-blue to-agri-sky rounded-full flex items-center justify-center text-white font-bold">
+                                JS
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="user-role-member text-xs px-2 py-1 rounded-full">Member</span>
+                                    <span class="reputation-score">+89</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                                    <a href="#" class="hover:text-community-purple transition-colors" data-translate="thread.weather.title">How to prepare for extreme weather events? Need advice!</a>
+                                </h3>
+                                <div class="thread-preview text-gray-600 dark:text-gray-300 mb-4" data-translate="thread.weather.preview">
+                                    With climate patterns becoming more unpredictable, I'm looking for practical strategies to protect my farm from extreme weather. What early warning systems do you use?
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <span data-translate="thread.by">by JohnFarmer</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.weather.time">5 hours ago</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.category.weather">Weather & Climate</span>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-eye mr-1" aria-hidden="true"></i>234</span>
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-comment mr-1" aria-hidden="true"></i>12</span>
+                                        <span class="flex items-center text-green-600">
+                                            <i class="fas fa-heart mr-1" aria-hidden="true"></i>18</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="forum-card rounded-2xl p-6 shadow-lg" data-aos="fade-up" data-aos-delay="400">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-community-purple to-community-pink rounded-full flex items-center justify-center text-white font-bold">
+                                DR
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="user-role-expert text-xs px-2 py-1 rounded-full">Expert</span>
+                                    <span class="reputation-score">+1.2k</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                                    <a href="#" class="hover:text-community-purple transition-colors" data-translate="thread.livestock.title">Comprehensive Cattle Vaccination Schedule for Different Regions</a>
+                                </h3>
+                                <div class="thread-preview text-gray-600 dark:text-gray-300 mb-4" data-translate="thread.livestock.preview">
+                                    As a veterinarian with 20+ years experience, I'm sharing updated vaccination protocols that consider regional disease patterns and climate factors. Includes cost-benefit analysis...
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <span data-translate="thread.by">by Dr.Rodriguez_DVM</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.livestock.time">1 day ago</span>
+                                        <span>•</span>
+                                        <span data-translate="thread.category.livestock">Livestock Management</span>
+                                    </div>
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-eye mr-1" aria-hidden="true"></i>1.1k</span>
+                                        <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                            <i class="fas fa-comment mr-1" aria-hidden="true"></i>34</span>
+                                        <span class="flex items-center text-green-600">
+                                            <i class="fas fa-heart mr-1" aria-hidden="true"></i>78</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-12" data-aos="fade-up">
+                    <button class="bg-gradient-to-r from-community-purple to-community-pink text-white px-8 py-3 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-community-purple">
+                        <span data-translate="load_more">Load More Discussions</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Guidelines Section -->
+        <section id="community-guidelines" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="guidelines.title">Community Guidelines</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 mb-12">
+                        <span data-translate="guidelines.description">Help us maintain a respectful, productive, and knowledge-rich farming community</span>
+                    </p>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                            <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-handshake text-green-600 text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="guideline.respect.title">Be Respectful</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm" data-translate="guideline.respect.description">Treat all community members with kindness and respect, regardless of experience level.</p>
+                        </div>
+
+                        <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+                            <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-share-alt text-blue-600 text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="guideline.share.title">Share Knowledge</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm" data-translate="guideline.share.description">Contribute valuable insights, experiences, and proven farming techniques to help others.</p>
+                        </div>
+
+                        <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                            <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-search text-purple-600 text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="guideline.search.title">Search First</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm" data-translate="guideline.search.description">Check existing discussions before posting to avoid duplicates and build on previous conversations.</p>
+                        </div>
+
+                        <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                            <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-orange-600 text-2xl" aria-hidden="true"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="guideline.safety.title">Stay Safe</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm" data-translate="guideline.safety.description">Don't share personal information and always verify advice with local agricultural experts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Community Discussion Forum</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Building the world's largest farming knowledge community where agricultural experts and farmers connect to share insights and drive innovation.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-community-purple rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Discord">
+                            <i class="fab fa-discord" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Forum Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.forum_categories">Forum Categories</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.crop_management">Crop Management</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.livestock_care">Livestock Care</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.weather_climate">Weather & Climate</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.market_intelligence">Market Intelligence</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.technology">Technology & Innovation</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.sustainable_farming">Sustainable Farming</a></li>
+                    </ul>
+                </div>
+
+                <!-- Community Resources -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.community_resources">Community Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.community_guidelines">Community Guidelines</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.expert_verification">Expert Verification</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.reputation_system">Reputation System</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.user_badges">User Badges</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.mobile_app">Mobile App</a></li>
+                        <li><a href="index.html#contact" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.contact_moderators">Contact Moderators</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-gray-800 dark:bg-gray-900 rounded-2xl p-8 mb-8">
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2" data-translate="footer.newsletter_title">Community Digest</h4>
+                        <p class="text-gray-300" data-translate="footer.newsletter_description">Get weekly highlights of the best discussions, expert answers, and trending topics in our farming community.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <input type="email" placeholder="Enter your email" 
+                               class="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-community-purple text-base text-white placeholder-gray-400"
+                               data-translate-placeholder="footer.email_placeholder">
+                        <button class="bg-gradient-to-r from-community-purple to-community-pink text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple">
+                            <span data-translate="footer.subscribe">Subscribe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect Community. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.code_of_conduct">Code of Conduct</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-community-purple rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Forum Action Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="new-topic-btn" class="w-16 h-16 bg-gradient-to-r from-community-purple to-community-pink text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center glow-on-hover focus:outline-none focus:ring-2 focus:ring-community-purple" aria-label="Create new topic">
+            <i class="fas fa-plus text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- New Topic Modal -->
+    <div id="new-topic-modal" class="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-agri-night rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-community-purple to-community-pink text-white p-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-semibold" data-translate="modal.new_topic.title">Create New Discussion</h3>
+                    <button id="close-modal" class="hover:bg-white/20 p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close modal">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+                <form id="new-topic-form" class="space-y-6">
+                    <!-- Category Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="modal.category">Category</label>
+                        <select class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-community-purple text-base dark:bg-gray-800 dark:text-white">
+                            <option data-translate="modal.select_category">Select a category...</option>
+                            <option data-translate="modal.category.crop">Crop Management</option>
+                            <option data-translate="modal.category.livestock">Livestock Management</option>
+                            <option data-translate="modal.category.weather">Weather & Climate</option>
+                            <option data-translate="modal.category.market">Market Intelligence</option>
+                            <option data-translate="modal.category.tech">Technology & Innovation</option>
+                            <option data-translate="modal.category.sustainable">Sustainable Farming</option>
+                            <option data-translate="modal.category.general">General Discussion</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Topic Title -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="modal.title">Topic Title</label>
+                        <input type="text" 
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-community-purple text-base dark:bg-gray-800 dark:text-white"
+                               data-translate-placeholder="modal.title_placeholder">
+                    </div>
+                    
+                    <!-- Topic Content -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="modal.content">Content</label>
+                        <textarea rows="8" 
+                                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-community-purple text-base dark:bg-gray-800 dark:text-white resize-none"
+                                  data-translate-placeholder="modal.content_placeholder"></textarea>
+                    </div>
+                    
+                    <!-- Tags -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" data-translate="modal.tags">Tags (optional)</label>
+                        <input type="text" 
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-community-purple text-base dark:bg-gray-800 dark:text-white"
+                               data-translate-placeholder="modal.tags_placeholder">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1" data-translate="modal.tags_help">Separate tags with commas (e.g., corn, drought, irrigation)</p>
+                    </div>
+                    
+                    <!-- Submit Buttons -->
+                    <div class="flex space-x-4 pt-4">
+                        <button type="submit" class="flex-1 bg-gradient-to-r from-community-purple to-community-pink text-white py-3 rounded-lg hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-community-purple">
+                            <span data-translate="modal.post_topic">Post Topic</span>
+                        </button>
+                        <button type="button" id="save-draft" class="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            <span data-translate="modal.save_draft">Save Draft</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for discussion forum
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather & Climate Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.forum': 'Discussion Forum',
+                'nav.knowledge_center': 'Knowledge Center',
+                'nav.expert_network': 'Expert Network',
+                'nav.events': 'Events & Training',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'cta.new_topic': 'New Topic',
+                'breadcrumb.home': 'Home',
+                'breadcrumb.community': 'Community',
+                'breadcrumb.forum': 'Discussion Forum',
+                'hero.join': 'Join the',
+                'hero.farming': 'Farming',
+                'hero.community': 'Community',
+                'hero.revolution': 'Revolution',
+                'hero.description': 'Connect with farmers worldwide, share knowledge, get expert advice, and transform your agricultural journey through our vibrant community discussions.',
+                'cta.start_discussion': 'Start Discussion',
+                'cta.browse_topics': 'Browse Topics',
+                'stats.active_members': 'Active Members',
+                'stats.daily_discussions': 'Daily Discussions',
+                'stats.expert_answers': 'Expert Answers',
+                'widget.live_activity': 'Live Activity',
+                'widget.online_now': '24 Online Now',
+                'widget.crop_forum': 'Crop Forum',
+                'widget.livestock_forum': 'Livestock Forum',
+                'widget.search_placeholder': 'Search discussions...',
+                'scroll.explore': 'Explore community discussions',
+                'categories.title': 'Forum Categories',
+                'categories.description': 'Explore specialized discussion areas designed for every aspect of modern agriculture and farming success.',
+                'footer.tagline': 'Community Discussion Forum',
+                'footer.description': 'Building the world\'s largest farming knowledge community where agricultural experts and farmers connect to share insights and drive innovation.'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.weather_climate': 'Inteligencia Climática',
+                'nav.crop_advisory': 'Asesoría de Cultivos',
+                'nav.livestock': 'Gestión de Ganado',
+                'nav.market_hub': 'Inteligencia de Mercado',
+                'nav.ai_tools': 'Herramientas de IA',
+                'nav.community': 'Comunidad',
+                'nav.forum': 'Foro de Discusión',
+                'nav.knowledge_center': 'Centro de Conocimiento',
+                'nav.expert_network': 'Red de Expertos',
+                'nav.events': 'Eventos y Entrenamiento',
+                'nav.about': 'Acerca de',
+                'nav.contact': 'Contacto',
+                'cta.new_topic': 'Nuevo Tema',
+                'breadcrumb.home': 'Inicio',
+                'breadcrumb.community': 'Comunidad',
+                'breadcrumb.forum': 'Foro de Discusión',
+                'hero.join': 'Únete a la',
+                'hero.farming': 'Agricultura',
+                'hero.community': 'Comunidad',
+                'hero.revolution': 'Revolución',
+                'hero.description': 'Conecta con agricultores de todo el mundo, comparte conocimiento, obtén asesoría experta y transforma tu viaje agrícola a través de nuestras vibrantes discusiones comunitarias.',
+                'cta.start_discussion': 'Iniciar Discusión',
+                'cta.browse_topics': 'Ver Temas',
+                'stats.active_members': 'Miembros Activos',
+                'stats.daily_discussions': 'Discusiones Diarias',
+                'stats.expert_answers': 'Respuestas de Expertos',
+                'widget.live_activity': 'Actividad en Vivo',
+                'widget.online_now': '24 En Línea Ahora',
+                'widget.crop_forum': 'Foro de Cultivos',
+                'widget.livestock_forum': 'Foro de Ganado',
+                'widget.search_placeholder': 'Buscar discusiones...',
+                'scroll.explore': 'Explorar discusiones comunitarias',
+                'categories.title': 'Categorías del Foro',
+                'categories.description': 'Explora áreas de discusión especializadas diseñadas para cada aspecto de la agricultura moderna y el éxito agrícola.',
+                'footer.tagline': 'Foro de Discusión Comunitaria',
+                'footer.description': 'Construyendo la comunidad de conocimiento agrícola más grande del mundo donde expertos agrícolas y agricultores se conectan para compartir ideas e impulsar la innovación.'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.weather_climate': 'Intelligence Climatique',
+                'nav.crop_advisory': 'Conseil des Cultures',
+                'nav.livestock': 'Gestion du Bétail',
+                'nav.market_hub': 'Intelligence du Marché',
+                'nav.ai_tools': 'Outils IA',
+                'nav.community': 'Communauté',
+                'nav.forum': 'Forum de Discussion',
+                'nav.knowledge_center': 'Centre de Connaissance',
+                'nav.expert_network': 'Réseau d\'Experts',
+                'nav.events': 'Événements et Formation',
+                'nav.about': 'À Propos',
+                'nav.contact': 'Contact',
+                'cta.new_topic': 'Nouveau Sujet',
+                'breadcrumb.home': 'Accueil',
+                'breadcrumb.community': 'Communauté',
+                'breadcrumb.forum': 'Forum de Discussion',
+                'hero.join': 'Rejoignez la',
+                'hero.farming': 'Agriculture',
+                'hero.community': 'Communauté',
+                'hero.revolution': 'Révolution',
+                'hero.description': 'Connectez-vous avec des agriculteurs du monde entier, partagez vos connaissances, obtenez des conseils d\'experts et transformez votre parcours agricole grâce à nos discussions communautaires dynamiques.',
+                'cta.start_discussion': 'Commencer Discussion',
+                'cta.browse_topics': 'Parcourir Sujets',
+                'stats.active_members': 'Membres Actifs',
+                'stats.daily_discussions': 'Discussions Quotidiennes',
+                'stats.expert_answers': 'Réponses d\'Experts',
+                'widget.live_activity': 'Activité en Direct',
+                'widget.online_now': '24 En Ligne Maintenant',
+                'widget.crop_forum': 'Forum Cultures',
+                'widget.livestock_forum': 'Forum Bétail',
+                'widget.search_placeholder': 'Rechercher discussions...',
+                'scroll.explore': 'Explorer discussions communautaires',
+                'categories.title': 'Catégories du Forum',
+                'categories.description': 'Explorez des espaces de discussion spécialisés conçus pour chaque aspect de l\'agriculture moderne et du succès agricole.',
+                'footer.tagline': 'Forum de Discussion Communautaire',
+                'footer.description': 'Construire la plus grande communauté de connaissances agricoles au monde où les experts agricoles et les agriculteurs se connectent pour partager des idées et stimuler l\'innovation.'
+            }
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Text size adjustment
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000;
+                        const increment = target / (duration / 16);
+                        let current = 0;
+                        
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.textContent = Math.floor(current).toLocaleString();
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // New Topic Modal functionality
+        const newTopicBtn = document.getElementById('new-topic-btn');
+        const newTopicModal = document.getElementById('new-topic-modal');
+        const closeModal = document.getElementById('close-modal');
+        const newTopicForm = document.getElementById('new-topic-form');
+
+        newTopicBtn.addEventListener('click', () => {
+            newTopicModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeModal.addEventListener('click', () => {
+            newTopicModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+
+        newTopicModal.addEventListener('click', (e) => {
+            if (e.target === newTopicModal) {
+                newTopicModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+
+        newTopicForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Handle form submission
+            console.log('New topic submitted');
+            newTopicModal.classList.add('hidden');
+            document.body.style.overflow = '';
+            
+            // Show success message
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
+            successDiv.textContent = 'Topic posted successfully!';
+            document.body.appendChild(successDiv);
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        });
+
+        // Forum search functionality
+        const forumSearch = document.getElementById('forum-search');
+        forumSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = forumSearch.value.trim();
+                if (searchTerm) {
+                    console.log('Searching for:', searchTerm);
+                    // Implement search functionality
+                }
+            }
+        });
+
+        // Discussion filter functionality
+        const filterButtons = document.querySelectorAll('[data-filter]');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-community-purple', 'text-white');
+                    btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                });
+                
+                // Add active class to clicked button
+                button.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                button.classList.add('bg-community-purple', 'text-white');
+                
+                const filter = button.getAttribute('data-filter');
+                console.log('Filtering by:', filter);
+                // Implement filtering logic
+            });
+        });
+
+        // Simulate live activity updates
+        function updateActivityFeed() {
+            const activities = [
+                { user: 'MK', action: 'posted in Crop Management', time: '2 minutes ago', icon: 'fa-seedling', color: 'agri-green' },
+                { user: 'DR', action: 'answered livestock question', time: '5 minutes ago', icon: 'fa-cow', badge: 'Expert' },
+                { user: 'JS', action: 'started weather discussion', time: '8 minutes ago', icon: 'fa-cloud-sun', color: 'agri-blue' }
+            ];
+            
+            // Randomly update activity every 30 seconds
+            setInterval(() => {
+                const activity = activities[Math.floor(Math.random() * activities.length)];
+                const timeAgo = Math.floor(Math.random() * 30) + 1;
+                activity.time = `${timeAgo} minutes ago`;
+                
+                // Update UI would go here
+                console.log('Activity update:', activity);
+            }, 30000);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced forum card interactions
+        document.querySelectorAll('.forum-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            translatePage(currentLanguage);
+            animateCounters();
+            updateActivityFeed();
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - Discussion Forum loaded successfully!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                newTopicModal.classList.add('hidden');
+                document.body.style.overflow = '';
+                mobileMenu.classList.add('hidden');
+            }
+            
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Performance optimization
+        const lazyElements = document.querySelectorAll('[data-aos]');
+        const lazyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        });
+
+        lazyElements.forEach(el => lazyObserver.observe(el));
+    </script>
+</body>
+</html>

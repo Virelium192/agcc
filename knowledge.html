@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Center - Community | AgriClimate Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-green': '#2F7D32',
+                        'agri-light': '#4CAF50',
+                        'agri-dark': '#1B5E20',
+                        'agri-accent': '#FF8F00',
+                        'agri-blue': '#1976D2',
+                        'agri-earth': '#8D6E63',
+                        'agri-sky': '#87CEEB',
+                        'agri-gold': '#FFD700',
+                        'agri-night': '#0F172A',
+                        'agri-night-light': '#1E293B',
+                        'agri-purple': '#7C3AED',
+                        'agri-pink': '#EC4899'
+                    },
+                    fontFamily: {
+                        'agri': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'scale-in': 'scaleIn 0.5s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #4CAF50, 0 0 10px #4CAF50, 0 0 15px #4CAF50; }
+            to { box-shadow: 0 0 10px #4CAF50, 0 0 20px #4CAF50, 0 0 30px #4CAF50; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #2F7D32 0%, #4CAF50 50%, #81C784 100%);
+        }
+        
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 30%, #2F7D32 70%, #4CAF50 100%);
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+        
+        .knowledge-card {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark .knowledge-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+        
+        .knowledge-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .dark .knowledge-card:hover {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+        }
+        
+        .navbar-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .navbar-item:hover .navbar-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #2F7D32, #4CAF50, #FF8F00);
+            transform-origin: left;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .search-highlight {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.2));
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .dark .search-highlight {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.3));
+            border: 1px solid rgba(76, 175, 80, 0.4);
+        }
+        
+        .category-filter {
+            transition: all 0.3s ease;
+        }
+        
+        .category-filter.active {
+            background: linear-gradient(135deg, #2F7D32, #4CAF50);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+        
+        .article-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .article-card:hover {
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Accessibility Enhancements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .knowledge-card, .glass-effect {
+                background: rgba(255, 255, 255, 0.9);
+                border: 2px solid #000;
+            }
+            
+            .dark .knowledge-card, .dark .glass-effect {
+                background: rgba(0, 0, 0, 0.9);
+                border: 2px solid #fff;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1E293B;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2F7D32;
+        }
+        
+        .knowledge-icon {
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .dark .knowledge-icon {
+            filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.6));
+        }
+        
+        .trending-badge {
+            background: linear-gradient(45deg, #FF6B6B, #FFE66D);
+            color: #333;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+        }
+        
+        .expert-badge {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #2F7D32, #4CAF50);
+            transform-origin: left;
+            z-index: 9998;
+            transition: transform 0.1s ease;
+        }
+    </style>
+</head>
+<body class="font-agri bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-agri-night dark:via-agri-night-light dark:to-slate-900 transition-all duration-500">
+    
+    <!-- Skip to main content for screen readers -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-agri-green text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+    
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-indicator" class="scroll-indicator" style="transform: scaleX(0);" role="progressbar" aria-label="Page scroll progress"></div>
+    
+    <!-- Navigation Header -->
+    <header class="fixed w-full top-0 z-50 bg-white/90 dark:bg-agri-night/95 backdrop-blur-xl shadow-lg border-b border-gray-200/50 dark:border-gray-700/50" role="banner">
+        <nav class="container mx-auto px-4 py-3" role="navigation" aria-label="Main navigation">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg glow-on-hover" role="img" aria-label="AgriClimate Connect Logo">
+                        <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-dark dark:text-agri-light">
+                            <a href="index.html" class="hover:text-agri-green transition-colors">AgriClimate Connect</a>
+                        </h1>
+                        <p class="text-xs text-gray-600 dark:text-gray-400">Knowledge Center</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.home">Home</a>
+                    
+                    <!-- Knowledge Tools Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.knowledge_tools">Knowledge Tools</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-72 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cloud-sun mr-3 text-agri-blue" aria-hidden="true"></i><span data-translate="nav.weather_climate">Weather & Climate Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-seedling mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.crop_advisory">Smart Crop Advisory</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-cow mr-3 text-agri-earth" aria-hidden="true"></i><span data-translate="nav.livestock">Livestock Management</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-store mr-3 text-agri-accent" aria-hidden="true"></i><span data-translate="nav.market_hub">Market Intelligence</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-robot mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.ai_tools">AI-Powered Tools</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Community Dropdown -->
+                    <div class="relative navbar-item">
+                        <button class="nav-link text-agri-green dark:text-agri-light font-semibold hover:text-agri-dark dark:hover:text-agri-light transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-agri-green rounded" aria-expanded="false" aria-haspopup="true">
+                            <span data-translate="nav.community">Community</span> 
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="navbar-dropdown absolute top-8 left-0 w-64 bg-white dark:bg-agri-night rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4" role="menu">
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-comments mr-3 text-blue-500" aria-hidden="true"></i><span data-translate="nav.forum">Discussion Forum</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm bg-agri-green/10 dark:bg-agri-green/20 rounded-lg px-3 py-2 text-agri-green dark:text-agri-light font-medium" role="menuitem">
+                                <i class="fas fa-book mr-3 text-agri-green" aria-hidden="true"></i><span data-translate="nav.knowledge_center">Knowledge Center</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-user-tie mr-3 text-purple-500" aria-hidden="true"></i><span data-translate="nav.expert_network">Expert Network</span>
+                            </a>
+                            <a href="#" class="block py-2 text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem">
+                                <i class="fas fa-calendar mr-3 text-orange-500" aria-hidden="true"></i><span data-translate="nav.events">Events & Training</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- About Us -->
+                    <a href="index.html#about" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.about">About Us</a>
+                    
+                    <!-- Contact Us -->
+                    <a href="index.html#contact" class="nav-link text-gray-700 dark:text-gray-300 hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="nav.contact">Contact Us</a>
+                </div>
+
+                <!-- Right Side Controls -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <div class="relative">
+                        <select id="language-selector" class="bg-transparent text-sm border-none focus:outline-none focus:ring-2 focus:ring-agri-green rounded cursor-pointer text-gray-700 dark:text-gray-300" aria-label="Select language">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="sw">🇰🇪 Kiswahili</option>
+                            <option value="hi">🇮🇳 हिंदी</option>
+                            <option value="pt">🇧🇷 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                        </select>
+                    </div>
+
+                    <!-- Accessibility Controls -->
+                    <div class="flex items-center space-x-2 border-l border-gray-300 dark:border-gray-600 pl-4">
+                        <!-- Text Size Controls -->
+                        <div class="flex items-center space-x-1" role="group" aria-label="Text size controls">
+                            <button id="decrease-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Decrease text size" aria-label="Decrease text size">
+                                <i class="fas fa-minus" aria-hidden="true"></i>
+                            </button>
+                            <span class="text-xs text-gray-400">|</span>
+                            <button id="increase-text" class="text-sm hover:text-agri-green dark:hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded p-1" title="Increase text size" aria-label="Increase text size">
+                                <i class="fas fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
+                        <!-- High Contrast Toggle -->
+                        <button id="contrast-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" title="Toggle high contrast" aria-label="Toggle high contrast mode">
+                            <i class="fas fa-adjust text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        </button>
+
+                        <!-- Dark Mode Toggle -->
+                        <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover" title="Toggle dark mode" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon dark:hidden text-gray-600" aria-hidden="true"></i>
+                            <i class="fas fa-sun hidden dark:block text-yellow-400" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <button class="hidden md:block bg-gradient-to-r from-agri-green to-agri-light text-white px-6 py-2 rounded-full hover:shadow-lg hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-agri-green glow-on-hover">
+                        <span data-translate="cta.contribute">Contribute</span>
+                    </button>
+
+                    <!-- Hamburger Menu -->
+                    <button id="hamburger" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Toggle mobile menu" aria-expanded="false">
+                        <div class="space-y-1.5">
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                            <div class="w-6 h-0.5 bg-gray-600 dark:bg-gray-300 transition-all duration-300 hamburger-line"></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700" role="menu">
+                <div class="space-y-2 pt-4">
+                    <a href="index.html" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.home">Home</a>
+                    <a href="#" class="block py-2 text-agri-green dark:text-agri-light font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.knowledge_center">Knowledge Center</a>
+                    <a href="index.html#about" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.about">About Us</a>
+                    <a href="index.html#contact" class="block py-2 text-gray-700 dark:text-gray-300 hover:text-agri-green transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" role="menuitem" data-translate="nav.contact">Contact Us</a>
+                    
+                    <button class="w-full mt-4 bg-gradient-to-r from-agri-green to-agri-light text-white py-2 rounded-full hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-agri-green">
+                        <span data-translate="cta.contribute">Contribute</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="knowledge-hero" class="min-h-screen pt-20 gradient-bg relative overflow-hidden" role="banner">
+            <div class="absolute inset-0 bg-black/30 dark:bg-black/50"></div>
+            
+            <!-- Floating Knowledge Elements -->
+            <div class="absolute top-20 left-10 w-20 h-20 bg-agri-gold/20 dark:bg-agri-gold/30 rounded-full animate-float flex items-center justify-center knowledge-icon" aria-hidden="true">
+                <i class="fas fa-book-open text-agri-gold text-2xl"></i>
+            </div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-white/20 dark:bg-agri-light/30 rounded-full animate-float flex items-center justify-center knowledge-icon" style="animation-delay: 1s;" aria-hidden="true">
+                <i class="fas fa-lightbulb text-white dark:text-agri-light text-xl"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-agri-accent/20 dark:bg-agri-accent/30 rounded-full animate-float flex items-center justify-center knowledge-icon" style="animation-delay: 2s;" aria-hidden="true">
+                <i class="fas fa-graduation-cap text-agri-accent text-2xl"></i>
+            </div>
+
+            <div class="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Left Content -->
+                    <div class="text-white" data-aos="fade-right">
+                        <nav class="mb-6" aria-label="Breadcrumb">
+                            <ol class="flex items-center space-x-2 text-sm text-white/80">
+                                <li><a href="index.html" class="hover:text-agri-gold transition-colors" data-translate="breadcrumb.home">Home</a></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li><span data-translate="breadcrumb.community">Community</span></li>
+                                <li><i class="fas fa-chevron-right text-xs" aria-hidden="true"></i></li>
+                                <li class="text-agri-gold font-medium" data-translate="breadcrumb.knowledge_center">Knowledge Center</li>
+                            </ol>
+                        </nav>
+                        
+                        <h1 class="text-5xl lg:text-7xl font-bold mb-6 text-shadow leading-tight">
+                            <span data-translate="hero.discover">Discover</span><br>
+                            <span class="text-agri-gold" data-translate="hero.agricultural">Agricultural</span><br>
+                            <span data-translate="hero.wisdom">Wisdom</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl mb-8 text-gray-100 dark:text-gray-200 leading-relaxed">
+                            <span data-translate="hero.description">Access the world's largest collection of agricultural knowledge, expert insights, and proven farming techniques shared by our global community of successful farmers.</span>
+                        </p>
+                        
+                        <!-- Knowledge Stats -->
+                        <div class="grid grid-cols-3 gap-6 mt-12">
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="15000">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.articles">Expert Articles</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="500">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.contributors">Expert Contributors</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-3xl font-bold text-agri-gold counter" data-target="50">0</div>
+                                <div class="text-sm text-gray-200 dark:text-gray-300" data-translate="stats.languages">Languages</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Content - Search Interface -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <!-- Advanced Search -->
+                        <div class="knowledge-card rounded-2xl p-6 text-gray-900 dark:text-white">
+                            <h3 class="text-xl font-semibold mb-4 flex items-center">
+                                <i class="fas fa-search mr-2 text-agri-green" aria-hidden="true"></i><span data-translate="search.title">Search Knowledge Base</span>
+                            </h3>
+                            
+                            <div class="space-y-4">
+                                <!-- Search Input -->
+                                <div class="relative">
+                                    <input type="text" 
+                                           placeholder="Search articles, guides, tutorials..." 
+                                           class="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-green text-base dark:bg-gray-800 dark:text-white"
+                                           id="knowledge-search"
+                                           data-translate-placeholder="search.placeholder">
+                                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-agri-green hover:text-agri-dark transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded">
+                                        <i class="fas fa-search" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                
+                                <!-- Quick Filters -->
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="category-filter px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-agri-green hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" data-category="all">
+                                        <span data-translate="filter.all">All Topics</span>
+                                    </button>
+                                    <button class="category-filter px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-agri-green hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" data-category="crops">
+                                        <span data-translate="filter.crops">Crops</span>
+                                    </button>
+                                    <button class="category-filter px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-agri-green hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" data-category="livestock">
+                                        <span data-translate="filter.livestock">Livestock</span>
+                                    </button>
+                                    <button class="category-filter px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-agri-green hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" data-category="technology">
+                                        <span data-translate="filter.technology">Technology</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Popular Topics -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-light" tabindex="0" role="button">
+                                <i class="fas fa-tractor text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="topics.sustainable_farming">Sustainable Farming</div>
+                            </div>
+                            <div class="glass-effect rounded-xl p-4 text-white text-center hover:bg-white/20 dark:hover:bg-agri-night/60 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-agri-light" tabindex="0" role="button">
+                                <i class="fas fa-leaf text-2xl mb-2 text-agri-gold" aria-hidden="true"></i>
+                                <div class="font-semibold" data-translate="topics.organic_methods">Organic Methods</div>
+                            </div>
+                        </div>
+
+                        <!-- AI Knowledge Assistant -->
+                        <div class="glass-effect rounded-full p-2">
+                            <div class="flex items-center">
+                                <input type="text" 
+                                       placeholder="Ask our AI knowledge assistant..." 
+                                       class="flex-1 bg-transparent text-white placeholder-gray-300 dark:placeholder-gray-400 px-4 py-2 focus:outline-none text-base"
+                                       id="ai-assistant-input"
+                                       data-translate-placeholder="assistant.placeholder">
+                                <button class="bg-agri-gold hover:bg-agri-accent text-gray-900 p-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-agri-gold" aria-label="Ask AI assistant">
+                                    <i class="fas fa-robot" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce" aria-hidden="true">
+                <div class="flex flex-col items-center">
+                    <span class="text-sm mb-2" data-translate="scroll.explore">Explore knowledge base</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge Categories Section -->
+        <section id="knowledge-categories" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="categories.title">Knowledge Categories</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
+                        <span data-translate="categories.description">Explore our comprehensive collection of agricultural knowledge organized by topic, expertise level, and farming practices.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-4 gap-8">
+                    <!-- Crop Management -->
+                    <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-seedling text-green-600 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="category.crop_management">Crop Management</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="category.crop_desc">Planting, growing, harvesting techniques</p>
+                        <div class="text-2xl font-bold text-green-600 mb-2">2,850</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-4" data-translate="category.articles">Articles</div>
+                        <button class="w-full bg-green-100 dark:bg-green-900/20 text-green-600 py-2 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/40 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+
+                    <!-- Livestock Care -->
+                    <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-cow text-orange-600 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="category.livestock_care">Livestock Care</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="category.livestock_desc">Animal health, nutrition, breeding</p>
+                        <div class="text-2xl font-bold text-orange-600 mb-2">1,920</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-4" data-translate="category.articles">Articles</div>
+                        <button class="w-full bg-orange-100 dark:bg-orange-900/20 text-orange-600 py-2 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-900/40 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+
+                    <!-- Sustainable Agriculture -->
+                    <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-leaf text-blue-600 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="category.sustainable_agriculture">Sustainable Agriculture</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="category.sustainable_desc">Eco-friendly farming practices</p>
+                        <div class="text-2xl font-bold text-blue-600 mb-2">3,140</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-4" data-translate="category.articles">Articles</div>
+                        <button class="w-full bg-blue-100 dark:bg-blue-900/20 text-blue-600 py-2 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/40 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+
+                    <!-- Farm Technology -->
+                    <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 text-center" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center mx-auto mb-4 glow-on-hover">
+                            <i class="fas fa-robot text-purple-600 text-2xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="category.farm_technology">Farm Technology</h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="category.technology_desc">AI, IoT, automation solutions</p>
+                        <div class="text-2xl font-bold text-purple-600 mb-2">1,650</div>
+                        <div class="text-xs text-gray-500 dark:text-gray-400 mb-4" data-translate="category.articles">Articles</div>
+                        <button class="w-full bg-purple-100 dark:bg-purple-900/20 text-purple-600 py-2 rounded-lg hover:bg-purple-200 dark:hover:bg-purple-900/40 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <span data-translate="category.explore">Explore</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Articles Section -->
+        <section id="featured-articles" class="py-20 bg-gradient-to-br from-green-50 to-blue-50 dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="featured.title">Featured Articles</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span data-translate="featured.description">Hand-picked expert articles and guides from our community of successful farmers and agricultural specialists.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Featured Article 1 -->
+                    <div class="article-card bg-white dark:bg-agri-night-light rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
+                                <i class="fas fa-tractor text-white text-6xl" aria-hidden="true"></i>
+                            </div>
+                            <div class="trending-badge">
+                                <span data-translate="badge.trending">Trending</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="expert-badge">Expert</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400" data-translate="article.read_time">8 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="article1.title">Precision Agriculture: Maximizing Crop Yields with Technology</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="article1.excerpt">
+                                Learn how GPS-guided tractors, soil sensors, and drone technology are revolutionizing modern farming practices and increasing productivity by up to 40%.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        DR
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Dr. Maria Santos</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400" data-translate="article1.author">Agricultural Engineer</div>
+                                    </div>
+                                </div>
+                                <button class="text-agri-green hover:text-agri-dark transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded">
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured Article 2 -->
+                    <div class="article-card bg-white dark:bg-agri-night-light rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
+                                <i class="fas fa-cow text-white text-6xl" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="expert-badge">Expert</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400" data-translate="article.read_time">12 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="article2.title">Sustainable Livestock Management in Changing Climates</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="article2.excerpt">
+                                Comprehensive guide to adapting livestock operations for climate resilience while maintaining animal welfare and farm profitability.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                        JK
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">John Kamau</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400" data-translate="article2.author">Livestock Specialist</div>
+                                    </div>
+                                </div>
+                                <button class="text-agri-green hover:text-agri-dark transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded">
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured Article 3 -->
+                    <div class="article-card bg-white dark:bg-agri-night-light rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                                <i class="fas fa-leaf text-white text-6xl" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 mb-3">
+                                <span class="expert-badge">Expert</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400" data-translate="article.read_time">15 min read</span>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3" data-translate="article3.title">Water-Smart Farming: Irrigation Innovations for Drought Resilience</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="article3.excerpt">
+                                Discover cutting-edge irrigation technologies and water conservation strategies that reduce water usage by 50% while maintaining crop productivity.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                                        AS
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900 dark:text-white">Amara Singh</div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400" data-translate="article3.author">Water Management Expert</div>
+                                    </div>
+                                </div>
+                                <button class="text-agri-green hover:text-agri-dark transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded">
+                                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View All Articles Button -->
+                <div class="text-center mt-12" data-aos="fade-up">
+                    <button class="bg-agri-green hover:bg-agri-dark text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-agri-green">
+                        <span data-translate="featured.view_all">View All Articles</span>
+                        <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expert Insights Section -->
+        <section id="expert-insights" class="py-20 bg-white dark:bg-agri-night">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="insights.title">Expert Insights & Tutorials</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span data-translate="insights.description">Learn from industry leaders through comprehensive video tutorials, interactive guides, and live expert sessions.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Video Tutorial List -->
+                    <div class="space-y-6" data-aos="fade-right">
+                        <!-- Tutorial 1 -->
+                        <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-20 h-16 bg-gradient-to-br from-red-500 to-pink-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-play text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tutorial1.title">Soil Health Assessment Techniques</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-3" data-translate="tutorial1.description">Learn professional soil testing methods and interpretation</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <span><i class="fas fa-clock mr-1" aria-hidden="true"></i>25 min</span>
+                                        <span><i class="fas fa-eye mr-1" aria-hidden="true"></i>12.4k views</span>
+                                        <span><i class="fas fa-star mr-1 text-yellow-500" aria-hidden="true"></i>4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tutorial 2 -->
+                        <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-20 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-play text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tutorial2.title">Integrated Pest Management Strategies</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-3" data-translate="tutorial2.description">Effective pest control without harmful chemicals</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <span><i class="fas fa-clock mr-1" aria-hidden="true"></i>32 min</span>
+                                        <span><i class="fas fa-eye mr-1" aria-hidden="true"></i>8.7k views</span>
+                                        <span><i class="fas fa-star mr-1 text-yellow-500" aria-hidden="true"></i>4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tutorial 3 -->
+                        <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-20 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-play text-white text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-2" data-translate="tutorial3.title">Smart Irrigation System Setup</h4>
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm mb-3" data-translate="tutorial3.description">Install and configure automated irrigation systems</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                        <span><i class="fas fa-clock mr-1" aria-hidden="true"></i>18 min</span>
+                                        <span><i class="fas fa-eye mr-1" aria-hidden="true"></i>15.2k views</span>
+                                        <span><i class="fas fa-star mr-1 text-yellow-500" aria-hidden="true"></i>4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Featured Video Player -->
+                    <div class="space-y-6" data-aos="fade-left">
+                        <div class="knowledge-card rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
+                            <div class="relative h-64 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                                <div class="text-center text-white">
+                                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-play text-2xl" aria-hidden="true"></i>
+                                    </div>
+                                    <h4 class="text-lg font-semibold mb-2" data-translate="featured_video.title">Live Expert Session</h4>
+                                    <p class="text-sm opacity-75" data-translate="featured_video.subtitle">Climate-Adaptive Farming Techniques</p>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h5 class="font-semibold text-gray-900 dark:text-white mb-2" data-translate="featured_video.description">Join Dr. Sarah Chen for an in-depth discussion on adapting farming practices to changing climate conditions.</h5>
+                                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                                    <span data-translate="featured_video.live">Live Session</span>
+                                    <span data-translate="featured_video.participants">450 participants</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learning Paths -->
+                        <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-4" data-translate="learning_paths.title">Recommended Learning Paths</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div>
+                                        <div class="font-medium text-gray-900 dark:text-white" data-translate="path1.title">Beginner Farmer</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400" data-translate="path1.lessons">12 lessons</div>
+                                    </div>
+                                    <div class="text-agri-green font-bold">75%</div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div>
+                                        <div class="font-medium text-gray-900 dark:text-white" data-translate="path2.title">Sustainable Practices</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400" data-translate="path2.lessons">8 lessons</div>
+                                    </div>
+                                    <div class="text-agri-green font-bold">45%</div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                                    <div>
+                                        <div class="font-medium text-gray-900 dark:text-white" data-translate="path3.title">Technology Integration</div>
+                                        <div class="text-sm text-gray-600 dark:text-gray-400" data-translate="path3.lessons">6 lessons</div>
+                                    </div>
+                                    <div class="text-gray-400">0%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Contributions Section -->
+        <section id="community-contributions" class="py-20 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-agri-night dark:to-agri-night-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                        <span data-translate="community.title">Community Contributions</span>
+                    </h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                        <span data-translate="community.description">Real experiences and proven solutions shared by farmers worldwide. Join the conversation and share your own insights.</span>
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                    <!-- Success Story 1 -->
+                    <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                                MK
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900 dark:text-white">Moses Kiprop</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400" data-translate="contributor1.location">Kenya</div>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3" data-translate="story1.title">"Increased Maize Yield by 300% Using Drought-Resistant Varieties"</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="story1.excerpt">
+                            "After switching to improved seeds and implementing water conservation techniques, my farm's productivity has tripled despite irregular rainfall patterns."
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                                <i class="fas fa-heart text-red-500" aria-hidden="true"></i>
+                                <span>245</span>
+                                <i class="fas fa-comment text-blue-500" aria-hidden="true"></i>
+                                <span>32</span>
+                            </div>
+                            <span class="text-xs text-gray-400" data-translate="story1.date">2 days ago</span>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 2 -->
+                    <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">
+                                AR
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900 dark:text-white">Ana Rodriguez</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400" data-translate="contributor2.location">Mexico</div>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3" data-translate="story2.title">"Organic Pest Control: 90% Reduction in Chemical Use"</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="story2.excerpt">
+                            "Implementing integrated pest management with beneficial insects and natural predators has revolutionized our approach to crop protection."
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                                <i class="fas fa-heart text-red-500" aria-hidden="true"></i>
+                                <span>189</span>
+                                <i class="fas fa-comment text-blue-500" aria-hidden="true"></i>
+                                <span>28</span>
+                            </div>
+                            <span class="text-xs text-gray-400" data-translate="story2.date">5 days ago</span>
+                        </div>
+                    </div>
+
+                    <!-- Success Story 3 -->
+                    <div class="knowledge-card rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-bold">
+                                JB
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900 dark:text-white">James Brown</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400" data-translate="contributor3.location">Australia</div>
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-3" data-translate="story3.title">"Smart Irrigation Cuts Water Usage by 60%"</h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4" data-translate="story3.excerpt">
+                            "Installing sensor-based irrigation systems with weather data integration has dramatically improved water efficiency while maintaining crop quality."
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                                <i class="fas fa-heart text-red-500" aria-hidden="true"></i>
+                                <span>312</span>
+                                <i class="fas fa-comment text-blue-500" aria-hidden="true"></i>
+                                <span>45</span>
+                            </div>
+                            <span class="text-xs text-gray-400" data-translate="story3.date">1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contribute Section -->
+                <div class="max-w-4xl mx-auto" data-aos="fade-up">
+                    <div class="bg-gradient-to-r from-agri-green to-agri-light rounded-2xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-bold mb-4" data-translate="contribute.title">Share Your Knowledge</h3>
+                        <p class="text-lg mb-6 opacity-90" data-translate="contribute.description">
+                            Help fellow farmers by sharing your experiences, techniques, and innovations. Your insights could transform agriculture worldwide.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button class="bg-white text-agri-green hover:bg-gray-100 font-semibold px-8 py-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-edit mr-2" aria-hidden="true"></i><span data-translate="contribute.write_article">Write Article</span>
+                            </button>
+                            <button class="border-2 border-white text-white hover:bg-white hover:text-agri-green font-semibold px-8 py-3 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white">
+                                <i class="fas fa-video mr-2" aria-hidden="true"></i><span data-translate="contribute.share_video">Share Video</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black text-white py-16" role="contentinfo">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-4 gap-8 mb-12">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-agri-green to-agri-light rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-seedling text-white text-xl" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">AgriClimate Connect</h3>
+                            <p class="text-sm text-gray-400" data-translate="footer.tagline">Knowledge Center</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6 max-w-md" data-translate="footer.description">
+                        Empowering farmers worldwide through shared knowledge, expert insights, and proven agricultural practices for sustainable farming success.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Twitter">
+                            <i class="fab fa-twitter" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-agri-green rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="YouTube">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.quick_links">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.home">Home</a></li>
+                        <li><a href="#knowledge-categories" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.categories">Knowledge Categories</a></li>
+                        <li><a href="#featured-articles" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.featured_articles">Featured Articles</a></li>
+                        <li><a href="#expert-insights" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.expert_insights">Expert Insights</a></li>
+                        <li><a href="#community-contributions" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.community_contributions">Community</a></li>
+                        <li><a href="index.html#contact" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Knowledge Topics -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6" data-translate="footer.topics">Popular Topics</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.sustainable_farming">Sustainable Farming</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.crop_management">Crop Management</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.livestock_care">Livestock Care</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.farm_technology">Farm Technology</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.organic_methods">Organic Methods</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.climate_adaptation">Climate Adaptation</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="bg-gray-800 dark:bg-gray-900 rounded-2xl p-8 mb-8">
+                <div class="grid md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2" data-translate="footer.newsletter_title">Knowledge Updates</h4>
+                        <p class="text-gray-300" data-translate="footer.newsletter_description">Get the latest articles, expert insights, and community highlights delivered to your inbox weekly.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <input type="email" placeholder="Enter your email" 
+                               class="flex-1 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-green text-base text-white placeholder-gray-400"
+                               data-translate-placeholder="footer.email_placeholder">
+                        <button class="bg-agri-green hover:bg-agri-dark text-white px-6 py-3 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green">
+                            <span data-translate="footer.subscribe">Subscribe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div class="text-gray-400 text-sm">
+                        <span data-translate="footer.copyright">© 2024 AgriClimate Connect Knowledge Center. All rights reserved.</span>
+                    </div>
+                    <div class="flex flex-wrap justify-end space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.privacy">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.terms">Terms of Service</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.guidelines">Community Guidelines</a>
+                        <a href="#" class="text-gray-400 hover:text-agri-light transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green rounded" data-translate="footer.accessibility">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fixed Chat Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button id="chat-toggle" class="w-16 h-16 bg-gradient-to-r from-agri-green to-agri-light text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center glow-on-hover focus:outline-none focus:ring-2 focus:ring-agri-green" aria-label="Open knowledge assistant">
+            <i class="fas fa-question-circle text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Knowledge Assistant Chat Widget -->
+    <div id="chat-widget" class="fixed bottom-24 right-6 w-96 h-96 bg-white dark:bg-agri-night rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 transform scale-0 origin-bottom-right transition-transform z-50">
+        <div class="h-full flex flex-col">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-agri-green to-agri-light text-white p-4 rounded-t-2xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold" data-translate="chat.title">Knowledge Assistant</h4>
+                            <p class="text-xs opacity-75" data-translate="chat.subtitle">Your Learning Guide</p>
+                        </div>
+                    </div>
+                    <button id="chat-close" class="hover:bg-white/20 p-1 rounded focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close chat">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 overflow-y-auto" id="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+                <div class="flex items-start space-x-2 mb-4">
+                    <div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs">
+                        <i class="fas fa-book-open" aria-hidden="true"></i>
+                    </div>
+                    <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-3 max-w-xs">
+                        <p class="text-sm text-gray-900 dark:text-white" data-translate="chat.welcome">Hello! I'm your knowledge assistant. Ask me about articles, tutorials, farming techniques, or any agricultural topic!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex space-x-2">
+                    <input type="text" 
+                           placeholder="Ask about agricultural knowledge..."
+                           class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-agri-green text-sm text-gray-900 dark:text-white dark:bg-gray-800"
+                           id="widget-chat-input"
+                           data-translate-placeholder="chat.input_placeholder">
+                    <button class="bg-agri-green hover:bg-agri-dark text-white px-4 py-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-agri-green" id="widget-send-chat" aria-label="Send message">
+                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Translation data for Knowledge Center
+        const translations = {
+            en: {
+                'nav.home': 'Home',
+                'nav.knowledge_tools': 'Knowledge Tools',
+                'nav.weather_climate': 'Weather & Climate Intelligence',
+                'nav.crop_advisory': 'Smart Crop Advisory',
+                'nav.livestock': 'Livestock Management',
+                'nav.market_hub': 'Market Intelligence',
+                'nav.ai_tools': 'AI-Powered Tools',
+                'nav.community': 'Community',
+                'nav.forum': 'Discussion Forum',
+                'nav.knowledge_center': 'Knowledge Center',
+                'nav.expert_network': 'Expert Network',
+                'nav.events': 'Events & Training',
+                'nav.about': 'About Us',
+                'nav.contact': 'Contact Us',
+                'cta.contribute': 'Contribute',
+                'breadcrumb.home': 'Home',
+                'breadcrumb.community': 'Community',
+                'breadcrumb.knowledge_center': 'Knowledge Center',
+                'hero.discover': 'Discover',
+                'hero.agricultural': 'Agricultural',
+                'hero.wisdom': 'Wisdom',
+                'hero.description': 'Access the world\'s largest collection of agricultural knowledge, expert insights, and proven farming techniques shared by our global community of successful farmers.',
+                'stats.articles': 'Expert Articles',
+                'stats.contributors': 'Expert Contributors',
+                'stats.languages': 'Languages',
+                'search.title': 'Search Knowledge Base',
+                'search.placeholder': 'Search articles, guides, tutorials...',
+                'filter.all': 'All Topics',
+                'filter.crops': 'Crops',
+                'filter.livestock': 'Livestock',
+                'filter.technology': 'Technology',
+                'topics.sustainable_farming': 'Sustainable Farming',
+                'topics.organic_methods': 'Organic Methods',
+                'assistant.placeholder': 'Ask our AI knowledge assistant...',
+                'scroll.explore': 'Explore knowledge base',
+                'chat.welcome': 'Hello! I\'m your knowledge assistant. Ask me about articles, tutorials, farming techniques, or any agricultural topic!',
+                'chat.input_placeholder': 'Ask about agricultural knowledge...',
+                'chat.title': 'Knowledge Assistant',
+                'chat.subtitle': 'Your Learning Guide'
+            },
+            es: {
+                'nav.home': 'Inicio',
+                'nav.knowledge_tools': 'Herramientas de Conocimiento',
+                'nav.weather_climate': 'Inteligencia Climática',
+                'nav.crop_advisory': 'Asesoramiento de Cultivos',
+                'nav.livestock': 'Gestión de Ganado',
+                'nav.market_hub': 'Inteligencia de Mercado',
+                'nav.ai_tools': 'Herramientas de IA',
+                'nav.community': 'Comunidad',
+                'nav.forum': 'Foro de Discusión',
+                'nav.knowledge_center': 'Centro de Conocimiento',
+                'nav.expert_network': 'Red de Expertos',
+                'nav.events': 'Eventos y Entrenamiento',
+                'nav.about': 'Acerca de Nosotros',
+                'nav.contact': 'Contáctanos',
+                'cta.contribute': 'Contribuir',
+                'breadcrumb.home': 'Inicio',
+                'breadcrumb.community': 'Comunidad',
+                'breadcrumb.knowledge_center': 'Centro de Conocimiento',
+                'hero.discover': 'Descubrir',
+                'hero.agricultural': 'Sabiduría',
+                'hero.wisdom': 'Agrícola',
+                'hero.description': 'Accede a la colección más grande del mundo de conocimiento agrícola, perspectivas de expertos y técnicas agrícolas probadas compartidas por nuestra comunidad global de agricultores exitosos.',
+                'stats.articles': 'Artículos de Expertos',
+                'stats.contributors': 'Contribuyentes Expertos',
+                'stats.languages': 'Idiomas',
+                'search.title': 'Buscar Base de Conocimiento',
+                'search.placeholder': 'Buscar artículos, guías, tutoriales...',
+                'filter.all': 'Todos los Temas',
+                'filter.crops': 'Cultivos',
+                'filter.livestock': 'Ganado',
+                'filter.technology': 'Tecnología',
+                'topics.sustainable_farming': 'Agricultura Sostenible',
+                'topics.organic_methods': 'Métodos Orgánicos',
+                'assistant.placeholder': 'Pregunta a nuestro asistente de conocimiento IA...',
+                'scroll.explore': 'Explorar base de conocimiento',
+                'chat.welcome': '¡Hola! Soy tu asistente de conocimiento. ¡Pregúntame sobre artículos, tutoriales, técnicas agrícolas o cualquier tema agrícola!',
+                'chat.input_placeholder': 'Pregunta sobre conocimiento agrícola...',
+                'chat.title': 'Asistente de Conocimiento',
+                'chat.subtitle': 'Tu Guía de Aprendizaje'
+            },
+            fr: {
+                'nav.home': 'Accueil',
+                'nav.knowledge_tools': 'Outils de Connaissance',
+                'nav.weather_climate': 'Intelligence Climatique',
+                'nav.crop_advisory': 'Conseil des Cultures',
+                'nav.livestock': 'Gestion du Bétail',
+                'nav.market_hub': 'Intelligence du Marché',
+                'nav.ai_tools': 'Outils IA',
+                'nav.community': 'Communauté',
+                'nav.forum': 'Forum de Discussion',
+                'nav.knowledge_center': 'Centre de Connaissances',
+                'nav.expert_network': 'Réseau d\'Experts',
+                'nav.events': 'Événements et Formation',
+                'nav.about': 'À Propos de Nous',
+                'nav.contact': 'Nous Contacter',
+                'cta.contribute': 'Contribuer',
+                'breadcrumb.home': 'Accueil',
+                'breadcrumb.community': 'Communauté',
+                'breadcrumb.knowledge_center': 'Centre de Connaissances',
+                'hero.discover': 'Découvrir',
+                'hero.agricultural': 'la Sagesse',
+                'hero.wisdom': 'Agricole',
+                'hero.description': 'Accédez à la plus grande collection mondiale de connaissances agricoles, d\'insights d\'experts et de techniques agricoles éprouvées partagées par notre communauté mondiale d\'agriculteurs prospères.',
+                'stats.articles': 'Articles d\'Experts',
+                'stats.contributors': 'Contributeurs Experts',
+                'stats.languages': 'Langues',
+                'search.title': 'Rechercher Base de Connaissances',
+                'search.placeholder': 'Rechercher articles, guides, tutoriels...',
+                'filter.all': 'Tous les Sujets',
+                'filter.crops': 'Cultures',
+                'filter.livestock': 'Bétail',
+                'filter.technology': 'Technologie',
+                'topics.sustainable_farming': 'Agriculture Durable',
+                'topics.organic_methods': 'Méthodes Biologiques',
+                'assistant.placeholder': 'Demandez à notre assistant de connaissances IA...',
+                'scroll.explore': 'Explorer la base de connaissances',
+                'chat.welcome': 'Bonjour! Je suis votre assistant de connaissances. Demandez-moi sur les articles, tutoriels, techniques agricoles ou tout sujet agricole!',
+                'chat.input_placeholder': 'Demandez sur les connaissances agricoles...',
+                'chat.title': 'Assistant de Connaissances',
+                'chat.subtitle': 'Votre Guide d\'Apprentissage'
+            },
+            // Add more languages as needed...
+        };
+
+        // Current language
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+
+        // Translation function
+        function translatePage(language) {
+            const elements = document.querySelectorAll('[data-translate]');
+            const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+            
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[language] && translations[language][key]) {
+                    element.textContent = translations[language][key];
+                }
+            });
+
+            placeholderElements.forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (translations[language] && translations[language][key]) {
+                    element.placeholder = translations[language][key];
+                }
+            });
+
+            currentLanguage = language;
+            localStorage.setItem('language', language);
+            document.documentElement.lang = language;
+        }
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        const currentTheme = savedTheme || systemTheme;
+
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (!localStorage.getItem('theme')) {
+                html.classList.toggle('dark', event.matches);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            
+            themeToggle.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 150);
+        });
+
+        // High contrast mode
+        let highContrast = false;
+        const contrastToggle = document.getElementById('contrast-toggle');
+
+        contrastToggle.addEventListener('click', () => {
+            highContrast = !highContrast;
+            document.body.classList.toggle('high-contrast', highContrast);
+            localStorage.setItem('highContrast', highContrast);
+            
+            contrastToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                contrastToggle.style.transform = '';
+            }, 300);
+        });
+
+        if (localStorage.getItem('highContrast') === 'true') {
+            document.body.classList.add('high-contrast');
+            highContrast = true;
+        }
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerLines = hamburger.querySelectorAll('.hamburger-line');
+
+        hamburger.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            mobileMenu.classList.toggle('hidden');
+            hamburger.setAttribute('aria-expanded', !isOpen);
+            
+            if (!isOpen) {
+                hamburgerLines[0].style.transform = 'translateY(6px) rotate(45deg)';
+                hamburgerLines[1].style.opacity = '0';
+                hamburgerLines[2].style.transform = 'translateY(-6px) rotate(-45deg)';
+            } else {
+                hamburgerLines.forEach(line => {
+                    line.style.transform = '';
+                    line.style.opacity = '';
+                });
+            }
+        });
+
+        // Text size adjustment
+        let currentTextSize = parseInt(localStorage.getItem('textSize')) || 100;
+        const decreaseTextBtn = document.getElementById('decrease-text');
+        const increaseTextBtn = document.getElementById('increase-text');
+
+        function updateTextSize() {
+            document.body.style.fontSize = currentTextSize + '%';
+            localStorage.setItem('textSize', currentTextSize);
+            
+            decreaseTextBtn.disabled = currentTextSize <= 80;
+            increaseTextBtn.disabled = currentTextSize >= 150;
+        }
+
+        decreaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize > 80) {
+                currentTextSize -= 10;
+                updateTextSize();
+            }
+        });
+
+        increaseTextBtn.addEventListener('click', () => {
+            if (currentTextSize < 150) {
+                currentTextSize += 10;
+                updateTextSize();
+            }
+        });
+
+        updateTextSize();
+
+        // Scroll progress indicator
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.transform = `scaleX(${Math.min(scrolled / 100, 1)})`;
+        });
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        const duration = 2000;
+                        const increment = target / (duration / 16);
+                        let current = 0;
+                        
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.textContent = Math.floor(current).toLocaleString();
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target.toLocaleString();
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Language selector functionality
+        const languageSelector = document.getElementById('language-selector');
+        languageSelector.value = currentLanguage;
+
+        languageSelector.addEventListener('change', (e) => {
+            const selectedLanguage = e.target.value;
+            translatePage(selectedLanguage);
+            
+            document.body.style.opacity = '0.8';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 200);
+        });
+
+        // Knowledge search functionality
+        const knowledgeSearch = document.getElementById('knowledge-search');
+        const categoryFilters = document.querySelectorAll('.category-filter');
+
+        // Category filter functionality
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                // Remove active class from all filters
+                categoryFilters.forEach(f => f.classList.remove('active'));
+                // Add active class to clicked filter
+                filter.classList.add('active');
+                
+                const category = filter.getAttribute('data-category');
+                console.log('Filtering by category:', category);
+                // Implement filtering logic here
+            });
+        });
+
+        // Search functionality
+        knowledgeSearch.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            console.log('Searching for:', searchTerm);
+            // Implement search logic here
+        });
+
+        // Chat functionality
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWidget = document.getElementById('chat-widget');
+        const chatClose = document.getElementById('chat-close');
+        const widgetChatInput = document.getElementById('widget-chat-input');
+        const widgetSendBtn = document.getElementById('widget-send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatToggle.addEventListener('click', () => {
+            const isVisible = !chatWidget.classList.contains('scale-0');
+            chatWidget.classList.toggle('scale-0');
+            
+            if (!isVisible) {
+                setTimeout(() => widgetChatInput.focus(), 300);
+            }
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.add('scale-0');
+        });
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-2 mb-4 ${isUser ? 'justify-end' : ''} animate-fade-in`;
+            
+            messageDiv.innerHTML = `
+                ${!isUser ? '<div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-book-open"></i></div>' : ''}
+                <div class="bg-${isUser ? 'agri-green text-white' : 'gray-100 dark:bg-gray-700'} rounded-lg p-3 max-w-xs shadow-sm">
+                    <p class="text-sm ${isUser ? 'text-white' : 'text-gray-900 dark:text-white'}">${message}</p>
+                </div>
+                ${isUser ? '<div class="w-6 h-6 bg-agri-green rounded-full flex items-center justify-center text-white text-xs"><i class="fas fa-user"></i></div>' : ''}
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function simulateKnowledgeAIResponse(userMessage) {
+            const responses = {
+                'crop': 'For crop management, our knowledge base has over 2,850 articles covering planting techniques, pest control, harvesting, and post-harvest handling. Would you like me to recommend specific articles for your crop type?',
+                'sustainable': 'Sustainable farming practices are covered extensively in our knowledge center. Popular topics include crop rotation, natural pest control, soil conservation, and water management. Check out our "Sustainable Agriculture" category!',
+                'livestock': 'Our livestock section has 1,920 expert articles on animal health, nutrition, breeding, and housing. Many include video tutorials from veterinarians and successful farmers worldwide.',
+                'technology': 'Farm technology articles cover AI, IoT sensors, drones, precision agriculture, and automated systems. Our "Smart Irrigation System Setup" tutorial is very popular with 15.2k views!',
+                'pest': 'Pest management resources include both organic and integrated approaches. The "Integrated Pest Management Strategies" video tutorial by Dr. Sarah Chen has excellent reviews and practical solutions.',
+                'soil': 'Soil health is fundamental to successful farming. Our "Soil Health Assessment Techniques" tutorial teaches professional testing methods. We also have articles on soil improvement and fertilization strategies.',
+                'organic': 'Organic farming methods are well-documented in our knowledge base. Popular articles include natural fertilizers, organic pest control, and certification processes. Many success stories from organic farmers too!',
+                'irrigation': 'Water management is crucial for modern farming. Check out our smart irrigation tutorials, drip irrigation guides, and water conservation techniques. The "Water-Smart Farming" article is trending!',
+                'tutorial': 'We have extensive video tutorials covering practical farming techniques. Topics range from basic skills to advanced technology implementation. All tutorials include expert commentary and step-by-step instructions.',
+                'expert': 'Our expert network includes agricultural engineers, veterinarians, soil scientists, and successful farmers from around the world. Their insights are available through articles, videos, and live sessions.',
+                'default': 'I can help you find articles, tutorials, expert insights, and community discussions on any agricultural topic. What specific farming knowledge are you looking for today?'
+            };
+
+            const lowerMessage = userMessage.toLowerCase();
+            let response = responses.default;
+
+            for (const key in responses) {
+                if (lowerMessage.includes(key)) {
+                    response = responses[key];
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendMessage(input) {
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, true);
+                input.value = '';
+                simulateKnowledgeAIResponse(message);
+            }
+        }
+
+        widgetSendBtn.addEventListener('click', () => sendMessage(widgetChatInput));
+
+        widgetChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage(widgetChatInput);
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - offset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Enhanced feature card interactions
+        document.querySelectorAll('.knowledge-card, .article-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (card.classList.contains('knowledge-card')) {
+                    card.style.transform = 'translateY(-8px) scale(1.02)';
+                } else {
+                    card.style.transform = 'translateY(-4px)';
+                }
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            translatePage(currentLanguage);
+            animateCounters();
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            console.log('AgriClimate Connect - Knowledge Center Loaded Successfully!');
+        });
+
+        // Keyboard navigation improvements
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                chatWidget.classList.add('scale-0');
+                mobileMenu.classList.add('hidden');
+            }
+            
+            if (e.key === 'Enter' && e.target.role === 'button') {
+                e.target.click();
+            }
+        });
+
+        // Performance optimization
+        const lazyElements = document.querySelectorAll('[data-aos]');
+        const lazyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+                }
+            });
+        });
+
+        lazyElements.forEach(el => lazyObserver.observe(el));
+    </script>
+</body>
+</html>
